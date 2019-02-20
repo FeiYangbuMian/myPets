@@ -1,0 +1,47 @@
+/*
+ * 作者：张慧珍
+ * 创建时间：2019-02-19
+ * 版本：[1.0,2019-02-19]
+ * 版权：@肥羊不绵
+ * 描述：
+ */
+
+/*
+* {
+    box-sizing: border-box; // 确保padding不会影响元素最终的宽度计算
+}*/
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background: url("img/wallhaven-270245.jpg") no-repeat;
+    background-size: cover;
+}
+.z-title {
+    padding: 20px 0;
+}
+
+.z-title h1 {
+    font-weight: bold;
+}
+
+.z-title h1 small {
+    display: block;
+    margin: 20px;
+}
+
+.z-container {
+    max-width: 350px;
+    margin: 40px auto;
+    background: #ffffff;
+    border: 1px solid rgba(49, 176, 213,0.5);
+    padding: 20px;
+    border-radius: 5px;
+    /*box-shadow: 1px 1px 1px 1px rgba(49, 176, 213,0.5);*/
+}
+
+.z-inline {
+    display: inline;
+}

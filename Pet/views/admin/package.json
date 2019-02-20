@@ -1,0 +1,51 @@
+{
+  "_from": "sb-admin-2",
+  "_id": "sb-admin-2@3.3.8",
+  "_inBundle": false,
+  "_integrity": "sha1-n0JLoiKz6pmO0H/4FF0vAipbeo0=",
+  "_location": "/sb-admin-2",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "sb-admin-2",
+    "name": "sb-admin-2",
+    "escapedName": "sb-admin-2",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/sb-admin-2/download/sb-admin-2-3.3.8.tgz",
+  "_shasum": "9f424ba222b3ea998ed07ff8145d2f022a5b7a8d",
+  "_spec": "sb-admin-2",
+  "_where": "D:\\workspace\\web\\Pet",
+  "author": {
+    "name": "Start Bootstrap"
+  },
+  "bugs": {
+    "url": "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A free, open source, Bootstrap admin theme created by Start Bootstrap",
+  "homepage": "http://startbootstrap.com/template-overviews/sb-admin-2/",
+  "keywords": [
+    "Bootstrap",
+    "admin"
+  ],
+  "license": "MIT",
+  "main": "index.html",
+  "name": "sb-admin-2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.3.8"
+}
