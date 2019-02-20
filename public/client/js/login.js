@@ -7,14 +7,12 @@
  * */
 "use strict";
 
-let useremail = document.getElementById('useremail'),
-    btn_vcode = document.getElementById('btn_vcode'),
-    vcode = document.getElementById('vcode'),
+let username = document.getElementById('username'),
     userpwd = document.getElementById('userpwd'),
-    userpwd1 = document.getElementById('userpwd1'),
-    btn_register = document.getElementById('btn_register'),
-    userAgreement = document.getElementById('userAgreement'),
-    to_login = document.getElementById('to_login');
+    btn_login = document.getElementById('btn_login'),
+    autolog = document.getElementById('autolog'),
+    to_register = document.getElementById('to_register'),
+    to_getpassword = document.getElementById('to_getpassword');
 
 
 $('.z-inline').on('mouseover','span',function () {
@@ -23,47 +21,42 @@ $('.z-inline').on('mouseover','span',function () {
     $(this).attr('class','text-muted');
 });
 
-btn_vcode.addEventListener('click',function () {
-
+to_register.addEventListener('click',function () {
+    window.location.href = '/register';
 });
 
-to_login.addEventListener('click',function () {
-    window.location.href = './login.html';
+to_getpassword.addEventListener('click',function () {
+    window.location.href = '/getpassword';
 });
 
-let allValue = function (){
-    if (useremail.value && vcode.value && userpwd.value && userpwd1.value && userAgreement.checked) {
-        console.log(useremail.value);
-        console.log(userAgreement.checked);
+username.addEventListener('input',function () {
+    if (username.value && userpwd.value) {
+        console.log(username.value);
+        console.log(userpwd.value);
         btn_login.removeAttribute('disabled');
     } else {
         btn_login.setAttribute('disabled','disabled');
     }
-};
+});
 
-useremail.addEventListener('input',function () {
-    allValue();
-});
-vcode.addEventListener('input',function () {
-    allValue();
-});
 userpwd.addEventListener('input',function () {
-    allValue();
+    if (username.value && userpwd.value) {
+        console.log(username.value);
+        console.log(userpwd.value);
+        btn_login.removeAttribute('disabled');
+    } else {
+        btn_login.setAttribute('disabled','disabled');
+    }
 });
-userpwd1.addEventListener('input',function () {
-    allValue();
-});
 
-
-
-btn_register.addEventListener('click',function () {
+btn_login.addEventListener('click',function () {
     let uname = username.value,
         upwd = userpwd.value;
     let auto = autolog.checked;
 
     console.log(uname,upwd,auto);
     alert('欢迎光临');
-    window.location.href = './index.html';
+    window.location.href = 'home';
 
 
     //ajax登录校验

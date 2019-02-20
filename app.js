@@ -10,16 +10,16 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); //应该是设置命名空间
 //app.set('view engine', 'ejs');
 app.engine('html',require('ejs').__express);
-app.set('view engine', 'html');
+app.set('view engine', 'html'); // 将项目改为运行html后缀
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // 资源文件从public后开始写
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
