@@ -24,6 +24,16 @@ router.route("/register").get(function(req,res){
     res.render("client/register");
 });
 
+router.route("/register1").get(function(req,res){
+    res.render("client/register1");
+});
+router.route("/register2").get(function(req,res){
+    res.render("client/register2");
+});
+router.route("/register3").get(function(req,res){
+    res.render("client/register3");
+});
+
 router.route("/getpassword").get(function(req,res){
     res.render("client/getpassword");
 });

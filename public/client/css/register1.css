@@ -1,7 +1,7 @@
 /*
  * 作者：张慧珍
- * 创建时间：2019-02-19
- * 版本：[1.0,2019-02-19]
+ * 创建时间：2019-02-25
+ * 版本：[1.0,2019-02-25]
  * 版权：@肥羊不绵
  * 描述：
  */
@@ -46,3 +46,51 @@ body {
     display: inline;
 }
 
+
+/* register1 */
+
+.z-foruserphoto {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 15px auto;
+}
+
+.img-circle {
+    width: 120px;
+    height: 120px;
+    margin: 15px auto;
+    display: block;
+}
+
+.z-forphoto {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    display: block;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+}
+
+.z-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.form-horizontal .form-group {
+   margin: 0 0 15px 0;
+}
+
+.z-col-3 {
+    float: left;
+    width: 20%;
+    color: #337ab7;
+    text-align: left !important;
+}
+
+.z-col-9 {
+    float: left;
+    width: 80%;
+}
