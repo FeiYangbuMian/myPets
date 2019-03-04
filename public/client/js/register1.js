@@ -1,41 +1,20 @@
 /*
  * 作者：张慧珍
- * 创建时间：2019-02-19
- * 版本：[1.0,2019-02-19]
+ * 创建时间：2019-03-02
+ * 版本：[1.0,2019-03-02]
  * 版权：@肥羊不绵
  * 描述：
  * */
 "use strict";
 
-let useremail = document.getElementById('useremail'),
-    btn_vcode = document.getElementById('btn_vcode'),
-    vcode = document.getElementById('vcode'),
-    userpwd = document.getElementById('userpwd'),
-    userpwd1 = document.getElementById('userpwd1'),
-    btn_register = document.getElementById('btn_register'),
-    userAgreement = document.getElementById('userAgreement'),
-    to_login = document.getElementById('to_login');
+let username = document.getElementById('username'),
+    userbrith = document.getElementById('userbrith'),
+    useraddress = document.getElementById('useraddress'),
+    btn_next = document.getElementById('btn_next');
 
-
-$('.z-inline').on('mouseover','span',function () {
-    $(this).attr('class','text-primary');
-}).on('mouseleave','span',function () {
-    $(this).attr('class','text-muted');
-});
-
-btn_vcode.addEventListener('click',function () {
-
-});
-
-to_login.addEventListener('click',function () {
-    window.location.href = '/login';
-});
 
 let allValue = function (){
-    console.log(useremail.value);
-    console.log(userAgreement.checked);
-    if (useremail.value && vcode.value && userpwd.value && userpwd1.value && userAgreement.checked) {
-
+    if (username.value && userbrith.value && useraddress.value) {
         btn_register.removeAttribute('disabled');
     } else {
         btn_register.setAttribute('disabled','disabled');
@@ -45,37 +24,21 @@ let allValue = function (){
 $('body').on('input','input',function () {
     allValue();
 });
-$('body').on('change','input[type=checkbox]',function () {
-    allValue();
-});
 
 
 
-btn_register.addEventListener('click',function () {
-    let uemail = useremail.value,
-        upwd = userpwd.value;
 
-    console.log(uemail,upwd);
-    alert('欢迎光临');
-    window.location.href = '/register1';
+btn_next.addEventListener('click',function () {
+    let usersex = $("input[name='usersex']:checked").val();
+    let data = {
+        'username':username.value,
+        'usersex':usersex,
+        'userbrith':userbrith.value,
+        'useraddress':useraddress.value
+    };
+    console.log(data);
+   $.get('/register2',data,function (result) {
+       console.log(result);
+   });
 
-
-    //ajax登录校验
-    // $.post("/dologin",{
-    //     "username":$('#user').val(),
-    //     "password":$('#pwd').val()
-    // },function(result){
-    //     if(result==-1){
-    //         alert("用户名不存在");
-    //         $('#err').fadeIn(800);
-    //         $('#err h3').html('用户名不在!请重试')
-    //     }else if(result==0){
-    //         alert("密码错误");
-    //         $('#err').fadeIn(800);
-    //         $('#err h3').html('密码错误!!请重新尝试登录')
-    //     }else{
-    //         alert("登录成功,马上进入首页!");
-    //         window.location="/";
-    //     }
-    // });
 });

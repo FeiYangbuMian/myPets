@@ -56,7 +56,7 @@ btn_login.addEventListener('click',function () {
 
     console.log(uname,upwd,auto);
     alert('欢迎光临');
-    window.location.href = 'home';
+  //  window.location.href = 'home';
 
 
     //ajax登录校验
@@ -76,5 +76,6 @@ btn_login.addEventListener('click',function () {
     //         alert("登录成功,马上进入首页!");
     //         window.location="/";
     //     }
-    // });
+    // });\
+
 });

@@ -12,9 +12,23 @@ html {
 
 body {
     height: 100%;
+    /*background: url("img/wallhaven-457434.jpg") no-repeat;
+    background-size: cover;*/
+}
+
+body:after {
+    content: "";
     background: url("img/wallhaven-457434.jpg") no-repeat;
     background-size: cover;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
 }
+
 .z-title {
     width: 1200px;
     margin: 30px auto;
@@ -38,7 +52,8 @@ body {
 .z-container {
     max-width: 350px;
     margin: 40px auto;
-    background: #ffffff;
+    border: 1px solid #ffffff;
+    background: rgba(255,255,255,0.5);
     /*border: 1px solid rgba(49, 176, 213,0.5);*/
     padding: 20px;
     border-radius: 5px;

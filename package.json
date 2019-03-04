@@ -1,5 +1,5 @@
 {
-  "name": "pet",
+  "name": "myPets",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,8 +12,12 @@
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.15.6",
+    "formidable": "^1.2.1",
     "http-errors": "~1.6.2",
     "jquery": "^3.3.1",
+    "moment": "^2.24.0",
     "morgan": "~1.9.0",
     "mysql": "^2.16.0",
     "sb-admin-2": "^3.3.8"

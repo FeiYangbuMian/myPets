@@ -18,7 +18,7 @@
 <body>
 <div class="container">
     <div class="text-center z-title">
-        <h1 class="text-primary">萌宠战记 <small>每一个生物，都带着使命降临到地球</small></h1>
+        <h1 class="text-primary">萌宠战记 <small class="text-info">每一个生物，都带着使命降临到地球</small></h1>
     </div>
 
     <div class="z-container">
@@ -26,8 +26,8 @@
         <form class="form-horizontal" method="post" enctype="multipart/form-data">
             <div class="z-foruserphoto">
                <!-- <span class="glyphicon glyphicon-camera z-icon"  aria-hidden="true"></span>-->
-                <img src="image/user_default.jpg" class="img-circle" alt="点击修改头像" id="photo" />
-                <input type="file" id="userphoto" name="userphoto" class="z-forphoto" />
+                <img src="image/user_default.jpg" title="点击修改头像" class="img-circle" alt="点击修改头像" id="photo" />
+                <input type="file" id="userphoto" title="点击修改头像" name="userphoto" class="z-forphoto" />
             </div>
             <div class="form-group">
                 <label  class="z-col-3 control-label">昵称</label>
@@ -39,7 +39,7 @@
                 <label  class="z-col-3 control-label">性别</label>
                 <div class="z-col-9">
                     <label for="0" class="checkbox-inline">
-                        <input type="radio" class="" id="0" name="usersex"  />男
+                        <input type="radio" class="" id="0" name="usersex" checked="checked"  />男
                     </label>
                     <label for="1" class="checkbox-inline">
                         <input type="radio" class="" id="1" name="usersex"  />女
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="button" id="btn_register" class="btn btn-md btn-info btn-block" disabled="disabled">下一步</button>
+                <button type="button" id="btn_next" class="btn btn-md btn-info btn-block" disabled="disabled">下一步</button>
             </div>
         </form>
     </div>
