@@ -3,26 +3,45 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');//一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。
 const logger = require('morgan'); //在控制台中，显示req请求的信息
-//const  bobyParser = require('body-parser');
+const  bodyParser = require('body-parser');
 const  moment = require('moment');
 
 const app = express();
 
 app.locals.moment = moment;
 
+//支持编码为JSON的请求消息体
+app.use(bodyParser.json());//接收json数据
+//支持编码为表单的请求消息体
+app.use(bodyParser.urlencoded({extended: true}));//extended: true表示可以接收任何数据类型的数据
+
+
 /*var indexRouter = require('./routes/client');
 var usersRouter = require('./routes/users');*/
 
 // 路由信息（接口地址），存放在routes的根目录
-const routes = require('./routes/client');
-const users = require('./routes/users');
+const client = require('./routes/client');
+//const user = require('./routes/user');
+const dologin = require('./routes/dologin');
+//const server = require('./routes/server');
+
+//配置路由('自定义路径'，上面设置的接口地址)
+app.use('/', client);  // 即为为路径 / 设置路由
+app.use('/dologin',dologin);
+//app.use('/user',user);
+
+//app.use('/pet', server); // 即为为路径 /users 设置路由
+/*app.use('/login',routes); // 即为为路径 /login 设置路由
+app.use('/register',routes); // 即为为路径 /register 设置路由
+app.use('/home',routes); // 即为为路径 /home 设置路由
+app.use("/logout",routes); // 即为为路径 /logout 设置路由*/
 
 
 // 设置模板目录
 app.set('views', path.join(__dirname, 'views')); //设置存放模板文件的目录
-//app.set('view engine', 'ejs');// 设置模板引擎为 ejs
-app.engine('html',require('ejs').__express);
-app.set('view engine', 'html'); // 将项目改为运行html后缀
+app.set('view engine', 'ejs');// 设置模板引擎为 ejs
+/*app.engine('html',require('ejs').__express);
+app.set('view engine', 'html'); // 将项目改为运行html后缀*/
 
 //载入中间件
 app.use(logger('dev'));
@@ -31,15 +50,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
+// express.static 将文件注册到恰当的URL上
+app.use('/css/bootstrap.css',express.static('node_modules/bootstrap/dist/css/bootstrap.css'));
+app.use('/js/bootstrap.js',express.static('node_modules/bootstrap/dist/js/bootstrap.js'));
+app.use('/js/jquery.js',express.static('node_modules/jquery/dist/jquery.js'));
 
 
-//配置路由('自定义路径'，上面设置的接口地址)
-app.use('/', routes);  // 即为为路径 / 设置路由
-app.use('/users', users); // 即为为路径 /users 设置路由
-/*app.use('/login',routes); // 即为为路径 /login 设置路由
-app.use('/register',routes); // 即为为路径 /register 设置路由
-app.use('/home',routes); // 即为为路径 /home 设置路由
-app.use("/logout",routes); // 即为为路径 /logout 设置路由*/
+
 
 
 

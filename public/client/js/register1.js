@@ -9,36 +9,17 @@
 
 let username = document.getElementById('username'),
     userbrith = document.getElementById('userbrith'),
-    useraddress = document.getElementById('useraddress'),
-    btn_next = document.getElementById('btn_next');
+    useraddress = document.getElementById('useraddress');
 
 
 let allValue = function (){
     if (username.value && userbrith.value && useraddress.value) {
-        btn_register.removeAttribute('disabled');
+        btn_next.removeAttribute('disabled');
     } else {
-        btn_register.setAttribute('disabled','disabled');
+        btn_next.setAttribute('disabled','disabled');
     }
 };
 
 $('body').on('input','input',function () {
     allValue();
-});
-
-
-
-
-btn_next.addEventListener('click',function () {
-    let usersex = $("input[name='usersex']:checked").val();
-    let data = {
-        'username':username.value,
-        'usersex':usersex,
-        'userbrith':userbrith.value,
-        'useraddress':useraddress.value
-    };
-    console.log(data);
-   $.get('/register2',data,function (result) {
-       console.log(result);
-   });
-
 });

@@ -49,33 +49,26 @@ userpwd.addEventListener('input',function () {
     }
 });
 
+/*
 btn_login.addEventListener('click',function () {
     let uname = username.value,
         upwd = userpwd.value;
     let auto = autolog.checked;
 
     console.log(uname,upwd,auto);
-    alert('欢迎光临');
-  //  window.location.href = 'home';
 
 
-    //ajax登录校验
-    // $.post("/dologin",{
-    //     "username":$('#user').val(),
-    //     "password":$('#pwd').val()
-    // },function(result){
-    //     if(result==-1){
-    //         alert("用户名不存在");
-    //         $('#err').fadeIn(800);
-    //         $('#err h3').html('用户名不在!请重试')
-    //     }else if(result==0){
-    //         alert("密码错误");
-    //         $('#err').fadeIn(800);
-    //         $('#err h3').html('密码错误!!请重新尝试登录')
-    //     }else{
-    //         alert("登录成功,马上进入首页!");
-    //         window.location="/";
-    //     }
-    // });\
-
+   // ajax登录校验
+    $.post("/dologin",{
+        "username":uname,
+        "userpwd":upwd
+    },function(result){
+        console.log(result);
+        if (result.code == '0') {
+            window.location.href=`index?id=${result.custom.id}`;
+        } else {
+            alert(result.text);
+        }
+    });
 });
+*/

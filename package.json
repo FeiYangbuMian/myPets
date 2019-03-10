@@ -6,8 +6,10 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "body-parser": "latest",
     "boostrap": "^2.0.0",
     "bootstrap": "^3.4.0",
+    "connect": "^3.4.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
