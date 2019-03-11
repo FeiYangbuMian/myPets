@@ -26,7 +26,8 @@
 
     <div class="z-container">
         <h4 class="text-info">请登录：</h4>
-        <form method="post" action="/client/dologin" enctype="multipart/form-data">
+        <!--<form enctype="multipart/form-data">-->
+        <!--<form method="post" action="/client/dologin" enctype="multipart/form-data">-->
             <div class="form-group">
                 <input type="text" class="form-control" id="username" value="" name="username" placeholder="请输入账户名" />
             </div>
@@ -34,7 +35,7 @@
                 <input type="password" class="form-control" id="userpwd" name="userpwd" placeholder="请输入密码" />
             </div>
             <div class="form-group">
-                <button type="submit" id="btn_login" class="btn btn-md btn-info btn-block" disabled="disabled">登录</button>
+                <button type="button" id="btn_login" class="btn btn-md btn-info btn-block" disabled="disabled">登录</button>
             </div>
             <div class="checkbox">
                 <label class="text-muted">
@@ -45,7 +46,7 @@
                     <a href="/client/register" class="text-muted">注册</a>
                 </div>
             </div>
-        </form>
+        <!--</form>-->
     </div>
 </div>
 

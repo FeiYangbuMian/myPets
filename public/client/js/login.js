@@ -22,3 +22,23 @@ $('.container').on('input','input',function () {
     }
 });
 
+$('#btn_login').on('click',function () {
+    let data = {
+        userpwd: userpwd.value,
+        username: username.value
+    };
+    console.log(JSON.stringify(data));
+
+    $.ajax({
+        url: '/client/dologin',
+        type: 'post',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        cache: false,
+        processData: false,
+        contentType: false,
+    }).done(function (data) {
+            alert(data);
+        }
+    );
+});

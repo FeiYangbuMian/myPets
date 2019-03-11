@@ -1,5 +1,4 @@
 const express = require('express');
-let router = express.Router();
 
 const fs = require('fs');
 const path = require('path');
@@ -9,6 +8,7 @@ const nodemailer  = require('nodemailer');
 const config = require('../middleware/config');
 const mail = require('../middleware/mail');
 const Util = require('../middleware/util');
+const db = require('../middleware/db');
 
 let username = '肥羊不绵';
 
@@ -24,11 +24,35 @@ router.route("/login").get(function(req,res){
 });
 
 router.post('/dologin',function (req,res) {
+    console.log('dologin');
+    console.log(req.query);
+    console.log(req.body.username);
     form.parse(req,function (err,fields,files) {
+        console.log('================================================');
         console.log(fields);
         let userpwd = fields.userpwd;
         username = fields.username;
-        res.render('post/home',{username:username});
+        let selectUsername = `SELECT * FROM t_user WHERE userName='${username}'`;
+        let selectUser = `SELECT * FROM t_user WHERE userName='${username}' AND userPwd='${userpwd}'`;
+
+        db.query(selectUsername, function (err, rows, fields) {
+            if (err) {
+                res.render('error');
+                return;
+            }
+            if (rows.length === 0) {
+                res.send('查无此人');
+                return;
+            }
+            db.query(selectUser, function (err, rows, fields) {
+                if (rows.length === 0) {
+                    res.send('密码错误');
+                    return;
+                }
+                res.render('post/home',{username:username});
+            });
+        });
+
     });
 });
 
@@ -42,9 +66,6 @@ router.route("/register1").get(function(req,res){
 });
 
 router.post('/dophoto',function (req,res) {
-    /* form.uploadDir = '../myPets/public/image/userPhoto/';
-     form.keepExtensions = true;
-     form.maxFieldsSize = 2*1024*1024;*/
 
     form.parse(req,function (err,fields,files) {
         let usersex = fields.usersex,
