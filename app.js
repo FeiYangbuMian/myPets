@@ -20,21 +20,18 @@ app.use(bodyParser.urlencoded({extended: true}));//extended: true表示可以接
 var usersRouter = require('./routes/users');*/
 
 // 路由信息（接口地址），存放在routes的根目录
+const index = require('./routes/index');
 const client = require('./routes/client');
 //const user = require('./routes/user');
-const dologin = require('./routes/dologin');
-//const server = require('./routes/server');
+//const dologin = require('./routes/dologin');
+const post = require('./routes/post');
 
 //配置路由('自定义路径'，上面设置的接口地址)
-app.use('/', client);  // 即为为路径 / 设置路由
-app.use('/dologin',dologin);
-//app.use('/user',user);
 
-//app.use('/pet', server); // 即为为路径 /users 设置路由
-/*app.use('/login',routes); // 即为为路径 /login 设置路由
-app.use('/register',routes); // 即为为路径 /register 设置路由
-app.use('/home',routes); // 即为为路径 /home 设置路由
-app.use("/logout",routes); // 即为为路径 /logout 设置路由*/
+app.use('/', index);  // 即为为路径 / 设置路由
+app.use('/client',client);
+app.use('/post',post);
+
 
 
 // 设置模板目录

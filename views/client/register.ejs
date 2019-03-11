@@ -23,7 +23,7 @@
 
     <div class="z-container">
         <h4 class="text-primary">请注册：</h4>
-        <form >
+        <form action="/client/doregister" method="post" enctype="multipart/form-data" >
             <div class="form-group">
                 <input type="text" class="form-control" id="useremail" name="useremail" placeholder="请输入邮箱账号" />
             </div>
@@ -42,15 +42,15 @@
             <div class="checkbox">
                 <label class="text-muted">
                     <input type="checkbox" id="userAgreement" name="autolog" />
-                    我已阅读并接受<a href="/useragreement" class="text-danger">用户协议</a>
+                    我已阅读并接受<a href="/client/useragreement" class="text-danger">用户协议</a>
                 </label>
             </div>
             <div class="form-group">
-                <button type="button" id="btn_register" class="btn btn-md btn-info btn-block" disabled="disabled">下一步</button>
+                <button type="submit" id="btn_register" class="btn btn-md btn-info btn-block" disabled="disabled">下一步</button>
             </div>
             <div class="form-group clearfix">
                 <div class="z-inline pull-right text-muted">
-                    已有账号，<span id="to_login">返回登录</span>
+                    已有账号，<a href="/client/login" id="to_login">返回登录</a>
                 </div>
             </div>
         </form>

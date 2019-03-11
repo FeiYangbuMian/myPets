@@ -13,29 +13,17 @@ let useremail = document.getElementById('useremail'),
     userpwd = document.getElementById('userpwd'),
     userpwd1 = document.getElementById('userpwd1'),
     btn_register = document.getElementById('btn_register'),
-    userAgreement = document.getElementById('userAgreement'),
-    to_login = document.getElementById('to_login');
+    userAgreement = document.getElementById('userAgreement');
 
-
-$('.z-inline').on('mouseover','span',function () {
-    $(this).attr('class','text-primary');
-}).on('mouseleave','span',function () {
-    $(this).attr('class','text-muted');
-});
 
 btn_vcode.addEventListener('click',function () {
 
-});
-
-to_login.addEventListener('click',function () {
-    window.location.href = '/login';
 });
 
 let allValue = function (){
     console.log(useremail.value);
     console.log(userAgreement.checked);
     if (useremail.value && vcode.value && userpwd.value && userpwd1.value && userAgreement.checked) {
-
         btn_register.removeAttribute('disabled');
     } else {
         btn_register.setAttribute('disabled','disabled');
@@ -47,35 +35,4 @@ $('body').on('input','input',function () {
 });
 $('body').on('change','input[type=checkbox]',function () {
     allValue();
-});
-
-
-
-btn_register.addEventListener('click',function () {
-    let uemail = useremail.value,
-        upwd = userpwd.value;
-
-    console.log(uemail,upwd);
-    alert('欢迎光临');
-    window.location.href = '/register1';
-
-
-    //ajax登录校验
-    // $.post("/dologin",{
-    //     "username":$('#user').val(),
-    //     "password":$('#pwd').val()
-    // },function(result){
-    //     if(result==-1){
-    //         alert("用户名不存在");
-    //         $('#err').fadeIn(800);
-    //         $('#err h3').html('用户名不在!请重试')
-    //     }else if(result==0){
-    //         alert("密码错误");
-    //         $('#err').fadeIn(800);
-    //         $('#err h3').html('密码错误!!请重新尝试登录')
-    //     }else{
-    //         alert("登录成功,马上进入首页!");
-    //         window.location="/";
-    //     }
-    // });
 });
