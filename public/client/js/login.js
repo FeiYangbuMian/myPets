@@ -34,11 +34,15 @@ $('#btn_login').on('click',function () {
         type: 'post',
         data: JSON.stringify(data),
         dataType: 'json',
-        cache: false,
-        processData: false,
-        contentType: false,
-    }).done(function (data) {
-            alert(data);
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                window.location.href=`/post/home?username=${result.username}`;
+            }
         }
-    );
+    });
+
 });

@@ -3,14 +3,17 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
-
 const nodemailer  = require('nodemailer');
 const config = require('../middleware/config');
 const mail = require('../middleware/mail');
 const Util = require('../middleware/util');
 const db = require('../middleware/db');
 
+let router = express.Router();
+
 let username = '肥羊不绵';
+
+let result={};
 
 let form = new formidable.IncomingForm();
 form.encoding = 'utf-8';
@@ -24,36 +27,38 @@ router.route("/login").get(function(req,res){
 });
 
 router.post('/dologin',function (req,res) {
-    console.log('dologin');
-    console.log(req.query);
-    console.log(req.body.username);
-    form.parse(req,function (err,fields,files) {
-        console.log('================================================');
-        console.log(fields);
-        let userpwd = fields.userpwd;
-        username = fields.username;
-        let selectUsername = `SELECT * FROM t_user WHERE userName='${username}'`;
-        let selectUser = `SELECT * FROM t_user WHERE userName='${username}' AND userPwd='${userpwd}'`;
+    console.log(req.body);
+    let userpwd = req.body.userpwd;
+    username = req.body.username;
+    let selectUsername = `SELECT * FROM t_user WHERE userName='${username}'`;
+    let selectUser = `SELECT * FROM t_user WHERE userName='${username}' AND userPwd='${userpwd}'`;
 
-        db.query(selectUsername, function (err, rows, fields) {
-            if (err) {
-                res.render('error');
-                return;
-            }
+    db.query(selectUsername, function (err, rows, fields) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '暂无此人';
+            res.send(result);
+            return;
+        }
+        db.query(selectUser, function (err, rows, fields) {
             if (rows.length === 0) {
-                res.send('查无此人');
+                result.code = 0;
+                result.text = '密码错误';
+                res.send(result);
                 return;
             }
-            db.query(selectUser, function (err, rows, fields) {
-                if (rows.length === 0) {
-                    res.send('密码错误');
-                    return;
-                }
-                res.render('post/home',{username:username});
-            });
+            result.code = 1;
+            result.text = '';
+            result.username = username;
+            res.send(result);
+            //res.render("post/home",{username:username});
         });
-
     });
+
 });
 
 
@@ -112,10 +117,12 @@ router.route("/useragreement").get(function(req,res){
 
 
 
-let tomail = '320801223@qq.com',
-    code= Util.math.random(100000,1000000);
+router.get('/docode',function (req,res,next) {
+    console.log(req.query); //多适用于get请求
+    console.log(req.query.useremail);
+    let tomail = req.query.useremail,
+        code= Util.math.random(100000,1000000);
 
-router.get('/send',function (req,res,next) {
     let options = {
         from:'"萌宠战记"<1136260155@qq.com>',
         to:tomail,
@@ -127,8 +134,8 @@ router.get('/send',function (req,res,next) {
             console.log(err);
             res.end();
         } else {
-            console.log(msg);
-           res.end();
+            console.log({code:code});
+            res.end();
         }
     });
 })
