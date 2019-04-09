@@ -24,11 +24,16 @@ Util.check = {
     },
 };
 
-
-
-
-
-
+Util.currentTime = function () {
+    let now = new Date();
+    let year = now.getFullYear(),
+        month = now.getMonth() + 1,
+        day = now.getDate(),
+        hh = now.getHours(),
+        mm = now.getMinutes(),
+        ss = now.getSeconds();
+    return year + '-' + month + '-' + day + ' ' + hh + ':' + mm + ':' + ss;
+};
 
 
 

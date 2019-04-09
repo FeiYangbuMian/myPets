@@ -26,67 +26,27 @@
     </div>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="image/img_cat.jpg" alt="...">
-                <div class="caption">
-                    <h3>猫类</h3>
-                    <p>“无论你贫穷或富贵，它都瞧不起你。”</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="image/img_dog.jpg" alt="...">
-                <div class="caption">
-                    <h3>狗类</h3>
-                    <p>千年驯化，已为人类最好的伙伴</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="image/img_mouse.jpg" alt="...">
-                <div class="caption">
-                    <h3>小型宠物类</h3>
-                    <p>龙猫，仓鼠，松鼠，兔，豚鼠，宠物貂……</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="image/img_bird.jpg" alt="...">
-                <div class="caption">
-                    <h3>鸟类</h3>
-                    <p>两只黄鹂鸣翠柳，一行白鹭上青天。</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="image/img_fish.jpg" alt="...">
-                <div class="caption">
-                    <h3>水族类</h3>
-                    <p>鱼，虾</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="image/img_lizard.jpg" alt="...">
-                <div class="caption">
-                    <h3>两栖爬行类</h3>
-                    <p>乌龟，蛇，蜥蜴……</p>
-                </div>
-            </div>
-        </div>
+    <div class="row" id="plates">
+
     </div>
     <footer>
 
     </footer>
 </div>
-
+<script type="text/template" id="template" >
+    <div class="col-sm-6 col-md-4"  >
+        <div class="thumbnail" id="{{plateId}}">
+            <img src="/image/{{platePhoto}}" alt="...">
+            <div class="caption">
+                <h3>{{plateName}}</h3>
+                <p>{{plateIntro}}</p>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
+<script src="/index.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
 </html>

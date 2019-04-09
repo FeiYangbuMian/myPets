@@ -3,8 +3,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');//一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。
 const logger = require('morgan'); //在控制台中，显示req请求的信息
-const  bodyParser = require('body-parser');
-const  moment = require('moment');
+const bodyParser = require('body-parser');
+const moment = require('moment');
 
 const app = express();
 
@@ -40,6 +40,9 @@ app.set('view engine', 'ejs');// 设置模板引擎为 ejs
 /*app.engine('html',require('ejs').__express);
 app.set('view engine', 'html'); // 将项目改为运行html后缀*/
 
+app.set('json spaces', 2);  // 输出JSON格式会更易读
+
+
 //载入中间件
 app.use(logger('dev'));
 app.use(express.json());
@@ -51,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css/bootstrap.css',express.static('node_modules/bootstrap/dist/css/bootstrap.css'));
 app.use('/js/bootstrap.js',express.static('node_modules/bootstrap/dist/js/bootstrap.js'));
 app.use('/js/jquery.js',express.static('node_modules/jquery/dist/jquery.js'));
+app.use('/js/mustache.js',express.static('node_modules/mustache/mustache.js'));
 
 
 
@@ -59,18 +63,18 @@ app.use('/js/jquery.js',express.static('node_modules/jquery/dist/jquery.js'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

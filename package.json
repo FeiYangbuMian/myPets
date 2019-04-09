@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "body-parser": "latest",
-    "boostrap": "^2.0.0",
     "bootstrap": "^3.4.0",
     "connect": "^3.4.0",
     "cookie-parser": "~1.4.3",
@@ -21,6 +20,7 @@
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
     "morgan": "~1.9.0",
+    "mustache": "^3.0.1",
     "mysql": "^2.16.0",
     "nodemailer": "^5.1.1",
     "sb-admin-2": "^3.3.8"

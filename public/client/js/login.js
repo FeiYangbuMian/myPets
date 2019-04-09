@@ -22,6 +22,7 @@ $('.container').on('input','input',function () {
     }
 });
 
+
 $('#btn_login').on('click',function () {
     let data = {
         userpwd: userpwd.value,
@@ -40,9 +41,9 @@ $('#btn_login').on('click',function () {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                window.location.href=`/post/home?username=${result.username}`;
+                //window.location.href=`/post/home?username=${result.username}`;
+                window.location.href=`/post/home/${result.username}`;
             }
         }
     });
-
 });

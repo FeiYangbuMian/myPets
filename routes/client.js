@@ -7,7 +7,7 @@ const nodemailer  = require('nodemailer');
 const config = require('../middleware/config');
 const mail = require('../middleware/mail');
 const Util = require('../middleware/util');
-const db = require('../middleware/db');
+const User = require('../models/User');
 
 let router = express.Router();
 
@@ -30,10 +30,8 @@ router.post('/dologin',function (req,res) {
     console.log(req.body);
     let userpwd = req.body.userpwd;
     username = req.body.username;
-    let selectUsername = `SELECT * FROM t_user WHERE userName='${username}'`;
-    let selectUser = `SELECT * FROM t_user WHERE userName='${username}' AND userPwd='${userpwd}'`;
 
-    db.query(selectUsername, function (err, rows, fields) {
+    User.selectUserbyUsername(username,function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -44,7 +42,7 @@ router.post('/dologin',function (req,res) {
             res.send(result);
             return;
         }
-        db.query(selectUser, function (err, rows, fields) {
+        User.selectUser([username,userpwd],function (err,rows) {
             if (rows.length === 0) {
                 result.code = 0;
                 result.text = '密码错误';
@@ -55,19 +53,37 @@ router.post('/dologin',function (req,res) {
             result.text = '';
             result.username = username;
             res.send(result);
-            //res.render("post/home",{username:username});
         });
     });
+});
 
+
+router.post('/doregister',function (req,res) {
+    console.log(req.body);
+    let current = Util.currentTime();
+    let userpwd = req.body.userpwd;
+    useremail = req.body.useremail;
+    User.insertUser([useremail,current,userpwd,useremail],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '插入失败';
+            res.send(result);
+            return;
+        }
+        result.code = 1;
+        result.text = '';
+        result.useremail = useremail;
+        res.send(result);
+    })
 });
 
 
 router.route("/register").get(function(req,res){
     res.render("client/register");
-});
-
-router.route("/register1").get(function(req,res){
-    res.render("client/register1");
 });
 
 router.post('/dophoto',function (req,res) {
@@ -118,27 +134,29 @@ router.route("/useragreement").get(function(req,res){
 
 
 router.get('/docode',function (req,res,next) {
-    console.log(req.query); //多适用于get请求
     console.log(req.query.useremail);
     let tomail = req.query.useremail,
         code= Util.math.random(100000,1000000);
-
     let options = {
         from:'"萌宠战记"<1136260155@qq.com>',
         to:tomail,
         subject:'通知：验证码',
-        html:`<h1>这是一封用于测试的邮件！<br /><p>您的验证码是${code}</p></h1>`
+        html:`<h1>这是一封用于测试的邮件！</h1><br />
+              <p>您的验证码是<span style="color: #0d6aad">${code}</span></p>`
     };
     mail.sendMail(options,function (err,msg) {
         if (err){
             console.log(err);
             res.end();
         } else {
-            console.log({code:code});
+            result.code = 1;
+            result.text = '';
+            result.code = code;
+            res.send(result);
             res.end();
         }
     });
-})
+});
 
 
 

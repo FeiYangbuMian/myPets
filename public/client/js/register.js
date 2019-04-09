@@ -20,6 +20,7 @@ let code = '';
 useremail.addEventListener('input',function () {
     btn_vcode.removeAttribute('disabled');
 });
+
 btn_vcode.addEventListener('click',function () {
     $.ajax({
         url: '/client/docode',
@@ -29,9 +30,9 @@ btn_vcode.addEventListener('click',function () {
         },
         dataType: 'json',
     }).
-    done(function (data) {
-        console.log(data);
-        code = data.code;
+    done(function (result) {
+        console.log(result);
+        code = result.code.toString();
     });
 });
 
@@ -50,4 +51,39 @@ $('body').on('input','input',function () {
 });
 $('body').on('change','input[type=checkbox]',function () {
     allValue();
+});
+
+btn_register.addEventListener('click',function () {
+    console.log(code);
+    console.log(vcode.value);
+    if (vcode.value!==code) {
+        alert('验证码错误');
+        return;
+    }
+    if (userpwd.value !== userpwd1.value) {
+        alert('两次密码不一致');
+        return;
+    }
+    let data = {
+        userpwd: userpwd.value,
+        useremail: useremail.value
+    };
+    console.log(JSON.stringify(data));
+
+    $.ajax({
+        url: '/client/doregister',
+        type: 'post',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                window.location.href=`/client/register1?useremail=${result.useremail}`;
+            }
+        }
+    });
+
 });
