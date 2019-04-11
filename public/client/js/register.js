@@ -15,30 +15,37 @@ let useremail = document.getElementById('useremail'),
     btn_register = document.getElementById('btn_register'),
     userAgreement = document.getElementById('userAgreement');
 
-let code = '';
+let code = '';  // 存放发送的验证码
 
 useremail.addEventListener('input',function () {
     btn_vcode.removeAttribute('disabled');
 });
 
 btn_vcode.addEventListener('click',function () {
+    let reg =  /^(\w)+([-.]\w+)*@(\w)+((\.\w{2,4}){1,3})$/;
+    if (!reg.test(useremail.value)) {
+        alert('邮箱格式不正确！');
+        return;
+    }
     $.ajax({
         url: '/client/docode',
         type: 'get',
         data:{
-            useremail: useremail.value
+            useremail: useremail.value,
         },
         dataType: 'json',
     }).
     done(function (result) {
         console.log(result);
-        code = result.code.toString();
+        if (result.code === 0){
+            alert(result.text);
+        } else {
+            code = result.data.toString();
+        }
     });
 });
 
 let allValue = function (){
-   // console.log(useremail.value);
-    //console.log(userAgreement.checked);
     if (useremail.value && vcode.value && userpwd.value && userpwd1.value && userAgreement.checked) {
         btn_register.removeAttribute('disabled');
     } else {
@@ -48,8 +55,7 @@ let allValue = function (){
 
 $('body').on('input','input',function () {
     allValue();
-});
-$('body').on('change','input[type=checkbox]',function () {
+}).on('change','input[type=checkbox]',function () {
     allValue();
 });
 

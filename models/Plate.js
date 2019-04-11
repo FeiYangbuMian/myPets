@@ -5,8 +5,6 @@
  * 版权：@肥羊不绵
  * 描述：
  * */
-"use strict";
-
 
 const db = require('../middleware/db');
 

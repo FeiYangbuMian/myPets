@@ -17,9 +17,7 @@ let options = {
     subject:'一封用于测试的邮件',
     html:'<h1>这是一封用于测试的邮件！<br /><p>您的验证码是</p></h1>'
 };
-*/
 
-/*
 mailTransport.sendMail(options,function (err,msg) {
     if (err){
         console.log(err);

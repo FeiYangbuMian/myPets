@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>萌宠战记</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/bootstrap-datepicker3.css" />
     <link rel="stylesheet" type="text/css" href="/client/css/register1.css" />
 </head>
 <body>
@@ -23,52 +24,53 @@
 
     <div class="z-container">
         <h4 class="text-primary">请完善基本资料：</h4>
-        <form class="form-horizontal" action="/client/dophoto" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" name="picForm">
             <div class="z-foruserphoto">
-               <!-- <span class="glyphicon glyphicon-camera z-icon"  aria-hidden="true"></span>-->
+                <!-- <span class="glyphicon glyphicon-camera z-icon"  aria-hidden="true"></span>-->
                 <img src="/image/user_default.jpg" title="点击修改头像" class="img-circle" alt="点击修改头像" id="photo" />
                 <input type="file" id="userphoto" title="点击修改头像" name="userphoto" class="z-forphoto" />
             </div>
             <div class="form-group">
-                <label  class="z-col-3 control-label">昵称</label>
+                <label  class="z-col-3 control-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称</label>
                 <div class="z-col-9">
+                    <input type="hidden" id="useremail" name="useremail" />
                     <input type="text" class="form-control" id="username" name="username" placeholder="昵称不可修改" />
+                    <span id="text_danger" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
-                <label  class="z-col-3 control-label">性别</label>
+                <label  class="z-col-3 control-label">出生日</label>
                 <div class="z-col-9">
-                    <label for="0" class="checkbox-inline">
-                        <input type="radio" class="" id="0" name="usersex" checked="checked"  />男
-                    </label>
-                    <label for="1" class="checkbox-inline">
-                        <input type="radio" class="" id="1" name="usersex"  />女
-                    </label>
+                    <input type="text" readonly="readonly" data-provide="datepicker" class="form-control" id="userbrith" name="userbrith" placeholder="您的出生年月日" />
                 </div>
             </div>
-
-            <div class="form-group">
-                <label  class="z-col-3 control-label">年龄</label>
+            <div>
+                <label  class="z-col-3 control-label">所在地</label>
                 <div class="z-col-9">
-                    <input type="text" class="form-control" id="userbrith" name="userbrith" placeholder="您的出生年月日" />
+                    <div data-toggle="distpicker">
+                        <div class="form-group">
+                            <select class="form-control" name="province" id="province"></select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="city" id="city"></select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <label  class="z-col-3 control-label">城市</label>
-                <div class="z-col-9">
-                    <input type="text" class="form-control" id="useraddress" name="useraddress" placeholder="您的常居城市" />
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" id="btn_next" class="btn btn-md btn-info btn-block" disabled="disabled">下一步</button>
+                <button type="button" id="btn_next" class="btn btn-md btn-info btn-block" disabled="disabled">下一步</button>
             </div>
         </form>
     </div>
 </div>
 
-<script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
-<script src="/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-<script src="/client/js/register1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js" charset="utf-8"></script>
+<script src="/js/bootstrap.js" charset="utf-8"></script>
+<script src="/client/js/bootstrap-datepicker.js" charset="utf-8"></script>
+<script src="/client/js/distpicker.data.js" charset="utf-8"></script>
+<script src="/client/js/distpicker.js" charset="utf-8"></script>
+<!--<script src="/client/js/bootstrap-datepicker.zh-CN.min.js" charset="utf-8"></script>-->
+<script src="/client/js/register1.js" charset="utf-8"></script>
 
 </body>
 </html>

@@ -33,7 +33,7 @@ router.get('/doindex',function (req,res) {
 });
 
 router.route("/plate/:id").get(function(req,res){
-    console.log(req.params.tag);
+    console.log(req.params.id);
     res.render("post/plate");
 
 });

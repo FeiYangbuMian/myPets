@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');//一个解析Cookie的工具。�
 const logger = require('morgan'); //在控制台中，显示req请求的信息
 const bodyParser = require('body-parser');
 const moment = require('moment');
-
 const app = express();
 
 app.locals.moment = moment;
@@ -55,10 +54,6 @@ app.use('/css/bootstrap.css',express.static('node_modules/bootstrap/dist/css/boo
 app.use('/js/bootstrap.js',express.static('node_modules/bootstrap/dist/js/bootstrap.js'));
 app.use('/js/jquery.js',express.static('node_modules/jquery/dist/jquery.js'));
 app.use('/js/mustache.js',express.static('node_modules/mustache/mustache.js'));
-
-
-
-
 
 
 // catch 404 and forward to error handler

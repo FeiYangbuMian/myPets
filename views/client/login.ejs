@@ -26,27 +26,24 @@
 
     <div class="z-container">
         <h4 class="text-info">请登录：</h4>
-        <!--<form enctype="multipart/form-data">-->
-        <!--<form method="post" action="/client/dologin" enctype="multipart/form-data">-->
-            <div class="form-group">
-                <input type="text" class="form-control" id="username" value="" name="username" placeholder="请输入账户名" />
+        <div class="form-group">
+            <input type="text" class="form-control" id="username" value="" name="username" placeholder="请输入账户名" />
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="userpwd" name="userpwd" placeholder="请输入密码" />
+        </div>
+        <div class="form-group">
+            <button type="button" id="btn_login" class="btn btn-md btn-info btn-block" disabled="disabled">登录</button>
+        </div>
+        <div class="checkbox clearfix">
+           <!-- <label class="text-muted">
+                <input type="checkbox" id="autolog" name="autolog" />下次自动登录
+            </label>-->
+            <div class="z-inline pull-right">
+                <a href="/client/getpassword" class="text-muted">忘记密码</a>&nbsp;|&nbsp;
+                <a href="/client/register" class="text-muted">注册</a>
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="userpwd" name="userpwd" placeholder="请输入密码" />
-            </div>
-            <div class="form-group">
-                <button type="button" id="btn_login" class="btn btn-md btn-info btn-block" disabled="disabled">登录</button>
-            </div>
-            <div class="checkbox">
-                <label class="text-muted">
-                    <input type="checkbox" id="autolog" name="autolog" />下次自动登录
-                </label>
-                <div class="z-inline pull-right">
-                    <a href="/client/getpassword" class="text-muted">忘记密码</a>&nbsp;|&nbsp;
-                    <a href="/client/register" class="text-muted">注册</a>
-                </div>
-            </div>
-        <!--</form>-->
+        </div>
     </div>
 </div>
 
