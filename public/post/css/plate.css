@@ -6,8 +6,50 @@
  * 描述：
  * */
 
+.z-nav-top {
+    margin-bottom: 0;
+}
 
 
 .jumbotron .img-thumbnail {
     min-height: 130px;
+}
+
+.list-group li {
+    list-style: none;
+}
+
+.z-post-imgs img {
+    height: 100px;
+}
+
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 300px;
+    max-height: 600px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+#up_post{
+    padding: 6px 24px;
+}
+
+.z-ml {
+    margin-left: 20px;
+    display: inline;
+}
+
+footer {
+    padding: 20px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    text-align: center;
 }

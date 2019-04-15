@@ -7,16 +7,52 @@
  * */
 "use strict";
 
+let userName = '',
+    plateId = '';
 
 window.onload = function () {
+
     let href = window.location.href;
-    let plateid = href.slice(-3);
-    console.log(plateid);
+    plateId = parseInt(href.slice(-4));
+    console.log(plateId);
+
+    doplate(plateId);
+    $('body').on('click','a',function (e) {
+        e.preventDefault();
+    });
+
+    $('#toplate').on('click','li',function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        plateId = $(this).attr('data-plate');
+        doplate(plateId);
+    });
+
+    $('#up_post').on('click',function () {
+        let data = {};
+        data.plateId = plateId;
+        data.userName = userName;
+        data.postTitle = $('#postTitle').val();
+        data.postContent = $('#postContent').val();
+        data.postPhoto = '';
+        data.postStart = '';
+        data.postLimit = 0;
+        console.log(data);
+        uppost(data);
+    });
+
+    $('#forlist').on('click','li',function () {
+        let postId = $(this).attr('data-id');
+        window.location.href = `/post/plate/${plateId}/${postId}`;
+    });
+
+};
+
+function doplate(plateId) {
     $.ajax({
-        url: '/post/doplate',
+        url: `/post/doplate`,
         type: 'post',
         data:JSON.stringify({
-            'plateid':plateid
+            'plateId':plateId
         }),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -25,11 +61,44 @@ window.onload = function () {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                let data = result.data;
-                let tem = $('#template').html();
-                let out = Mustache.render(tem,data);
-                $('#plates').append(out);
+                $('#forlist').html('');
+                let info = result.info;
+                let tem = $('#tem-plate').html();
+                let out = Mustache.render(tem,info);
+                $('#forplate').html(out);
+                document.title = `萌宠战记-${info.plateName}`;
+                $('#plateName').text(`#${info.plateName}`);
+
+                let list = result.list;
+
+                let tem2 = $('#tem-list').html();
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem2,v);
+                    $('#forlist').append(out);
+                });
+                userName = result.user.userName;
+                $('#foruser').text(userName);
             }
         }
     });
-};
+}
+
+function uppost(data) {
+    $.ajax({
+        url: `/post/uppost`,
+        type: 'post',
+        data:JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                console.log(result);
+                doplate(plateId);
+                $('input,textarea').val('');
+            }
+        }
+    });
+}

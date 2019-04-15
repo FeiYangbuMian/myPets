@@ -9,10 +9,10 @@
 const db = require('../middleware/db');
 
 function Plate(plate){
-    this.plateid = plate.plateid;
-    this.platename = plate.platename;
-    this.platephoto = plate.platephoto;
-    this.plateintro = plate.plateintro;
+    this.plateId = plate.plateId;
+    this.plateName = plate.plateName;
+    this.platePhoto = plate.platePhoto;
+    this.plateIntro = plate.plateIntro;
 }
 
 /**
@@ -33,18 +33,18 @@ Plate.selectPlate = function (callback){
 
 /**
  * 根据id查询板块信息
- * @param plateid 板块ID
+ * @param plateId 板块ID
  * @param callback
  */
 
-Plate.selectPlatebyPlateid = function (plateid,callback){
+Plate.selectPlatebyId = function (plateId,callback){
     let selectSql = `SELECT * FROM t_plate WHERE plateId= ? `;
-    db.query(selectSql,[plateid],function (err,rows,fields) {
+    db.query(selectSql,[plateId],function (err,rows,fields) {
         if (err){
-            console.log('selectPlatebyPlateid err:' + err);
+            console.log('selectPlatebyplateId err:' + err);
             return;
         }
-        console.log('selectPlatebyPlateid success');
+        console.log('selectPlatebyplateId success');
         callback(err,rows);
     });
 };

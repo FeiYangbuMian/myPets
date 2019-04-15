@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');//一个解析Cookie的工具。�
 const logger = require('morgan'); //在控制台中，显示req请求的信息
 const bodyParser = require('body-parser');
 const moment = require('moment');
+const session = require('express-session');
 const app = express();
+
 
 app.locals.moment = moment;
 
@@ -13,6 +15,17 @@ app.locals.moment = moment;
 app.use(bodyParser.json());//接收json数据
 //支持编码为表单的请求消息体
 app.use(bodyParser.urlencoded({extended: true}));//extended: true表示可以接收任何数据类型的数据
+
+// 使用session中间件
+app.use(session({
+    secret: 'secret', // 对session id 相关的cookie 进行签名
+    resave: true,
+    saveUninitialized:false, // 是否保存未初始化的会话
+    cookie:{
+        maxAge:1000 * 60 * 60, // 设置 session 的有效时间，单位毫秒
+    },
+}));
+
 
 
 /*var indexRouter = require('./routes/client');

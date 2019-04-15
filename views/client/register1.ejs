@@ -25,23 +25,22 @@
     <div class="z-container">
         <h4 class="text-primary">请完善基本资料：</h4>
         <form class="form-horizontal" method="post" enctype="multipart/form-data" name="picForm">
-            <div class="z-foruserphoto">
-                <!-- <span class="glyphicon glyphicon-camera z-icon"  aria-hidden="true"></span>-->
+            <div class="z-foruserPhoto">
                 <img src="/image/user_default.jpg" title="点击修改头像" class="img-circle" alt="点击修改头像" id="photo" />
-                <input type="file" id="userphoto" title="点击修改头像" name="userphoto" class="z-forphoto" />
+                <input type="file" id="userPhoto" title="点击修改头像" name="userPhoto" class="z-forphoto" />
             </div>
             <div class="form-group">
                 <label  class="z-col-3 control-label">昵&nbsp;&nbsp;&nbsp;&nbsp;称</label>
                 <div class="z-col-9">
-                    <input type="hidden" id="useremail" name="useremail" />
-                    <input type="text" class="form-control" id="username" name="username" placeholder="昵称不可修改" />
+                    <input type="hidden" id="userEmail" name="userEmail" />
+                    <input type="text" class="form-control" id="userName" name="userName" placeholder="昵称不可重复" />
                     <span id="text_danger" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label  class="z-col-3 control-label">出生日</label>
                 <div class="z-col-9">
-                    <input type="text" readonly="readonly" data-provide="datepicker" class="form-control" id="userbrith" name="userbrith" placeholder="您的出生年月日" />
+                    <input type="text" readonly="readonly" data-provide="datepicker" class="form-control" id="userBrith" name="userBrith" placeholder="您的出生年月日" />
                 </div>
             </div>
             <div>
@@ -49,10 +48,10 @@
                 <div class="z-col-9">
                     <div data-toggle="distpicker">
                         <div class="form-group">
-                            <select class="form-control" name="province" id="province"></select>
+                            <select class="form-control" name="province" id="province" title="省"></select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="city" id="city"></select>
+                            <select class="form-control" name="city" id="city" title="市"></select>
                         </div>
                     </div>
                 </div>

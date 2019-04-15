@@ -7,15 +7,15 @@
  * */
 "use strict";
 
-let username = document.getElementById('username'),
-    userbrith = document.getElementById('userbrith'),
-    useremail = document.getElementById('useremail'),
+let userName = document.getElementById('userName'),
+    userBrith = document.getElementById('userBrith'),
+    userEmail = document.getElementById('userEmail'),
     province = '',city = '',email='',data={};
 
-let reg = new RegExp("(^|&)useremail=([^&]*)(&|$)", "i");
+let reg = new RegExp("(^|&)userEmail=([^&]*)(&|$)", "i");
 let r = window.location.search.substr(1).match(reg);
 if (r != null) email = unescape(r[2]);
-useremail.value = email;
+userEmail.value = email;
 console.log(email);
 
 
@@ -23,7 +23,7 @@ let allValue = function (){
     province = $('#province option:selected').val();
     city = $('#city option:selected').val();
     console.log('222');
-    if (username.value && userbrith.value && province && city) {
+    if (userName.value && userBrith.value && province && city) {
         btn_next.removeAttribute('disabled');
     } else {
         btn_next.setAttribute('disabled','disabled');
@@ -34,7 +34,7 @@ $('body').on('input','input',function () {
     allValue();
 }).on('change','select,input',function () {
     allValue();
-}).on('change','#userphoto',function () {
+}).on('change','#userPhoto',function () {
     let objFile = $(this).val();
     let objSize = $(this)[0].files[0].size;
     console.log($(this)[0].files[0]);
@@ -66,13 +66,13 @@ $('body').on('input','input',function () {
             }
         });
     }
-}).on('input','#username',function () {
+}).on('input','#userName',function () {
     let _this = $(this);
     $.ajax({
         url: '/client/ifname',
         type: 'post',
         data: JSON.stringify({
-            username:username.value
+            userName:userName.value
         }),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -88,9 +88,9 @@ $('body').on('input','input',function () {
     });
 }).on('click','#btn_next',function () {
     data.userarea = province+city;
-    data.username = username.value;
-    data.userbrith = userbrith.value;
-    data.useremail = useremail.value;
+    data.userName = userName.value;
+    data.userBrith = userBrith.value;
+    data.userEmail = userEmail.value;
     console.log(data);
     $.ajax({
         url: '/client/doregister1',

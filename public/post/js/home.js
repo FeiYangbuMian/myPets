@@ -15,7 +15,8 @@ window.onload = function () {
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
         success:function (result) {
-            if (result.code !== '200'){
+            if (result.code === 0){
+                alert(result.text);
                 return;
             }
             let list = result.data;

@@ -1,0 +1,138 @@
+<!--
+作者：张慧珍
+创建时间：2019-04-05
+版本：[1.0,2019-04-05]
+版权：@肥羊不绵
+描述：
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>萌宠战记-猫</title>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/post/css/post.css" />
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">萌宠战记</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">消息</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">肥羊不绵 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">个人中心</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            今天你云吸猫了吗
+            <span class="pull-right"><i class="glyphicon glyphicon-edit"></i> 回复</span>
+        </div>
+        <div class="panel-body clearfix">
+            <div class="pull-left col-md-2 col-lg-2 z-user">
+                <img src="../../public/image/user_default.jpg" class="z-user-img img-thumbnail" />
+                <p class="text-info">[发帖者]肥羊不绵</p>
+            </div>
+            <div class="pull-left col-md-10 col-lg-10 z-post">
+                大家好，给大家看看我家的几只猫咪：饭团 闪闪和毛球~
+                <div class="z-post-imgs" >
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                </div>
+                <p class="z-time">
+                    <span class="text-muted">2019-04-03 12:23 </span>
+                    <a href="#" class="text-primary">回复</a>
+                </p>
+            </div>
+
+
+        </div>
+        <div class="panel-body clearfix">
+            <div class="pull-left col-md-2 col-lg-2 z-user">
+                <img src="../../public/image/user_default.jpg" class="z-user-img img-thumbnail" />
+                <p class="text-info">肥羊不绵</p>
+            </div>
+            <div class="pull-left col-md-10 col-lg-10 z-post clearfix">
+                <p>
+                    大家好，给大家看看我家的几只猫咪：饭团 闪闪和毛球~
+                </p>
+
+                <!--<div class="z-post-imgs" >
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                </div>-->
+                <p class="z-time">
+                    <span class="text-muted">2019-04-03 12:26 </span>
+                    <a href="#" class="text-primary">回复(3)</a>
+                </p>
+                <ul class="list-group pull-right col-md-9 col-lg-9 clearfix">
+                    <li class="list-group-item">
+                        <span class="text-primary">夏达 </span>回复
+                        <span class="text-primary">肥羊不绵：</span>你偷拍我家猫猫呀
+                        <p class="z-time">
+                            <span class="text-muted">2019-04-03 12:26 </span>
+                            <a href="#" class="text-info">回复</a>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="text-primary">夏达 </span>回复
+                        <span class="text-primary">肥羊不绵：</span>你偷拍我家猫猫呀
+                        <p class="z-time">
+                            <span class="text-muted">2019-04-03 12:26 </span>
+                            <a href="#" class="text-info">回复</a>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="text-primary">夏达 </span>回复
+                        <span class="text-primary">肥羊不绵：</span>你偷拍我家猫猫呀
+                        <p class="z-time">
+                            <span class="text-muted">2019-04-03 12:26 </span>
+                            <a href="#" class="text-info">回复</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<hr />
+
+<div class="container">
+    <h4 class="text-info"><i class="glyphicon glyphicon-pencil"></i> &nbsp;发表回复</h4>
+    <div class="form-group">
+        <textarea title="回复内容" id="postContent" ></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-info" id="up_post">发&nbsp;表</button>
+    </div>
+    <div class="form-group">
+        <input type="file" id="postPhoto" />
+        <p class="help-block">注：仅支持.jpg .png格式。</p>
+    </div>
+</div>
+<footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>
+
+
+<script src="../../node_modules/jquery/src/jquery.js"></script>
+</body>
+</html>

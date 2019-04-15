@@ -7,15 +7,15 @@
  * */
 "use strict";
 
-let username = document.getElementById('username'),
-    userpwd = document.getElementById('userpwd'),
+let userName = document.getElementById('userName'),
+    userPwd = document.getElementById('userPwd'),
     btn_login = document.getElementById('btn_login'),
     autolog = document.getElementById('autolog');
 
 
 $('.container').on('input','input',function () {
-    if (username.value && userpwd.value) {
-        console.log(username.value+','+userpwd.value);
+    if (userName.value && userPwd.value) {
+        console.log(userName.value+','+userPwd.value);
         btn_login.removeAttribute('disabled');
     } else {
         btn_login.setAttribute('disabled','disabled');
@@ -25,8 +25,8 @@ $('.container').on('input','input',function () {
 
 $('#btn_login').on('click',function () {
     let data = {
-        userpwd: userpwd.value,
-        username: username.value
+        userPwd: userPwd.value,
+        userName: userName.value
     };
     console.log(JSON.stringify(data));
 
@@ -41,8 +41,8 @@ $('#btn_login').on('click',function () {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                //window.location.href=`/post/home?username=${result.username}`;
-                window.location.href=`/post/home/${result.username}`;
+                //window.location.href=`/post/home?userName=${result.userName}`;
+                window.location.href=`/post/home/${result.userName}`;
             }
         }
     });

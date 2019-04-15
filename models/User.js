@@ -9,28 +9,29 @@
 const db = require('../middleware/db');
 
 function User(user){
-    this.username = user.username;
-    this.userpwd = user.userpwd;
-    this.userbrith = user.userbrith;
-    this.userstatus = user.userstatus;
-    this.userphoto = user.userphoto;
-    this.userqq = user.userqq;
-    this.userwechat = user.userwechat;
-    this.useremail = user.useremail;
-    this.userarea = user.userarea;
-    this.userstart = user.userstart;
-    this.userstate = user.userstate;
+    this.userId = user.userId;
+    this.userName = user.userName;
+    this.userPwd = user.userPwd;
+    this.userBrith = user.userBrith;
+    this.userStatus = user.userStatus;
+    this.userPhoto = user.userPhoto;
+    this.userQQ = user.userQQ;
+    this.userWechat = user.userWechat;
+    this.userEmail = user.userEmail;
+    this.userArea = user.userArea;
+    this.userStart = user.userStart;
+    this.userState = user.userState;
 }
 
 /**
  * 判断用户是否已存在
- * @param username
+ * @param userName
  * @param callback
  */
 
-User.selectUserbyName = function (username,callback){
+User.selectUserbyName = function (userName,callback){
     let selectSql = `SELECT * FROM t_user WHERE userName= ? `;
-    db.query(selectSql,[username],function (err,rows,fields) {
+    db.query(selectSql,[userName],function (err,rows,fields) {
         if (err){
             console.log('selectUserbyName err:' + err);
             return;
@@ -86,10 +87,10 @@ User.updateUserpwd = function (arr,callback){
   let uploadSql = `update t_user set userPwd= ? where userEmail= ? `;
   db.query(uploadSql,arr,function (err,rows,fields) {
       if (err){
-          console.log('uploadUserpwd err:' + err);
+          console.log('updateUserpwd err:' + err);
           return;
       }
-      console.log('uploadUserpwd success');
+      console.log('updateUserpwd success');
       callback(err,rows);
   });
 };

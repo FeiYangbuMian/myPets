@@ -11,7 +11,7 @@ const User = require('../models/User');
 
 let router = express.Router();
 
-let username = '肥羊不绵';
+let userName = '肥羊不绵';
 
 let result={};
 
@@ -30,10 +30,11 @@ router.route("/login").get(function(req,res){
 
 router.post('/dologin',function (req,res) {
     console.log(req.body);
-    let userpwd = req.body.userpwd;
-    username = req.body.username;
+    let userPwd = req.body.userPwd;
+    userName = req.body.userName;
+    //req.session.userName = userName;
 
-    User.selectUserbyName(username,function (err,rows) {
+    User.selectUserbyName(userName,function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -44,7 +45,8 @@ router.post('/dologin',function (req,res) {
             res.send(result);
             return;
         }
-        User.selectUser([username,userpwd],function (err,rows) {
+        req.session.user = rows[0];
+        User.selectUser([userName,userPwd],function (err,rows) {
             if (rows.length === 0) {
                 result.code = 0;
                 result.text = '密码错误';
@@ -53,7 +55,7 @@ router.post('/dologin',function (req,res) {
             }
             result.code = 1;
             result.text = '';
-            result.username = username;
+            result.userName = userName;
             res.send(result);
         });
     });
@@ -65,9 +67,9 @@ router.route("/getpassword").get(function(req,res){
 
 router.post('/dopassword',function (req,res) {
     console.log(req.body);
-    let userpwd = req.body.userpwd,
-        useremail = req.body.useremail;
-    User.updateUserpwd([userpwd,useremail],function (err,rows) {
+    let userPwd = req.body.userPwd,
+        userEmail = req.body.userEmail;
+    User.updateUserpwd([userPwd,userEmail],function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -81,7 +83,7 @@ router.post('/dopassword',function (req,res) {
         console.log(rows);
         result.code = 1;
         result.text = '';
-        result.useremail = useremail;
+        result.userEmail = userEmail;
         res.send(result);
     });
 });
@@ -93,9 +95,9 @@ router.route("/register").get(function(req,res){
 router.post('/doregister',function (req,res) {
     console.log(req.body);
     let current = Util.currentTime(),
-        userpwd = req.body.userpwd,
-        useremail = req.body.useremail;
-    User.insertUser([useremail,current,userpwd,useremail],function (err,rows) {
+        userPwd = req.body.userPwd,
+        userEmail = req.body.userEmail;
+    User.insertUser([userEmail,current,userPwd,userEmail],function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -109,7 +111,7 @@ router.post('/doregister',function (req,res) {
         console.log(rows);
         result.code = 1;
         result.text = '';
-        result.useremail = useremail;
+        result.userEmail = userEmail;
         res.send(result);
     })
 });
@@ -128,14 +130,14 @@ router.post('/dophoto',function (req,res,next) {
             throw err;
         }
         console.log(fields);
-        let userphoto = files.userphoto.name; //input的name
-        let useremail = fields.useremail;
-        console.log(userphoto);
+        let userPhoto = files.userPhoto.name; //input的name
+        let userEmail = fields.userEmail;
+        console.log(userPhoto);
 
         let t = (new Date()).getTime();
         let ran = parseInt(Math.random() * 8999 + 10000);
-        let extname = path.extname(userphoto);
-        let oldpath = path.normalize(files.userphoto.path);
+        let extname = path.extname(userPhoto);
+        let oldpath = path.normalize(files.userPhoto.path);
         let newfilename = t + ran + extname;
         let newpath = '../myPets/public/image/userPhoto/' + newfilename;
         fs.rename(oldpath, newpath, function (err) {
@@ -145,7 +147,7 @@ router.post('/dophoto',function (req,res,next) {
                 console.log('改名失败' + err);
                 return;
             } else {
-                User.updateUserphoto([newfilename,useremail],function (err,rows) {
+                User.updateUserphoto([newfilename,userEmail],function (err,rows) {
                     if (err) {
                         res.render('error');
                         return;
@@ -169,8 +171,8 @@ router.post('/dophoto',function (req,res,next) {
 
 router.post('/ifname',function (req,res) {
     console.log(req.body);
-    let username = req.body.username;
-    User.selectUserbyName(username,function (err,rows) {
+    let userName = req.body.userName;
+    User.selectUserbyName(userName,function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -189,11 +191,11 @@ router.post('/ifname',function (req,res) {
 
 router.post('/doregister1',function (req,res) {
     console.log(req.body);
-    let username = req.body.username,
-        userbrith = req.body.userbrith,
-        userarea = req.body.userarea,
-        useremail = req.body.useremail;
-    User.updateUser([username,userbrith,userarea,useremail],function (err,rows) {
+    let userName = req.body.userName,
+        userBrith = req.body.userBrith,
+        userArea = req.body.userArea,
+        userEmail = req.body.userEmail;
+    User.updateUser([userName,userBrith,userArea,userEmail],function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -211,8 +213,8 @@ router.post('/doregister1',function (req,res) {
 });
 
 router.get('/docode',function (req,res,next) {
-    console.log(req.query.useremail);
-    let tomail = req.query.useremail,
+    console.log(req.query.userEmail);
+    let tomail = req.query.userEmail,
         code= Util.math.random(100000,1000000);
     let options = {
         from:'"萌宠战记"<1136260155@qq.com>',
@@ -245,8 +247,8 @@ router.get('/docode',function (req,res,next) {
 });
 
 router.get('/docode2',function (req,res,next) {
-    console.log(req.query.useremail);
-    let tomail = req.query.useremail,
+    console.log(req.query.userEmail);
+    let tomail = req.query.userEmail,
         code= Util.math.random(100000,1000000);
     let options = {
         from:'"萌宠战记"<1136260155@qq.com>',
