@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/post/css/post.css" />
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">萌宠战记</a>
@@ -23,25 +23,109 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">消息</a></li>
+                <li><a href="/client/unread">消息<span class="badge" id="count">42</span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">肥羊不绵 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">个人中心</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">退出</a></li>
+                    <a href="#" id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="foruser">肥羊不绵 </span><span class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li><a href="/client/myinfo">我的信息</a></li>
+                        <li><a href="/client/mypost">我的发帖</a></li>
+                        <li><a href="/client/myreply">我的回帖</a></li>
+                        <li><a href="/client/logout">退出系统</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="container" id="forpost">
+
+</div>
+
+<div class="container">
+    <h4 class="text-info"><i class="glyphicon glyphicon-pencil"></i> &nbsp;发表回复</h4>
+    <div class="form-group">
+        <textarea title="回复内容" id="replyContent" class="z-textarea"></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-info" id="up_reply">发&nbsp;表</button>
+    </div>
+    <div class="form-group">
+        <input type="file" id="replyPhoto" />
+        <p class="help-block">注：仅支持.jpg .png格式。</p>
+    </div>
+</div>
+<footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>
+
+
+
+<script type="text/template" id="tem-post" >
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            {{info.postTitle}}
+            <span class="pull-right"><a href="#up_reply"><i class="glyphicon glyphicon-edit"></i> 回复</a></span>
+        </div>
+        <div class="panel-body clearfix">
+            <div class="pull-left col-md-2 col-lg-2 z-user">
+                <img src="/image/userPhoto/{{info.userPhoto}}" class="z-user-img img-thumbnail" id="userPhoto" />
+                <p class="text-info">[发帖者]{{info.userName}}</p>
+            </div>
+            <div class="pull-left col-md-10 col-lg-10 z-post">
+                {{info.postContent}}
+                <div class="z-post-imgs" >
+                    <!--<img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">-->
+                </div>
+                <p class="z-time">
+                    <span class="text-muted">{{info.postStart}} </span>
+                </p>
+            </div>
+        </div>
+        <ul id="forreply">
+        </ul>
+    </div>
+</script>
+
+<script type="text/template" id="tem-reply">
+    <li class="panel-body clearfix reply-item" data-floor="{{replyFloor}}">
+        <div class="pull-left col-md-2 col-lg-2 z-user">
+            <img src="/image/userPhoto/{{userPhoto}}" class="z-user-img img-thumbnail" />
+            <p class="text-info">{{userNameF}}</p>
+        </div>
+        <div class="pull-left col-md-10 col-lg-10 z-post">
+            {{replyContent}}
+            <div class="z-post-imgs" >
+                <!--<img src="../../public/image/{{replyContent}}">-->
+            </div>
+            <p class="z-time">
+                <span class="text-muted">{{replyTime}} </span>
+                <a href="#" class="text-primary lol-reply">回复</a>
+            </p>
+            <ul class="list-group pull-right col-md-9 col-lg-9 clearfix" id="forlol">
+            </ul>
+            <div class="form-group  pull-right col-md-9 col-lg-9 clearfix">
+                <textarea title="回复内容" class="z-lol-textarea" ></textarea>
+                <button class="btn pull-right btn-primary btn-sm z-lol-up">发&nbsp;表</button>
+            </div>
+        </div>
+    </li>
+</script>
+
+<script type="text/template" id="tem-lol">
+    <li class="list-group-item">
+        <span class="text-primary">夏达 </span>回复
+        <span class="text-primary">肥羊不绵：</span>你偷拍我家猫猫呀
+        <p class="z-time">
+            <span class="text-muted">2019-04-03 12:26 </span>
+            <a href="#" class="text-info">回复</a>
+        </p>
+    </li>
+</script>
 
 
 
 <script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
 <script src="/post/js/post.js" type="text/javascript" charset="utf-8"></script>
 </body>

@@ -149,4 +149,17 @@ User.updateUser = function (arr,callback){
     });
 };
 
+
+User.selectUserphoto = function (arr,callback){
+    let selectSql = `SELECT userPhoto FROM t_user WHERE userName= ?`;
+    db.query(selectSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('selectUserphoto error:' + err);
+            return;
+        }
+        console.log('selectUserphoto success');
+        callback(err,rows);
+    });
+};
+
 module.exports = User;

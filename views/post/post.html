@@ -62,10 +62,34 @@
                     <a href="#" class="text-primary">回复</a>
                 </p>
             </div>
-
-
         </div>
-        <div class="panel-body clearfix">
+        <ul id="forreply">
+        <li class="panel-body clearfix">
+            <div class="pull-left col-md-2 col-lg-2 z-user">
+                <img src="../../public/image/user_default.jpg" class="z-user-img img-thumbnail" />
+                <p class="text-info">[发帖者]肥羊不绵</p>
+            </div>
+            <div class="pull-left col-md-10 col-lg-10 z-post clearfix">
+                大家好，给大家看看我家的几只猫咪：饭团 闪闪和毛球~
+                <div class="z-post-imgs" >
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                    <img src="../../public/image/img_cat.jpg">
+                </div>
+                <p class="z-time">
+                    <span class="text-muted">2019-04-03 12:23 </span>
+                    <a href="#" class="text-primary">回复</a>
+                </p>
+                <ul class="list-group pull-right col-md-9 col-lg-9 clearfix">
+
+                </ul>
+                <div class="form-group  pull-right col-md-9 col-lg-9 clearfix">
+                    <textarea title="回复内容" class="z-lol-textarea" ></textarea>
+                    <button class="btn pull-right btn-primary btn-sm z-lol-up">发&nbsp;表</button>
+                </div>
+            </div>
+        </li>
+        <li class="panel-body clearfix">
             <div class="pull-left col-md-2 col-lg-2 z-user">
                 <img src="../../public/image/user_default.jpg" class="z-user-img img-thumbnail" />
                 <p class="text-info">肥羊不绵</p>
@@ -74,7 +98,6 @@
                 <p>
                     大家好，给大家看看我家的几只猫咪：饭团 闪闪和毛球~
                 </p>
-
                 <!--<div class="z-post-imgs" >
                     <img src="../../public/image/img_cat.jpg">
                     <img src="../../public/image/img_cat.jpg">
@@ -110,8 +133,14 @@
                         </p>
                     </li>
                 </ul>
+                <div class="form-group  pull-right col-md-9 col-lg-9 clearfix">
+                    <textarea title="回复内容" class="z-lol-textarea" ></textarea>
+                    <button class="btn pull-right btn-primary btn-sm z-lol-up">发&nbsp;表</button>
+                </div>
             </div>
-        </div>
+        </li>
+
+        </ul>
     </div>
 
 </div>
@@ -120,7 +149,7 @@
 <div class="container">
     <h4 class="text-info"><i class="glyphicon glyphicon-pencil"></i> &nbsp;发表回复</h4>
     <div class="form-group">
-        <textarea title="回复内容" id="postContent" ></textarea>
+        <textarea title="回复内容" id="postContent" class="z-textarea"></textarea>
     </div>
     <div class="form-group">
         <button class="btn btn-info" id="up_post">发&nbsp;表</button>

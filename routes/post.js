@@ -102,10 +102,22 @@ router.route("/plate/:id/:postId").get(function(req,res){
     res.render("post/post");
 });
 
-router.post('/plate/:id/:postId',function (req,res) {
-    console.log(req.params.postId);
+router.post('/docount',function (req,res) {
     result.user = req.session.user;
-   Reply.selectReplybyPostid([postId],function (err,rows) {
+    Reply.selectIsread([result.user.userName],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.count = rows.length;
+        res.send(result);
+    });
+});
+
+router.post('/dopost',function (req,res) {
+    result.user = req.session.user;
+    let postId = req.body.postId;
+    Post.selectPostbyId([postId],function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -116,10 +128,40 @@ router.post('/plate/:id/:postId',function (req,res) {
         } else {
             result.code = 1;
             result.text = '查询成功';
-            result.list = rows;
+            result.info = rows[0];
+        }
+    });
+   Reply.selectReplybyPostid([postId],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+       result.code = 1;
+       result.text = '查询成功';
+       result.list = rows;
+       res.send(result);
+    });
+});
+
+router.post('/upreply',function (req,res) {
+    let data = req.body;
+    data.replyTime = Util.currentTime();
+    console.log(data.replyTime);
+    Reply.insertReply([data.replyContent,data.replyPhoto,data.replyTime,data.replyFloor,data.replyState,data.postId,data.userNameF,data.userNameT],function (err,rows) {
+        console.log(rows);
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '未知错误,上传失败！';
+        } else {
+            result.text = '发表成功！';
             res.send(result);
         }
     });
 });
+
 
 module.exports = router;

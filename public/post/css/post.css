@@ -23,13 +23,25 @@
     height: 100px;
 }
 
-textarea {
+.z-textarea {
     max-width: 100%;
     min-width: 100%;
     min-height: 300px;
     max-height: 600px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+.z-lol-textarea {
+    max-width: calc(100% - 70px);
+    min-width: calc(100% - 70px);
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.z-lol-up {
+    float: right;
 }
 
 .input-group {
@@ -116,4 +128,17 @@ footer {
 
 .list-group .list-group-item .z-time {
     margin: 0;
+}
+
+
+#forreply {
+    padding: 0;
+}
+
+#forreply li {
+    list-style: none;
+}
+
+.dropdown-menu {
+    min-width: 100px;
 }

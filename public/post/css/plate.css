@@ -53,3 +53,7 @@ footer {
     border-bottom-left-radius: 3px;
     text-align: center;
 }
+
+.dropdown-menu {
+    min-width: 100px;
+}

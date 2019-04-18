@@ -21,18 +21,36 @@ function Reply(reply){
 }
 
 /**
+ * 评论
+ * @param arr
+ * @param callback
+ */
+Reply.insertReply = function(arr,callback) {
+    let insertSql = `insert into t_reply (replyContent,replyPhoto,replyTime,replyFloor,replyState,postId,userNameF,userNameT) values (?,?,?,?,?,?,?,?)`;
+    db.query(insertSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('insertPost err:' + err);
+            return;
+        }
+        console.log('insertPost success.');
+        callback(err,rows);
+    });
+};
+
+
+/**
  * 帖子的评论
  * @param arr
  * @param callback
  */
 Reply.selectReplybyPostid = function(arr,callback){
-    let selectSql = `SELECT * FROM t_reply WHERE postId= ? and replyState = 0 order by replyFloor DESC`;
+    let selectSql = `SELECT r.replyId,r.replyContent,r.replyPhoto,r.replyTime,r.replyFloor,r.replyState,r.postId,r.userNameF,r.userNameT,u.userPhoto FROM t_reply AS r,t_user AS u WHERE r.postId= ? and r.userNameF=u.userName and r.replyState = 0 order by r.replyId ASC`;
     db.query(selectSql,arr,function (err,rows,fields) {
         if (err){
-            console.log('selectReplyid err:' + err);
+            console.log('selectReplybyPostid err:' + err);
             return;
         }
-        console.log('selectReplyid success');
+        console.log('selectReplybyPostid success');
         callback(err,rows);
     });
 };
@@ -49,5 +67,22 @@ Reply.selectReplyLOL = function (arr,callback){
     });
 };
 
+/**
+ * 查询未读消息
+ * @param arr 用户名
+ * @param callback
+ */
+Reply.selectIsread = function(arr,callback){
+    let selectSql = `SELECT replyId FROM t_reply WHERE userNameT = ? and isRead = 0`;
+    db.query(selectSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('selectIsread err:' + err);
+            return;
+        }
+        console.log('selectIsread success');
+        console.log(rows.length);
+        callback(err,rows);
+    });
+};
 
 module.exports = Reply;

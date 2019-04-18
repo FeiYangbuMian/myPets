@@ -63,7 +63,7 @@ Post.insertPost = function (arr,callback){
  * @param callback
  */
 Post.selectPostbyId = function (arr,callback){
-    let selectSql = 'SELECT * FROM t_post where postId = ?';
+    let selectSql = 'SELECT p.postId,p.postTitle,p.postContent,p.postPhoto,p.postStart,p.postLimit,p.postReply,p.postLike,p.userName,p.plateId,u.userPhoto FROM t_post as p,t_user as u where p.postId = ? and p.userName = u.userName';
     db.query(selectSql,arr,function (err,rows,fields) {
         if (err){
             console.log('selectPostbyId err:' + err);

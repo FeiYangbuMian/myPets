@@ -32,15 +32,14 @@
                 <li data-plate="1006"><a>两栖爬行</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">消息</a></li>
+                <li><a href="/client/unread">消息<span class="badge" id="count">42</span></a></li>
                 <li class="dropdown">
                     <a href="#" id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="foruser">肥羊不绵 </span><span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="#">个人信息</a></li>
-                        <li><a href="#">个人帖子</a></li>
-                        <li><a href="#">Something</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">退出</a></li>
+                        <li><a href="/client/myinfo">我的信息</a></li>
+                        <li><a href="/client/mypost">我的发帖</a></li>
+                        <li><a href="/client/myreply">我的回帖</a></li>
+                        <li><a href="/client/logout">退出系统</a></li>
                     </ul>
                 </li>
             </ul>
@@ -117,8 +116,9 @@
         <textarea title="发帖内容" id="postContent" ></textarea>
     </div>
     <div class="form-group">
-        <input type="file" id="postPhoto" />
+        <input type="file" id="postPhoto" multiple="multiple" />
         <p class="help-block">注：仅支持.jpg .png格式。</p>
+        <ul id="content"></ul>
     </div>
     <div class="form-group">
         <button class="btn btn-info" id="up_post">发&nbsp;表</button>

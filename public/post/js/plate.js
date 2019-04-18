@@ -16,6 +16,7 @@ window.onload = function () {
     plateId = parseInt(href.slice(-4));
     console.log(plateId);
 
+    docount();
     doplate(plateId);
     $('body').on('click','a',function (e) {
         e.preventDefault();
@@ -44,6 +45,19 @@ window.onload = function () {
         let postId = $(this).attr('data-id');
         window.location.href = `/post/plate/${plateId}/${postId}`;
     });
+
+   /* let postPhoto = document.getElementById('postPhoto');
+    postPhoto.addEventListener('change', function() {
+        let t_files = this.files;
+        console.log(t_files);
+        var str = '';
+        for (let i = 0, len = t_files.length; i < len; i++) {
+            console.log(t_files[i]);
+            str += '<li>名称：' + t_files[i].name + '大小' + t_files[i].size / 1024 + 'KB</li>';
+        }
+        document.getElementById('content').appendChild(str);
+    }, false);*/
+
 
 };
 
@@ -95,9 +109,26 @@ function uppost(data) {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                console.log(result);
                 doplate(plateId);
                 $('input,textarea').val('');
+            }
+        }
+    });
+}
+
+/**
+ * 未读消息数目
+ */
+function docount() {
+    $.ajax({
+        url: `/post/docount`,
+        type: 'post',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                $('#count').text(result.count);
             }
         }
     });
