@@ -73,13 +73,31 @@ Reply.selectReplyLOL = function (arr,callback){
  * @param callback
  */
 Reply.selectIsread = function(arr,callback){
-    let selectSql = `SELECT replyId FROM t_reply WHERE userNameT = ? and isRead = 0`;
+    let selectSql = `SELECT * FROM t_reply WHERE userNameT = ? and isRead = 0`;
     db.query(selectSql,arr,function (err,rows,fields) {
         if (err){
             console.log('selectIsread err:' + err);
             return;
         }
         console.log('selectIsread success');
+        console.log(rows.length);
+        callback(err,rows);
+    });
+};
+
+/**
+ * 查询我的回复
+ * @param arr 用户名
+ * @param callback
+ */
+Reply.selectMyreply = function(arr,callback){
+    let selectSql = `SELECT * FROM t_reply WHERE userNameF = ?`;
+    db.query(selectSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('selectMyreply err:' + err);
+            return;
+        }
+        console.log('selectMyreply success');
         console.log(rows.length);
         callback(err,rows);
     });

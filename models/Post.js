@@ -75,20 +75,21 @@ Post.selectPostbyId = function (arr,callback){
 };
 
 /**
- * 根据用户名查询帖子，我的帖子模块使用
+ * 根据用户名查询帖子，我的发帖
  * @param arr [用户名]
  * @param callback
  */
 Post.selectPostbyUsername = function (arr,callback){
-    let selectSql = 'SELECT * FROM t_post where userName = ? order by postId DESC';
+    let selectSql = 'SELECT pl.plateId,pl.plateName,po.postId,po.postTitle,po.postStart,po.postReply FROM t_post AS po,t_plate AS pl where po.userName = ? and po.plateId = pl.plateId order by po.postId DESC';
     db.query(selectSql,arr,function (err,rows,fields) {
         if (err){
-            console.log('selectPostbyId err:' + err);
+            console.log('selectPostbyUsername err:' + err);
             return;
         }
-        console.log('selectPostbyId success.');
+        console.log('selectPostbyUsername success.');
         callback(err,rows);
     });
 };
+
 
 module.exports = Post;

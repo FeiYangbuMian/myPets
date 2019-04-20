@@ -1,10 +1,142 @@
+<!--
+作者：张慧珍
+创建时间：2019-04-19
+版本：[1.0,2019-02-20]
+版权：@肥羊不绵
+描述：
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/client/css/userinfo.css" />
+    <title>个人中心</title>
 </head>
 <body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">萌宠战记</a>
+        </div>
 
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">肥羊不绵</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="col-xs-2 hidden-xs hidden-sm left">
+        <!--<div id="left-top">
+            <img src="../../public/image/userPhoto/user_default.jpg" class="img-thumbnail" alt="">
+            <h4>ID：肥羊不肥羊不绵</h4>
+            <span>年龄：<span>22岁</span></span><br/>
+            <span>城市：<span>江苏省淮安市</span></span>
+        </div>
+        <hr />-->
+        <div class="list-group">
+            <!--<a class="list-group-item" href="#basic">首页</a>-->
+            <a class="list-group-item" href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
+            <a class="list-group-item" href="#formypost"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
+            <a class="list-group-item" href="#project"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
+            <a class="list-group-item" href="#education"><span class="glyphicon glyphicon-comment"></span>&nbsp;回复我的</a>
+        </div>
+    </div>
+    <div class="col-xs-10 right">
+        <!-- 个人信息 -->
+        <ul class="list-group" id="formyinfo">
+            <li class="list-group-item">
+                <span class="text-muted">用户头像：</span>
+                <span class="text-info"><img src="../../public/image/userPhoto/user_default.jpg" class="img-thumbnail" alt=""></span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">所绑邮箱：</span>
+                <span class="text-info">320801223@qq.com</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">用户昵称：</span>
+                <span class="text-info">肥羊不绵</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">出生年月：</span>
+                <div class="modify">
+                    <span class="text-info">1997-04-09</span>
+                    <a class="pull-right text-primary onmodify">修改</a>
+                </div>
+                <div class="confirm hidden">
+                    <input type="text"  id="userBrith" name="userBrith" />
+                    <a class="text-primary onconfirm"> 确认</a>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">所在城市：</span>
+                <div class="modify">
+                    <span class="text-info">江苏省 淮安市</span>
+                    <a class="pull-right text-primary onmodify">修改</a>
+                </div>
+                <div class="confirm hidden">
+                    <input type="text"  id="userArea" name="userArea" />
+                    <a class="text-primary onconfirm"> 确认</a>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">申请时间：</span>
+                <span class="text-info">2019-02-03 12:23:34</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">用户状态：</span>
+                <span class="text-info">正常</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Q Q 号：</span>
+                <div class="modify hidden">
+                    <span class="text-info"></span>
+                    <a class="pull-right text-primary onmodify">修改</a>
+                </div>
+                <div class="confirm ">
+                    <input type="text"  id="userQQ" name="userQQ" />
+                    <a class="text-primary onconfirm"> 确认</a>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">微 信 号：</span>
+                <div class="modify hidden">
+                    <span class="text-info"></span>
+                    <a class="pull-right text-primary onmodify">修改</a>
+                </div>
+                <div class="confirm">
+                    <input type="text"  id="userWechat" name="userWechat" />
+                    <a class="text-primary onconfirm"> 确认</a>
+                </div>
+            </li>
+        </ul>
+
+        <!-- 我的发帖 -->
+        <ul class="list-group hidden" id="formypost">
+            <li class="list-group-item">
+                在<a href=""> 猫类 </a>发帖 <a href="" > 帖子标题 </a> 回复(5)
+                <span class="pull-right">2019-4-28 23:23:23</span>
+            </li>
+            <li class="list-group-item">
+                在<a href=""> 猫类 </a>发帖 <a href="" > 帖子标题 </a> 回复(5)
+                <span class="pull-right">2019-4-28 23:23:23</span>
+            </li>
+            <li class="list-group-item">
+                在<a href=""> 猫类 </a>发帖 <a href="" > 帖子标题 </a> 回复(5)
+                <span class="pull-right">2019-4-28 23:23:23</span>
+            </li>
+            <li class="list-group-item">
+                在<a href=""> 猫类 </a>发帖 <a href="" > 帖子标题 </a> 回复(5)
+                <span class="pull-right">2019-4-28 23:23:23</span>
+            </li>
+        </ul>
+    </div>
+</div>
 </body>
+<script src="../../node_modules/jquery/src/jquery.js"></script>
+<script src="../../public/client/js/userinfo.js"></script>
 </html>

@@ -1,0 +1,146 @@
+<!--
+作者：张慧珍
+创建时间：2019-04-19
+版本：[1.0,2019-02-20]
+版权：@肥羊不绵
+描述：
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/userinfo.css" />
+    <title>个人中心</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">萌宠战记</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">肥羊不绵</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="col-xs-2 hidden-xs hidden-sm left">
+        <div class="list-group">
+            <a class="list-group-item" href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
+            <a class="list-group-item" href="#formypost"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
+            <a class="list-group-item" href="#project"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
+            <a class="list-group-item" href="#education"><span class="glyphicon glyphicon-comment"></span>&nbsp;回复我的</a>
+        </div>
+    </div>
+    <div class="col-xs-10 right">
+        <!-- 个人信息 -->
+        <ul class="list-group" id="formyinfo">
+        </ul>
+
+        <!-- 我的发帖 -->
+        <ul class="list-group hidden" id="formypost">
+        </ul>
+    </div>
+</div>
+</body>
+
+<!-- 模板 我的信息 -->
+<script type="text/template" id="tem-myinfo" >
+    <li class="list-group-item forphoto">
+        <span class="text-muted">用户头像：</span>
+        <span class="text-info"><img src="/image/userPhoto/{{userPhoto}}" class="img-thumbnail" alt=""></span>
+        <a class="text-primary onmodify">修改</a>
+    </li>
+    <li class="list-group-item">
+        <span class="text-muted">所绑邮箱：</span>
+        <span class="text-info">{{userEmail}}</span>
+    </li>
+    <li class="list-group-item">
+        <span class="text-muted">用户昵称：</span>
+        <span class="text-info">{{userName}}</span>
+    </li>
+    <li class="list-group-item forbrith">
+        <span class="text-muted">出生年月：</span>
+        <div class="modify">
+            <span class="text-info">{{userBrith}}</span>
+            <a class="pull-right text-primary onmodify">修改</a>
+        </div>
+        <div class="confirm hidden">
+            <input type="text"  id="userBrith" name="userBrith"  readonly="readonly" data-provide="datepicker"  title="" />
+            <button class="text-primary onconfirm"> 确认</button>
+        </div>
+    </li>
+    <li class="list-group-item forarea">
+        <span class="text-muted">所在城市：</span>
+        <div class="modify">
+            <span class="text-info">{{userArea}}</span>
+            <a class="pull-right text-primary onmodify">修改</a>
+        </div>
+        <div class="confirm hidden">
+            <div data-toggle="distpicker" class="z-inline">
+                <select  name="province" id="province" title="省"></select>
+                <select name="city" id="city" title="市"></select>
+            </div>
+            <button class="text-primary onconfirm"> 确认</button>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <span class="text-muted">申请时间：</span>
+        <span class="text-info">{{userStart}}</span>
+    </li>
+    <li class="list-group-item">
+        <span class="text-muted">用户状态：</span>
+        <span class="text-info">正常</span>
+    </li>
+    <li class="list-group-item forqq">
+        <span class="text-muted">Q Q 号：</span>
+        <div class="modify">
+            <span class="text-info">{{userQQ}}</span>
+            <a class="pull-right text-primary onmodify">修改</a>
+        </div>
+        <div class="confirm hidden">
+            <input type="text"  id="userQQ" name="userQQ"  title=""/>
+            <button class="text-primary onconfirm"> 确认</button>
+        </div>
+    </li>
+    <li class="list-group-item forwechat">
+        <span class="text-muted">微 信 号：</span>
+        <div class="modify">
+            <span class="text-info">{{userWechat}}</span>
+            <a class="pull-right text-primary onmodify">修改</a>
+        </div>
+        <div class="confirm hidden">
+            <input type="text"  id="userWechat" name="userWechat"  title=""/>
+            <button class="text-primary onconfirm"> 确认</button>
+        </div>
+    </li>
+</script>
+
+<!-- 模板 我的发帖 -->
+<script type="text/template" id="tem-mypost">
+    <li class="list-group-item">
+        在<a href="/post/plate/{{plateId}}"> {{plateName}} </a>发帖 <a href="/post/plate/{{plateId}}/{{postId}}" > {{postTitle}} </a> 回复({{postReply}})
+    <span class="pull-right">{{postStart}}</span>
+    </li>
+</script>
+
+
+
+
+<script src="/js/jquery.js" charset="utf-8"></script>
+<script src="/js/bootstrap.js" charset="utf-8"></script>
+
+<script src="/client/js/bootstrap-datepicker.js" charset="utf-8"></script>
+<script src="/client/js/distpicker.data.js" charset="utf-8"></script>
+<script src="/client/js/distpicker.js" charset="utf-8"></script>
+<script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
+<script src="/client/js/userinfo.js" charset="utf-8"></script>
+
+</html>

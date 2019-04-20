@@ -23,15 +23,14 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">消息</a></li>
+                <li><a href="/client/unread">消息<span class="badge" id="count">42</span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">肥羊不绵 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">个人中心</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">退出</a></li>
+                    <a href="#" id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="foruser">肥羊不绵 </span><span class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li><a href="/client/myinfo">我的信息</a></li>
+                        <li><a href="/client/mypost">我的发帖</a></li>
+                        <li><a href="/client/myreply">我的回帖</a></li>
+                        <li><a href="/client/logout">退出系统</a></li>
                     </ul>
                 </li>
             </ul>

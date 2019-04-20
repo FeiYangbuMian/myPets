@@ -8,12 +8,18 @@ const config = require('../middleware/config');
 const mail = require('../middleware/mail');
 const Util = require('../middleware/util');
 const User = require('../models/User');
+const Post = require('../models/Post');
+const Reply = require('../models/Reply');
 
 let router = express.Router();
 
 let userName = '肥羊不绵';
 
-let result={};
+let result={
+    code: 1,
+    text:'成功',
+    user:{}
+};
 
 let form = new formidable.IncomingForm();
 form.encoding = 'utf-8';
@@ -283,13 +289,74 @@ router.get('/docode2',function (req,res,next) {
 
 
 
+router.route("/userinfo").get(function(req,res){
+    res.render("client/userinfo");
+});
 
 
+router.post('/userinfo',function (req,res) {
+    let userName = req.session.user.userName;
+    console.log('userName:'+userName);
+    User.selectUserbyName(userName,function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.user = rows[0];
+    });
+    Post.selectPostbyUsername([userName],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.mypostcode = 1;
+        result.text = '查询帖子成功';
+        result.mypost = rows;
+        result.mypostlen = rows.length;
+    });
+    Reply.selectMyreply([userName],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.myreplycode = 1;
+        result.text = '查询帖子成功';
+        result.myreply = rows;
+        result.myreplylen = rows.length;
+    });
+    Reply.selectIsread([userName],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.replymecode = 1;
+        result.text = '查询帖子成功';
+        result.replyme = rows;
+        result.replymelen = rows.length;
+        res.send(result);
+    });
+});
 
-
-
-
-
+router.post('/domodify',function (req,res) {
+    console.log(req.body);
+    let data = req.body;
+    console.log(data);
+    User.updateUserExtra([data.userBrith,data.userArea,data.userQQ,data.userWechat,data.userName],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '修改失败';
+            res.send(result);
+            return;
+        }
+        result.code = 1;
+        result.text = '';
+        res.send(result);
+    })
+});
 
 
 

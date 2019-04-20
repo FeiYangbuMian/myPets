@@ -132,7 +132,7 @@ User.updateUserphoto = function (arr,callback){
 };
 
 /**
- * 修改基本信息
+ * 修改基本信息 注册第二步
  * @param arr [用户名，出生日，所在地，用户邮箱]
  * @param callback
  */
@@ -158,6 +158,24 @@ User.selectUserphoto = function (arr,callback){
             return;
         }
         console.log('selectUserphoto success');
+        callback(err,rows);
+    });
+};
+
+/**
+ * 个人信息 修改
+ * @param arr
+ * @param callback
+ */
+User.updateUserExtra = function (arr,callback){
+    console.log(arr);
+    let uploadSql = `update t_user set userBrith=?,userArea=?,userQQ=?,userWechat=? where userName= ? `;
+    db.query(uploadSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('updateUserExtra error:' + err);
+            return;
+        }
+        console.log('updateUserExtra success');
         callback(err,rows);
     });
 };

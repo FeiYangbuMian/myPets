@@ -18,9 +18,9 @@ window.onload = function () {
 
     docount();
     doplate(plateId);
-    $('body').on('click','a',function (e) {
+    /*$('body').on('click','a',function (e) {
         e.preventDefault();
-    });
+    });*/
 
     $('#toplate').on('click','li',function () {
         $(this).addClass('active').siblings().removeClass('active');

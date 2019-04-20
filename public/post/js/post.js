@@ -126,6 +126,7 @@ function docount() {
     $.ajax({
         url: `/post/docount`,
         type: 'post',
+        contentType: 'application/json;charset=UTF-8',
         success:function (result) {
             console.log(result);
             if (result.code === 0){

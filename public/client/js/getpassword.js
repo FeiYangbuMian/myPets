@@ -7,10 +7,10 @@
  * */
 "use strict";
 
-let useremail = document.getElementById('useremail'),
+let userEmail = document.getElementById('userEmail'),
     btn_vcode = document.getElementById('btn_vcode'),
     vcode = document.getElementById('vcode'),
-    userpwd = document.getElementById('userpwd'),
+    userPwd = document.getElementById('userPwd'),
     userpwd1 = document.getElementById('userpwd1'),
     btn_to_login = document.getElementById('btn_to_login'),
     to_login = document.getElementById('to_login');
@@ -26,7 +26,7 @@ $('.z-inline').on('mouseover','span',function () {
 
 btn_vcode.addEventListener('click',function () {
     let reg =  /^(\w)+([-.]\w+)*@(\w)+((\.\w{2,4}){1,3})$/;
-    if (!reg.test(useremail.value)) {
+    if (!reg.test(userEmail.value)) {
         alert('邮箱格式不正确！');
         return;
     }
@@ -34,7 +34,7 @@ btn_vcode.addEventListener('click',function () {
         url: '/client/docode2',
         type: 'get',
         data:{
-            useremail: useremail.value
+            userEmail: userEmail.value
         },
         dataType: 'json',
     }).
@@ -49,7 +49,7 @@ btn_vcode.addEventListener('click',function () {
 });
 
 let allValue = function (){
-    if (useremail.value && vcode.value && userpwd.value && userpwd1.value) {
+    if (userEmail.value && vcode.value && userPwd.value && userpwd1.value) {
         btn_to_login.removeAttribute('disabled');
     } else {
         btn_to_login.setAttribute('disabled','disabled');
@@ -67,13 +67,13 @@ btn_to_login.addEventListener('click',function () {
         alert('验证码错误');
         return;
     }
-    if (userpwd.value !== userpwd1.value) {
+    if (userPwd.value !== userpwd1.value) {
         alert('两次密码不一致');
         return;
     }
     let data = {
-        userpwd: userpwd.value,
-        useremail: useremail.value
+        userPwd: userPwd.value,
+        userEmail: userEmail.value
     };
     console.log(JSON.stringify(data));
 
