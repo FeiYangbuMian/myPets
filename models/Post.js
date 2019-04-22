@@ -75,7 +75,7 @@ Post.selectPostbyId = function (arr,callback){
 };
 
 /**
- * 根据用户名查询帖子，我的发帖
+ * 根据用户名查询帖子 ——> 我的发帖
  * @param arr [用户名]
  * @param callback
  */
@@ -87,6 +87,38 @@ Post.selectPostbyUsername = function (arr,callback){
             return;
         }
         console.log('selectPostbyUsername success.');
+        callback(err,rows);
+    });
+};
+/**
+ * 根据回复数降序查询
+ * @param arr
+ * @param callback
+ */
+Post.sortPostbyReply = function(arr,callback){
+    let selectSql = `SELECT * FROM t_post where plateId = ? order by postReply DESC`;
+    db.query(selectSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('sortPostbyReply err:' + err);
+            return;
+        }
+        console.log('sortPostbyReply success.');
+        callback(err,rows);
+    });
+};
+/**
+ * 回复数增加
+ * @param arr
+ * @param callback
+ */
+Post.updatePostreply = function(arr,callback){
+    let uploadSql = `update t_post set postReply=? where postId= ? `;
+    db.query(uploadSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('updatePostreply error:' + err);
+            return;
+        }
+        console.log('updatePostreply success');
         callback(err,rows);
     });
 };

@@ -23,14 +23,14 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/client/userinfo/">消息(<span id="count">42</span>)</a></li>
+                <li><a href="/client/userinfo?type=4">消息(<span id="count">42</span>)</a></li>
                 <li class="dropdown">
                     <a href="#" id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="foruser">肥羊不绵 </span><span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="/client/userinfo">我的信息</a></li>
-                        <li><a href="/client/userinfo/mypost">我的发帖</a></li>
-                        <li><a href="/client/userinfo/myreply">我的回帖</a></li>
-                        <li><a href="/client/userinfo/logout">退出系统</a></li>
+                        <li><a href="/client/userinfo?type=1">我的信息</a></li>
+                        <li><a href="/client/userinfo?type=2">我的发帖</a></li>
+                        <li><a href="/client/userinfo?type=3">我的回帖</a></li>
+                        <li><a href="/client/logout">退出系统</a></li>
                     </ul>
                 </li>
             </ul>
@@ -61,23 +61,23 @@
 <script type="text/template" id="tem-post" >
     <div class="panel panel-info">
         <div class="panel-heading">
-            {{info.postTitle}}
+            {{postTitle}}
             <span class="pull-right"><a href="#up_reply"><i class="glyphicon glyphicon-edit"></i> 回复</a></span>
         </div>
         <div class="panel-body clearfix">
             <div class="pull-left col-md-2 col-lg-2 z-user">
-                <img src="/image/userPhoto/{{info.userPhoto}}" class="z-user-img img-thumbnail" id="userPhoto" />
-                <p class="text-info">[发帖者]{{info.userName}}</p>
+                <img src="/image/userPhoto/{{userPhoto}}" class="z-user-img img-thumbnail" id="userPhoto" />
+                <p class="text-info">[发帖者]{{userName}}</p>
             </div>
             <div class="pull-left col-md-10 col-lg-10 z-post">
-                {{info.postContent}}
+                {{postContent}}
                 <div class="z-post-imgs" >
                     <!--<img src="../../public/image/img_cat.jpg">
                     <img src="../../public/image/img_cat.jpg">
                     <img src="../../public/image/img_cat.jpg">-->
                 </div>
                 <p class="z-time">
-                    <span class="text-muted">{{info.postStart}} </span>
+                    <span class="text-muted">{{postStart}} </span>
                 </p>
             </div>
         </div>

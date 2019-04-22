@@ -18,9 +18,21 @@ window.onload = function () {
 
     docount();
     doplate(plateId);
-    /*$('body').on('click','a',function (e) {
+    dosort(plateId,'/post/dosort1');
+    $('.sort').on('click','li',function (e) {
         e.preventDefault();
-    });*/
+        $(this).addClass('active').siblings().removeClass('active');
+        let type = $(this).attr('data-type');
+        console.log(type);
+        switch (type) {
+            case '1':
+                dosort(plateId,'/post/dosort1');
+                break;
+            case '2':
+                dosort(plateId,'/post/dosort2');
+                break;
+        }
+    });
 
     $('#toplate').on('click','li',function () {
         $(this).addClass('active').siblings().removeClass('active');
@@ -46,6 +58,8 @@ window.onload = function () {
         window.location.href = `/post/plate/${plateId}/${postId}`;
     });
 
+
+
    /* let postPhoto = document.getElementById('postPhoto');
     postPhoto.addEventListener('change', function() {
         let t_files = this.files;
@@ -61,6 +75,10 @@ window.onload = function () {
 
 };
 
+/**
+ *
+ * @param plateId
+ */
 function doplate(plateId) {
     $.ajax({
         url: `/post/doplate`,
@@ -83,13 +101,6 @@ function doplate(plateId) {
                 document.title = `萌宠战记-${info.plateName}`;
                 $('#plateName').text(`#${info.plateName}`);
 
-                let list = result.list;
-
-                let tem2 = $('#tem-list').html();
-                $.each(list,function (k,v) {
-                    let out = Mustache.render(tem2,v);
-                    $('#forlist').append(out);
-                });
                 userName = result.user.userName;
                 $('#foruser').text(userName);
             }
@@ -97,6 +108,37 @@ function doplate(plateId) {
     });
 }
 
+function dosort(plateId,url) {
+    $.ajax({
+        url: url,
+        type: 'post',
+        data:JSON.stringify({
+            'plateId':plateId
+        }),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                $('#forlist').html('');
+                let list = result.list;
+                let tem2 = $('#tem-list').html();
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem2,v);
+                    $('#forlist').append(out);
+                });
+            }
+        }
+    });
+}
+
+
+/**
+ * 发帖
+ * @param data
+ */
 function uppost(data) {
     $.ajax({
         url: `/post/uppost`,

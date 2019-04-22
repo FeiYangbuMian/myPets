@@ -33,19 +33,27 @@
 <div class="container">
     <div class="col-xs-2 hidden-xs hidden-sm left">
         <div class="list-group">
-            <a class="list-group-item" href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
-            <a class="list-group-item" href="#formypost"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
-            <a class="list-group-item" href="#project"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
-            <a class="list-group-item" href="#education"><span class="glyphicon glyphicon-comment"></span>&nbsp;回复我的</a>
+            <a class="list-group-item" data-toggle="tab" href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
+            <a class="list-group-item" data-toggle="tab" href="#formypost"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
+            <a class="list-group-item" data-toggle="tab" href="#formyreply"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
+            <a class="list-group-item" data-toggle="tab" href="#forreplyme"><span class="glyphicon glyphicon-comment"></span>&nbsp;未读消息</a>
         </div>
     </div>
-    <div class="col-xs-10 right">
+    <div class="col-xs-10 right tab-content">
         <!-- 个人信息 -->
-        <ul class="list-group" id="formyinfo">
+        <ul class="list-group tab-pane" id="formyinfo">
         </ul>
 
         <!-- 我的发帖 -->
-        <ul class="list-group hidden" id="formypost">
+        <ul class="list-group tab-pane" id="formypost">
+        </ul>
+
+        <!-- 我的回帖 -->
+        <ul class="list-group tab-pane" id="formyreply">
+        </ul>
+
+        <!-- 未读回复 -->
+        <ul class="list-group tab-pane" id="forreplyme">
         </ul>
     </div>
 </div>
@@ -55,8 +63,12 @@
 <script type="text/template" id="tem-myinfo" >
     <li class="list-group-item forphoto">
         <span class="text-muted">用户头像：</span>
-        <span class="text-info"><img src="/image/userPhoto/{{userPhoto}}" class="img-thumbnail" alt=""></span>
-        <a class="text-primary onmodify">修改</a>
+        <span class="text-info"><img src="/image/userPhoto/{{userPhoto}}" class="img-thumbnail" alt="" id="photo"></span>
+        <a class="pull-right text-primary onmodify">修改</a>
+        <form  method="post" class="z-inline pull-right" enctype="multipart/form-data" name="picForm">
+            <input type="file" id="userPhoto" title="点击修改头像" name="userPhoto" class="pull-right z-forphoto" />
+            <input type="hidden" name="userEmail" value="{{userEmail}}" />
+        </form>
     </li>
     <li class="list-group-item">
         <span class="text-muted">所绑邮箱：</span>
@@ -125,14 +137,37 @@
 
 <!-- 模板 我的发帖 -->
 <script type="text/template" id="tem-mypost">
-    <li class="list-group-item">
+    <li class="list-group-item" data-id="{{postId}}">
         在<a href="/post/plate/{{plateId}}"> {{plateName}} </a>发帖 <a href="/post/plate/{{plateId}}/{{postId}}" > {{postTitle}} </a> 回复({{postReply}})
     <span class="pull-right">{{postStart}}</span>
     </li>
 </script>
 
+<!-- 模板 我的回帖 -->
+<script type="text/template" id="tem-myreply">
+    <li class="list-group-item" data-id="{{replyId}}">
+        <span class="text-primary">{{userNameF}}</span> 回复 <span class="text-primary">{{userNameT}}</span>:<span class="pull-right">{{replyTime}}</span>
+        <p class="text-info ">{{replyContent}}</p>
+        <div class="z-reply-from">
+            <a href="/post/plate/{{plateId}}/{{postId}}"> {{postTitle}} </a> 来自 <a href="/post/plate/{{plateId}}"> {{plateName}}</a>
+        </div>
+    </li>
+</script>
 
-
+<!-- 模板 未读消息 -->
+<script type="text/template" id="tem-replyme">
+    <li class="list-group-item" data-id="{{replyId}}" data-floor="{{replyFloor}}" data-url="/post/plate/{{plateId}}/{{postId}}?floor={{replyFloor}}">
+        <div>
+            <span class="text-primary">{{userNameF}}：</span>
+            <span class="text-primary">{{replyContent}}</span>
+            <span class="pull-right">{{replyTime}}</span>
+        </div>
+        <div>
+            <span>回复我的帖子：“ <span class="text-info">{{postTitle}}</span></span> ” >
+            <span class="text-info"> {{plateName}}</span>
+        </div>
+    </li>
+</script>
 
 <script src="/js/jquery.js" charset="utf-8"></script>
 <script src="/js/bootstrap.js" charset="utf-8"></script>

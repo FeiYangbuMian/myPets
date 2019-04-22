@@ -65,9 +65,31 @@ router.post('/doplate',function (req,res) {
             result.code = 1;
             result.text = '查询成功';
             result.info = rows[0];
+            res.send(result);
         }
     });
+});
+
+router.post('/dosort1',function (req,res) {
+    console.log(req.body);
+    result.user = req.session.user;
+    let plateId = req.body.plateId;
+    console.log(plateId);
     Post.selectPostbyPlateid([plateId],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.list = rows;
+        res.send(result);
+    });
+});
+router.post('/dosort2',function (req,res) {
+    console.log(req.body);
+    result.user = req.session.user;
+    let plateId = req.body.plateId;
+    console.log(plateId);
+    Post.sortPostbyReply([plateId],function (err,rows) {
         if (err) {
             res.render('error');
             return;
@@ -148,7 +170,6 @@ router.post('/upreply',function (req,res) {
     data.replyTime = Util.currentTime();
     console.log(data.replyTime);
     Reply.insertReply([data.replyContent,data.replyPhoto,data.replyTime,data.replyFloor,data.replyState,data.postId,data.userNameF,data.userNameT],function (err,rows) {
-        console.log(rows);
         if (err) {
             res.render('error');
             return;
@@ -158,10 +179,34 @@ router.post('/upreply',function (req,res) {
             result.text = '未知错误,上传失败！';
         } else {
             result.text = '发表成功！';
+        }
+    });
+    Post.updatePostreply([data.postReply,data.postId],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '回复数增加失败！';
+        } else {
             res.send(result);
         }
     });
 });
 
+
+router.post('/doread',function (req,res) {
+    let replyId = req.body.replyId;
+    Reply.updateIsread([replyId],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.code=1;
+        result.text = '已读！';
+        res.send(result);
+    });
+});
 
 module.exports = router;

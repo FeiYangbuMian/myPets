@@ -32,23 +32,6 @@ window.onload = function () {
 
 
 $('#plates').on('click','.thumbnail',function () {
-    let plateid = $(this).attr('id');
-    // $.ajax({
-    //     url: `/post/doplate`,
-    //     type: 'get',
-    //     data:JSON.stringify({
-    //         'plateid':plateid
-    //     }),
-    //     dataType: 'json',
-    //     contentType: 'application/json;charset=UTF-8',
-    //     success:function (result) {
-    //         console.log(result);
-    //         if (result.code === 0){
-    //             alert(result.text);
-    //         } else {
-    //             window.location.href=`/post/plate/${plateid}`;
-    //         }
-    //     }
-    // });
-     window.location.href = `/post/plate/${plateid}`;
+    let plateId = $(this).attr('id');
+     window.location.href = `/post/plate/${plateId}`;
 });

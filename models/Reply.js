@@ -73,7 +73,7 @@ Reply.selectReplyLOL = function (arr,callback){
  * @param callback
  */
 Reply.selectIsread = function(arr,callback){
-    let selectSql = `SELECT * FROM t_reply WHERE userNameT = ? and isRead = 0`;
+    let selectSql = `SELECT r.replyId,r.postId,r.userNameF,r.replyContent,r.replyTime,r.replyFloor,p.postTitle,p.plateId,pl.plateName FROM t_reply AS r,t_post AS p,t_plate AS pl WHERE r.userNameT = ? and r.isRead = 0 and r.postId = p.postId and p.plateId = pl.plateId`;
     db.query(selectSql,arr,function (err,rows,fields) {
         if (err){
             console.log('selectIsread err:' + err);
@@ -99,6 +99,23 @@ Reply.selectMyreply = function(arr,callback){
         }
         console.log('selectMyreply success');
         console.log(rows.length);
+        callback(err,rows);
+    });
+};
+
+/**
+ * 未读==>已读
+ * @param arr 回复ID
+ * @param callback
+ */
+Reply.updateIsread = function(arr,callback){
+    let uploadSql = `update t_reply set isRead=1 where replyId= ? `;
+    db.query(uploadSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('updateIsread error:' + err);
+            return;
+        }
+        console.log('updateIsread success');
         callback(err,rows);
     });
 };

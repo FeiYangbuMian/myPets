@@ -44,7 +44,10 @@ $('body').on('input','input',function () {
     if(!(objType === '.jpg'||objType === '.png')){
         alert("请上传jpg、png类型图片");
         return false;
-    }else{
+    } else if(objSize>1024*1024*3){
+        alert("上传的图片过大，请在3M以内。");
+        return false;
+    } else {
         $.ajax({
             type : 'post',
             url : '/client/dophoto',

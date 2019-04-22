@@ -11,7 +11,7 @@ let postId = '',
     userName='',
     userNameT = '',
     userPhoto='';
-let replyFloor = 0;
+let replyFloor,postReply;
 
 window.onload = function () {
     let href = window.location.href;
@@ -27,6 +27,7 @@ window.onload = function () {
         data.replyPhoto = '';
         data.replyTime = '';
         data.replyFloor = replyFloor + 1; //楼层
+        data.postReply = postReply + 1;
         data.replyState = 0; //0评论 1楼中楼
         data.postId = postId;
         data.userNameF = userName;
@@ -42,7 +43,8 @@ window.onload = function () {
         data.replyPhoto = '';
         data.replyTime = '';
         data.replyFloor = replyFloor; //楼层
-        data.replyState = 0; //0评论 1楼中楼
+        data.postReply = postReply + 1;
+        data.replyState = 1; //0评论 1楼中楼
         data.postId = postId;
         data.userNameF = userName;
         data.userNameT = userNameT;
@@ -69,11 +71,12 @@ function dopost(postId) {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                let info = result;
+                let info = result.info;
                 let tem = $('#tem-post').html();
                 let out = Mustache.render(tem,info);
                 $('#forpost').html(out);
                 userNameT = info.userName;
+                postReply = info.postReply;
                // document.title = `萌宠战记-${info.plateName}`;
 
                 $('#forreply').html('');

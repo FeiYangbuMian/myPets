@@ -51,7 +51,6 @@ router.post('/dologin',function (req,res) {
             res.send(result);
             return;
         }
-        req.session.user = rows[0];
         User.selectUser([userName,userPwd],function (err,rows) {
             if (rows.length === 0) {
                 result.code = 0;
@@ -61,7 +60,9 @@ router.post('/dologin',function (req,res) {
             }
             result.code = 1;
             result.text = '';
+            req.session.user = rows[0];
             result.userName = userName;
+            result.user = rows[0];
             res.send(result);
         });
     });
@@ -164,7 +165,6 @@ router.post('/dophoto',function (req,res,next) {
                         res.send(result);
                         return;
                     }
-                    console.log(rows);
                     result.code = 1;
                     result.text = ''
                     result.data = newfilename;
@@ -294,48 +294,63 @@ router.route("/userinfo").get(function(req,res){
 });
 
 
-router.post('/userinfo',function (req,res) {
+router.post('/myinfo',function (req,res) {
     let userName = req.session.user.userName;
-    console.log('userName:'+userName);
-    User.selectUserbyName(userName,function (err,rows) {
+    User.selectUserbyName(userName, function (err, rows) {
         if (err) {
             res.render('error');
             return;
         }
+        result.code = 1;
+        result.text = '我的信息查询成功';
         result.user = rows[0];
+        res.send(result);
     });
+});
+router.post('/mypost',function (req,res) {
+    let userName = req.session.user.userName;
     Post.selectPostbyUsername([userName],function (err,rows) {
         if (err) {
             res.render('error');
             return;
         }
-        result.mypostcode = 1;
-        result.text = '查询帖子成功';
-        result.mypost = rows;
-        result.mypostlen = rows.length;
+        result.code = 1;
+        result.text = '我的帖子查询成功';
+        result.list = rows;
+        result.length = rows.length;
+        res.send(result);
     });
+});
+router.post('/myreply',function (req,res) {
+    let userName = req.session.user.userName;
     Reply.selectMyreply([userName],function (err,rows) {
         if (err) {
             res.render('error');
             return;
         }
-        result.myreplycode = 1;
-        result.text = '查询帖子成功';
-        result.myreply = rows;
-        result.myreplylen = rows.length;
+        result.code = 1;
+        result.text = '我的回复查询成功';
+        result.list = rows;
+        result.length = rows.length;
+        res.send(result);
     });
+});
+
+router.post('/replyme',function (req,res) {
+    let userName = req.session.user.userName;
     Reply.selectIsread([userName],function (err,rows) {
         if (err) {
             res.render('error');
             return;
         }
-        result.replymecode = 1;
-        result.text = '查询帖子成功';
-        result.replyme = rows;
-        result.replymelen = rows.length;
+        result.code = 1;
+        result.text = '未读回复查询成功';
+        result.list = rows;
+        result.length = rows.length;
         res.send(result);
     });
 });
+
 
 router.post('/domodify',function (req,res) {
     console.log(req.body);

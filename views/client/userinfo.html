@@ -42,13 +42,13 @@
             <!--<a class="list-group-item" href="#basic">首页</a>-->
             <a class="list-group-item" href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
             <a class="list-group-item" href="#formypost"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
-            <a class="list-group-item" href="#project"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
-            <a class="list-group-item" href="#education"><span class="glyphicon glyphicon-comment"></span>&nbsp;回复我的</a>
+            <a class="list-group-item" href="#formyreply"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
+            <a class="list-group-item" href="#forreplyme"><span class="glyphicon glyphicon-comment"></span>&nbsp;回复我的</a>
         </div>
     </div>
     <div class="col-xs-10 right">
         <!-- 个人信息 -->
-        <ul class="list-group" id="formyinfo">
+        <ul class="list-group hidden" id="formyinfo">
             <li class="list-group-item">
                 <span class="text-muted">用户头像：</span>
                 <span class="text-info"><img src="../../public/image/userPhoto/user_default.jpg" class="img-thumbnail" alt=""></span>
@@ -134,6 +134,35 @@
                 <span class="pull-right">2019-4-28 23:23:23</span>
             </li>
         </ul>
+
+        <!-- 我的回帖 -->
+        <ul class="list-group" id="formyreply">
+            <li class="list-group-item">
+                <span class="text-primary">肥羊不绵</span> 回复 <span class="text-primary">夏达</span>:<span class="pull-right">04-23</span>
+                <p class="text-info ">你家的猫猫猫好可爱你家的猫猫猫好可爱</p>
+                <div class="z-reply-from">
+                    <a href="">今日份的猫咪</a> 来自 <a href=""> 猫类</a>
+                </div>
+            </li>
+        </ul>
+<hr />
+        <!-- 未读回复 -->
+        <ul class="list-group" id="forreplyme">
+            <li class="list-group-item">
+                <div>
+                    <span class="text-primary">肥羊不绵：</span>
+                    <span class="text-primary">你家的猫猫猫好可爱</span>
+                    <span class="pull-right">2019-04-23 12:23:23</span>
+                </div>
+                <div>
+                    <span>回复我的帖子：“ <span class="text-info">测试发帖11111</span></span> ” >
+                    <span class="text-info"> 猫类</span>
+                </div>
+            </li>
+
+
+        </ul>
+
     </div>
 </div>
 </body>

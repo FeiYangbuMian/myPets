@@ -8,19 +8,56 @@
 "use strict";
 
 let myinfo = {};
-
+let type;
 window.onload = function () {
-    userinfo();
+    let href = window.location.href;
+    type = parseInt(href.slice(-1));
+    myInfo();
+    myPost();
+    myReply();
+    replyMe();
 };
 
+
 function initial() {
+    switch (type) {
+        case 1:
+            $('#formyinfo').addClass('active');
+            break;
+        case 2:
+            $('#formypost').addClass('active');
+            break;
+        case 3:
+            $('#formyreply').addClass('active');
+            break;
+        case 4:
+            $('#forreplyme').addClass('active');
+            break;
+        default:break;
+    }
+
+
     // 个人信息修改
     $('#formyinfo').on('click','.onmodify',function () {
         $(this).parents('.modify').addClass('hidden').siblings('.confirm').removeClass('hidden');
     });
-    $('.forphoto').on('click','.onconfirm',function () {
-        let content='';
-        $(this).parents('.confirm').addClass('hidden').siblings('.modify').removeClass('hidden');
+    $('.forphoto').on('change','#userPhoto',function () {
+        let objFile = $(this).val();
+        let objSize = $(this)[0].files[0].size;
+        console.log($(this)[0].files[0]);
+        let objType = objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
+        let formData = new FormData(document.forms.namedItem("picForm"));
+        console.log(objFile);
+        if (!(objType === '.jpg' || objType === '.png')) {
+            alert("请上传jpg、png类型图片");
+            return false;
+        } else if(objSize>1024*1024*3){
+            alert("上传的图片过大，请在3M以内。");
+            return false;
+        } else {
+            dophoto(formData);
+        }
+
     });
 
     $('.forbrith').on('click','.onconfirm',function (e) {
@@ -55,14 +92,23 @@ function initial() {
         console.log(user);
         domodify(user,user.userWechat,$(this));
     });
+
+
+
+    // 未读消息跳转
+    $('#forreplyme').on('click','li',function () {
+        let replyId = $(this).attr('data-id'),
+            url = $(this).attr('data-url');
+        doread(replyId,url);
+    });
 }
 
 /**
- * 获取我的信息，发帖，回复
+ * 获取我的信息
  */
-function userinfo() {
+function myInfo() {
     $.ajax({
-        url: `/client/userinfo`,
+        url: `/client/myinfo`,
         type: 'post',
         contentType: 'application/json;charset=UTF-8',
         success:function (result) {
@@ -76,26 +122,86 @@ function userinfo() {
                 let out = Mustache.render(tem,myinfo);
                 $('#formyinfo').html(out);
 
-                //我的发帖
-                let mypost = result.mypost;
-                let tem1 = $('#tem-mypost').html();
-                $.each(mypost,function (k,v) {
-                    let out = Mustache.render(tem1,v);
-                    $('#formypost').append(out);
-                });
-
-                //我的回复
-                let replyme = result.replyme;
-
                 initial();
-
             }
         }
     });
 }
 
 /**
- *
+ * 获取我的发帖
+ */
+function myPost() {
+    $.ajax({
+        url: `/client/mypost`,
+        type: 'post',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                let list = result.list;
+                let tem1 = $('#tem-mypost').html();
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem1,v);
+                    $('#formypost').append(out);
+                });
+            }
+        }
+    });
+}
+
+/**
+ * 获取我的回复
+ */
+function myReply() {
+    $.ajax({
+        url: `/client/myreply`,
+        type: 'post',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                let list = result.list;
+                let tem1 = $('#tem-myreply').html();
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem1,v);
+                    $('#formyreply').append(out);
+                });
+            }
+        }
+    });
+}
+
+/**
+ * 获取未读消息
+ */
+function replyMe() {
+    $.ajax({
+        url: `/client/replyme`,
+        type: 'post',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                let list = result.list;
+                let tem1 = $('#tem-replyme').html();
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem1,v);
+                    $('#forreplyme').append(out);
+                });
+            }
+        }
+    });
+}
+
+/**
+ * 修改个人信息
  * @param data 用户信息
  * @param content 修改的那块
  * @param that 点击的那块
@@ -112,6 +218,49 @@ function domodify(data,content,that) {
                 alert(result.text);
             } else {
                 that.parents('.confirm').addClass('hidden').siblings('.modify').removeClass('hidden').children('span').text(content);
+            }
+        }
+    });
+}
+
+function dophoto(formData) {
+    $.ajax({
+        type: 'post',
+        url: '/client/dophoto',
+        data: formData,
+        processData: false,
+        async: false,
+        cache: false,
+        contentType: false,
+        success: function (result) {
+            console.log(result);
+            if (result.code === 0) {
+                alert(result.text);
+            } else {
+                $('#photo').attr('src', `../../image/userPhoto/${result.data}`);
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
+function doread(replyId,url) {
+    $.ajax({
+        url: `/post/doread`,
+        type: 'post',
+        data:JSON.stringify({
+            replyId:replyId
+        }),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                window.location.href = url;
             }
         }
     });

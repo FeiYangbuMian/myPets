@@ -41,8 +41,12 @@ $('#btn_login').on('click',function () {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                //window.location.href=`/post/home?userName=${result.userName}`;
-                window.location.href=`/post/home/${result.userName}`;
+                let isadmin = result.user.userStatus;
+                if (isadmin===1){
+                    window.location.href=`/post/home/${result.userName}`;
+                } else {
+                    window.location.href=`/admin/home/${result.userName}`;
+                }
             }
         }
     });
