@@ -1,17 +1,11 @@
-/**
- * 关于帖子
- * /add
- * /delete
- * /select
- * /upload
- *
- */
-
 const express = require('express');
 const Plate = require('../models/Plate');
 const Post = require('../models/Post');
 const Reply = require('../models/Reply');
 const Util = require('../middleware/util');
+const formidable = require('formidable');
+const path = require('path');
+const fs = require('fs');
 
 let router = express.Router();
 
@@ -21,13 +15,20 @@ let result={
     user:{}
 };
 
+let form = new formidable.IncomingForm();
+form.encoding = 'utf-8';
+form.keepExtensions = true;//是否包含文件后缀
 
 router.route("/home/:username").get(function(req,res){
+    let user = req.session.user;
+    if (!user) res.render("client/login");
     console.log(req.params.username);
     res.render("post/home",{username:req.params.username});
 });
 
 router.get('/doindex',function (req,res) {
+    let user = req.session.user;
+    if (!user) res.render("client/login");
     Plate.selectPlate(function (err,rows) {
         if (err) {
             res.render('error');
@@ -44,6 +45,8 @@ router.get('/doindex',function (req,res) {
 });
 
 router.route("/plate/:id").get(function(req,res){
+    let user = req.session.user;
+    if (!user) res.render("client/login");
     console.log(req.params.id);
     res.render("post/plate");
 });
@@ -99,28 +102,74 @@ router.post('/dosort2',function (req,res) {
     });
 });
 
-router.post('/uppost',function (req,res) {
-    let data = req.body;
-    data.postStart = Util.currentTime();
-    Post.insertPost([data.postTitle,data.postContent,data.postPhoto,data.postStart,data.postLimit,data.userName,data.plateId],function (err,rows) {
-        console.log(rows);
+router.post('/dosearch',function (req,res) {
+    let plateId = req.body.plateId,
+        postTitle = '%'+req.body.postTitle+'%';
+    Post.selectPostbyTitle([postTitle,plateId],function (err,rows) {
         if (err) {
             res.render('error');
             return;
         }
-        if (rows.length === 0) {
-            result.code = 0;
-            result.text = '未知错误,上传失败！';
-        } else {
-            result.text = '发表成功！';
-            res.send(result);
+        result.list = rows;
+        res.send(result);
+    });
+});
+
+router.post('/uppost',function (req,res) {
+    let all=[]; //存放图片文件
+    let data = {}; //存放数据
+    let postPhotos = ''; //存放照片名称
+    form.multiples=true; //设置为多文件上传
+    form.uploadDir = "../myPets/public/image/postPhoto"; //缓存地址
+    form.on('file',function (filed,file) {
+        all.push([filed,file]);
+    }).parse(req,function (err,fields,files) {
+        if(err){
+            throw err;
         }
+        console.log(fields);
+        data = fields;
+
+        for (let i=0,len=all.length;i<len;i++) {
+            let postPhoto = all[i][1].name;
+            let t = (new Date()).getTime();
+            let ran = parseInt(Math.random() * 8999 + 10000);
+            let extname = path.extname(postPhoto);
+            let oldpath = path.normalize(all[i][1].path);
+            let newfilename = t + ran + extname;
+            let newpath = '../myPets/public/image/postPhoto/' + newfilename;
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) {
+                    console.log('改名失败' + err);
+                    return false;
+                } else {
+                    console.log('改名成功');
+                    console.log(postPhotos);
+                }
+            });
+            postPhotos += newfilename + ',';
+        }
+        let postStart = Util.currentTime();
+        Post.insertPost([data.postTitle,data.postContent,postPhotos,postStart,0,data.userName,data.plateId],function (err,rows) {
+            if (err) {
+                res.render('error');
+                return;
+            }
+            if (rows.length === 0) {
+                result.code = 0;
+                result.text = '未知错误,上传失败！';
+            } else {
+                result.text = '发表成功！';
+                res.send(result);
+            }
+        });
     });
 });
 
 router.route("/plate/:id/:postId").get(function(req,res){
-    console.log(req.params);
-    console.log(req.params.postId);
+    let user = req.session.user;
+    if (!user) res.render("client/login");
+    console.log(req.params);//req.params.id, req.params.postId
     res.render("post/post");
 });
 
@@ -166,32 +215,63 @@ router.post('/dopost',function (req,res) {
 });
 
 router.post('/upreply',function (req,res) {
-    let data = req.body;
-    data.replyTime = Util.currentTime();
-    console.log(data.replyTime);
-    Reply.insertReply([data.replyContent,data.replyPhoto,data.replyTime,data.replyFloor,data.replyState,data.postId,data.userNameF,data.userNameT],function (err,rows) {
+    let all=[]; //存放图片文件
+    let data = {}; //存放数据
+    let replyPhotos = ''; //存放照片名称
+    form.multiples=true; //设置为多文件上传
+    form.uploadDir = "../myPets/public/image/replyPhoto"; //缓存地址
+    form.on('file',function (filed,file) {
+        all.push([filed,file]);
+    }).parse(req,function (err,fields,files) {
         if (err) {
-            res.render('error');
-            return;
+            throw err;
         }
-        if (rows.length === 0) {
-            result.code = 0;
-            result.text = '未知错误,上传失败！';
-        } else {
-            result.text = '发表成功！';
+        console.log(fields);
+        data = fields;
+        for (let i = 0, len = all.length; i < len; i++) {
+            let replyPhoto = all[i][1].name;
+            let t = (new Date()).getTime();
+            let ran = parseInt(Math.random() * 8999 + 10000);
+            let extname = path.extname(replyPhoto);
+            let oldpath = path.normalize(all[i][1].path);
+            let newfilename = t + ran + extname;
+            let newpath = '../myPets/public/image/replyPhoto/' + newfilename;
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) {
+                    console.log('改名失败' + err);
+                    return false;
+                } else {
+                    console.log('改名成功');
+                    console.log(replyPhotos);
+                }
+            });
+            replyPhotos += newfilename + ',';
         }
-    });
-    Post.updatePostreply([data.postReply,data.postId],function (err,rows) {
-        if (err) {
-            res.render('error');
-            return;
-        }
-        if (rows.length === 0) {
-            result.code = 0;
-            result.text = '回复数增加失败！';
-        } else {
-            res.send(result);
-        }
+        let replyTime = Util.currentTime();
+        Reply.insertReply([data.replyContent, replyPhotos, replyTime, data.replyFloor, data.replyState, data.postId, data.userNameF, data.userNameT], function (err, rows) {
+            if (err) {
+                res.render('error');
+                return;
+            }
+            if (rows.length === 0) {
+                result.code = 0;
+                result.text = '未知错误,上传失败！';
+            } else {
+                result.text = '发表成功！';
+            }
+        });
+        Post.updatePostreply([data.postReply, data.postId], function (err, rows) {
+            if (err) {
+                res.render('error');
+                return;
+            }
+            if (rows.length === 0) {
+                result.code = 0;
+                result.text = '回复数增加失败！';
+            } else {
+                res.send(result);
+            }
+        });
     });
 });
 

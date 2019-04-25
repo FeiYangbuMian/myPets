@@ -40,19 +40,28 @@
 <div class="container" id="forpost">
 
 </div>
-
+<!-- 回复  -->
 <div class="container">
     <h4 class="text-info"><i class="glyphicon glyphicon-pencil"></i> &nbsp;发表回复</h4>
-    <div class="form-group">
-        <textarea title="回复内容" id="replyContent" class="z-textarea"></textarea>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-info" id="up_reply">发&nbsp;表</button>
-    </div>
-    <div class="form-group">
-        <input type="file" id="replyPhoto" />
-        <p class="help-block">注：仅支持.jpg .png格式。</p>
-    </div>
+    <form name="addForm" enctype="multipart/form-data">
+        <input type="hidden" id="postId" name="postId" value="" />
+        <input type="hidden" id="userNameF" name="userNameF" value="" />
+        <input type="hidden" id="replyFloor" name="replyFloor" value="" />
+        <input type="hidden" id="postReply" name="postReply" value="" />
+        <input type="hidden" id="replyState" name="replyState" value="" />
+        <input type="hidden" id="userNameT" name="userNameT" value="" />
+        <div class="form-group">
+            <textarea title="回复内容" id="replyContent" name="replyContent" class="z-textarea"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="file" id="replyPhoto" name="replyPhoto" multiple="multiple"/>
+            <p class="help-block">注：仅支持.jpg .png格式。</p>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-info" id="up_reply">发&nbsp;表</button>
+        </div>
+
+    </form>
 </div>
 <footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>
 
@@ -72,9 +81,6 @@
             <div class="pull-left col-md-10 col-lg-10 z-post">
                 {{postContent}}
                 <div class="z-post-imgs" >
-                    <!--<img src="../../public/image/img_cat.jpg">
-                    <img src="../../public/image/img_cat.jpg">
-                    <img src="../../public/image/img_cat.jpg">-->
                 </div>
                 <p class="z-time">
                     <span class="text-muted">{{postStart}} </span>
@@ -95,11 +101,10 @@
         <div class="pull-left col-md-10 col-lg-10 z-post">
             {{replyContent}}
             <div class="z-post-imgs" >
-                <!--<img src="../../public/image/{{replyContent}}">-->
             </div>
             <p class="z-time">
-                <span class="text-muted">{{replyTime}} </span>
-                <a href="#" class="text-primary lol-reply">回复</a>
+                <span class="text-muted">{{replyFloor}}楼 {{replyTime}} </span>
+                <a href="#" class="text-primary lol-reply">收起回复</a>
             </p>
             <ul class="list-group pull-right col-md-9 col-lg-9 clearfix" id="forlol">
             </ul>
@@ -128,5 +133,6 @@
 <script src="/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
 <script src="/post/js/post.js" type="text/javascript" charset="utf-8"></script>
+<script src="/post/js/paginathing.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

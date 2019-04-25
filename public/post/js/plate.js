@@ -8,7 +8,8 @@
 "use strict";
 
 let userName = '',
-    plateId = '';
+    plateId = '',
+    url = '/post/dosort1';
 
 window.onload = function () {
 
@@ -18,7 +19,9 @@ window.onload = function () {
 
     docount();
     doplate(plateId);
-    dosort(plateId,'/post/dosort1');
+    dosort(plateId,url);
+
+    // 排序
     $('.sort').on('click','li',function (e) {
         e.preventDefault();
         $(this).addClass('active').siblings().removeClass('active');
@@ -26,57 +29,86 @@ window.onload = function () {
         console.log(type);
         switch (type) {
             case '1':
-                dosort(plateId,'/post/dosort1');
+                url= '/post/dosort1';
+                dosort(plateId,url);
                 break;
             case '2':
-                dosort(plateId,'/post/dosort2');
+                url= '/post/dosort2';
+                dosort(plateId,url);
                 break;
         }
     });
 
-    $('#toplate').on('click','li',function () {
+    //切换板块
+   /* $('#toplate').on('click','li',function () {
         $(this).addClass('active').siblings().removeClass('active');
         plateId = $(this).attr('data-plate');
         doplate(plateId);
+        dosort(plateId,url);
+    });*/
+
+   //搜帖
+    $('#btn_search').on('click',function () {
+        let postTitle = $('#likeTitle').val();
+        dosearch(plateId,postTitle);
     });
 
+    // 选择图片
+    let postPhoto = document.getElementById('postPhoto');
+    postPhoto.addEventListener('change', function() {
+        let t_files = this.files;
+        console.log(t_files);
+        for (let i = 0, len = t_files.length; i < len; i++) {
+            let objFile = t_files[i].name;
+            let objSize = t_files[i].size;
+            console.log($(this)[0].files[0]);
+            let objType = objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
+            if (!(objType === '.jpg' || objType === '.png')) {
+                alert("请上传jpg、png类型图片");
+                delete t_files[i];
+                return false;
+            } else if(objSize>1024*1024*3){
+                alert("上传的图片过大，请在3M以内。");
+                delete t_files[i];
+                return false;
+            }
+        }
+    }, false);
+
+
+
+   // 发帖
     $('#up_post').on('click',function () {
-        let data = {};
-        data.plateId = plateId;
-        data.userName = userName;
-        data.postTitle = $('#postTitle').val();
-        data.postContent = $('#postContent').val();
-        data.postPhoto = '';
-        data.postStart = '';
-        data.postLimit = 0;
-        console.log(data);
-        uppost(data);
+        let postTitle = $('#postTitle').val();
+        let postContent = $('#postContent').val();
+        if (!postTitle) {
+            alert('标题不可为空');
+            return ;
+        }
+        if (!postContent) {
+            alert('内容不可为空');
+            return ;
+        }
+        $('#plateId').val(plateId);
+        $('#userName').val(userName);
+
+        let formData = new FormData(document.forms.namedItem("addForm"));  //获取表单内容
+        console.log(formData);
+
+        uppost(formData);
     });
 
+    // 跳转帖子详情页面
     $('#forlist').on('click','li',function () {
         let postId = $(this).attr('data-id');
         window.location.href = `/post/plate/${plateId}/${postId}`;
     });
 
 
-
-   /* let postPhoto = document.getElementById('postPhoto');
-    postPhoto.addEventListener('change', function() {
-        let t_files = this.files;
-        console.log(t_files);
-        var str = '';
-        for (let i = 0, len = t_files.length; i < len; i++) {
-            console.log(t_files[i]);
-            str += '<li>名称：' + t_files[i].name + '大小' + t_files[i].size / 1024 + 'KB</li>';
-        }
-        document.getElementById('content').appendChild(str);
-    }, false);*/
-
-
 };
 
 /**
- *
+ * 板块信息
  * @param plateId
  */
 function doplate(plateId) {
@@ -108,6 +140,11 @@ function doplate(plateId) {
     });
 }
 
+/**
+ * 帖子排序
+ * @param plateId
+ * @param url
+ */
 function dosort(plateId,url) {
     $.ajax({
         url: url,
@@ -128,22 +165,48 @@ function dosort(plateId,url) {
                 $.each(list,function (k,v) {
                     let out = Mustache.render(tem2,v);
                     $('#forlist').append(out);
+
+                    // 图片摁进去
+                    if (v.postPhoto) {
+                        v.postPhoto =  v.postPhoto.split(',');
+                       v.postPhoto.pop();
+                        let imgs = v.postPhoto;
+                        console.log(imgs);
+                        let html='',key = k;
+                        $.each(imgs,function (k,v) {
+                            html += `<img src="/image/postPhoto/${v}" />`;
+                            console.log(html);
+                             $(`#forlist li:eq(${key}) .z-post-imgs`).html(html);
+                        });
+                    }
                 });
+
+                // 分页
+                $('.pagination-container').remove();
+                $('#forlist').paginathing({
+                    perPage: 10, //每页几个
+                    insertAfter: '#forlist',
+                    pageNumbers: true
+                });
+
             }
         }
     });
 }
 
-
 /**
- * 发帖
- * @param data
+ * 搜索帖子
+ * @param plateId
+ * @param postTitle
  */
-function uppost(data) {
+function dosearch(plateId,postTitle) {
     $.ajax({
-        url: `/post/uppost`,
+        url: '/post/dosearch',
         type: 'post',
-        data:JSON.stringify(data),
+        data:JSON.stringify({
+            'plateId':plateId,
+            'postTitle':postTitle
+        }),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
         success:function (result) {
@@ -151,9 +214,64 @@ function uppost(data) {
             if (result.code === 0){
                 alert(result.text);
             } else {
-                doplate(plateId);
+                $('#forlist').html('');
+                let list = result.list;
+                let tem2 = $('#tem-list').html();
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem2,v);
+                    $('#forlist').append(out);
+
+                    // 图片摁进去
+                    if (v.postPhoto) {
+                        v.postPhoto =  v.postPhoto.split(',');
+                        v.postPhoto.pop();
+                        let imgs = v.postPhoto;
+                        console.log(imgs);
+                        let html='',key = k;
+                        $.each(imgs,function (k,v) {
+                            html += `<img src="/image/postPhoto/${v}" />`;
+                            console.log(html);
+                            $(`#forlist li:eq(${key}) .z-post-imgs`).html(html);
+                        });
+                    }
+
+                });
+
+                // 分页
+                $('.pagination-container').remove();
+                $('#forlist').paginathing({
+                    perPage: 10, //每页几个
+                    insertAfter: '#forlist',
+                    pageNumbers: true
+                });
+            }
+        }
+    });
+}
+
+/**
+ * 发帖
+ * @param formData
+ */
+function uppost(formData) {
+    $.ajax({
+        type:'POST',
+        url:'/post/uppost',
+        data:formData,
+        dataType:'json',
+        processData: false,  // 告诉JSLite不要去处理发送的数据
+        contentType: false,   // 告诉JSLite不要去设置Content-Type请求头
+        success:function(result){
+            console.log(result);
+            if (result.code===0){
+                alert(result.text);
+            } else {
+                dosort(plateId,url);
                 $('input,textarea').val('');
             }
+        },
+        error:function(err){
+            console.log('error:',err)
         }
     });
 }

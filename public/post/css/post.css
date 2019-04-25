@@ -19,8 +19,13 @@
     list-style: none;
 }
 
+.z-post-imgs {
+    height: auto;
+}
+
 .z-post-imgs img {
-    height: 100px;
+    height: 130px;
+    padding: 5px 10px 5px 0;
 }
 
 .z-textarea {
@@ -66,13 +71,6 @@ footer {
     text-align: center;
 }
 
-
-
-
-.z-post-imgs {
-    height: 100px;
-}
-
 .panel-body {
     padding: 0;
     border-bottom: 1px solid #e7e7e7;
@@ -110,6 +108,7 @@ footer {
     min-height: 170px;
 }
 
+
 .z-time {
     width: 100%;
     text-align: right;
@@ -141,4 +140,9 @@ footer {
 
 .dropdown-menu {
     min-width: 100px;
+}
+
+/* 分页 */
+.pagination-container {
+    text-align: center;
 }

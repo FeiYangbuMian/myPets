@@ -48,6 +48,7 @@ Post.selectPostbyPlateid = function (arr,callback){
 Post.insertPost = function (arr,callback){
     let insertSql = `insert into t_post (postTitle,postContent,postPhoto,postStart,postLimit,userName,plateId) values (?,?,?,?,?,?,?)`;
     db.query(insertSql,arr,function (err,rows,fields) {
+        console.log(arr);
         if (err){
             console.log('insertPost err:' + err);
             return;
@@ -123,5 +124,17 @@ Post.updatePostreply = function(arr,callback){
     });
 };
 
+
+Post.selectPostbyTitle = function (arr,callback){
+    let selectSql = `SELECT * FROM t_post WHERE postTitle LIKE ? AND plateId = ? order by postId DESC`;
+    db.query(selectSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('selectPostbyTitle err:' + err);
+            return;
+        }
+        console.log('selectPostbyTitle success.');
+        callback(err,rows);
+    });
+};
 
 module.exports = Post;

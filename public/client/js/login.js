@@ -42,7 +42,7 @@ $('#btn_login').on('click',function () {
                 alert(result.text);
             } else {
                 let isadmin = result.user.userStatus;
-                if (isadmin===1){
+                if (isadmin === 1){
                     window.location.href=`/post/home/${result.userName}`;
                 } else {
                     window.location.href=`/admin/home/${result.userName}`;

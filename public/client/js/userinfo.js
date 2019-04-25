@@ -36,18 +36,47 @@ function initial() {
         default:break;
     }
 
+    // 标签切换，分页隐藏与显示
+    $('#myTab a').click(function (e) {
+        e.preventDefault();//阻止a链接的跳转行为
+        $(this).tab('show');//显示当前选中的链接及关联的content
+        console.log($(this).tab());
+        let type = $(this).tab().attr('data-type');
+        let pmp =  $('.page-mypost'),
+            pmr = $('.page-myreply'),
+            prm =  $('.page-replyme');
+        switch (type) {
+            case '2':
+                pmp.removeClass('hidden');
+                pmr.addClass('hidden');
+                prm.addClass('hidden');
+                break;
+            case '3':
+                pmp.addClass('hidden');
+                pmr.removeClass('hidden');
+                prm.addClass('hidden');
+                break;
+            case '4':
+                pmp.addClass('hidden');
+                pmr.addClass('hidden');
+                prm.removeClass('hidden');
+                break;
+            default:break;
+        }
+    });
 
     // 个人信息修改
     $('#formyinfo').on('click','.onmodify',function () {
         $(this).parents('.modify').addClass('hidden').siblings('.confirm').removeClass('hidden');
     });
+
     $('.forphoto').on('change','#userPhoto',function () {
         let objFile = $(this).val();
         let objSize = $(this)[0].files[0].size;
         console.log($(this)[0].files[0]);
         let objType = objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
         let formData = new FormData(document.forms.namedItem("picForm"));
-        console.log(objFile);
+        console.log(formData);
         if (!(objType === '.jpg' || objType === '.png')) {
             alert("请上传jpg、png类型图片");
             return false;
@@ -62,9 +91,12 @@ function initial() {
 
     $('.forbrith').on('click','.onconfirm',function (e) {
         // e.preventDefault();
-        console.log('...');
         let user = myinfo;
         user.userBrith = $('#userBrith').val();
+        if (!user.userBrith){
+            alert('不可为空');
+            return;
+        }
         console.log(user);
         domodify(user,user.userBrith,$(this));
     });
@@ -74,6 +106,10 @@ function initial() {
             city = $('#city option:selected').val();
         let user = myinfo;
         user.userArea = province+ city;
+        if (!user.userArea){
+            alert('不可为空');
+            return;
+        }
         console.log(user);
         domodify(user,user.userArea,$(this));
     });
@@ -82,6 +118,10 @@ function initial() {
         console.log('qq');
         let user = myinfo;
         user.userQQ = $('#userQQ').val();
+        if (!user.userQQ){
+            alert('不可为空');
+            return;
+        }
         console.log(user);
         domodify(user,user.userQQ,$(this));
     });
@@ -89,10 +129,13 @@ function initial() {
     $('.forwechat').on('click','.onconfirm',function () {
         let user = myinfo;
         user.userWechat = $('#userWechat').val();
+        if (!user.userWechat){
+            alert('不可为空');
+            return;
+        }
         console.log(user);
         domodify(user,user.userWechat,$(this));
     });
-
 
 
     // 未读消息跳转
@@ -147,6 +190,14 @@ function myPost() {
                     let out = Mustache.render(tem1,v);
                     $('#formypost').append(out);
                 });
+
+                // 分页
+                $('#formypost').paginathing({
+                    perPage: 2, //每页几个
+                    containerClass: 'pagination-container page-mypost hidden',
+                    insertAfter: '#formypost',
+                    pageNumbers: true
+                });
             }
         }
     });
@@ -171,6 +222,13 @@ function myReply() {
                     let out = Mustache.render(tem1,v);
                     $('#formyreply').append(out);
                 });
+
+                $('#formyreply').paginathing({
+                    perPage: 2, //每页几个
+                    containerClass: 'pagination-container page-myreply hidden',
+                    insertAfter: '#formyreply',
+                    pageNumbers: true
+                });
             }
         }
     });
@@ -194,6 +252,13 @@ function replyMe() {
                 $.each(list,function (k,v) {
                     let out = Mustache.render(tem1,v);
                     $('#forreplyme').append(out);
+                });
+
+                $('#forreplyme').paginathing({
+                    perPage: 2, //每页几个
+                    containerClass: 'pagination-container page-replyme hidden',
+                    insertAfter: '#forreplyme',
+                    pageNumbers: true
                 });
             }
         }
@@ -223,6 +288,10 @@ function domodify(data,content,that) {
     });
 }
 
+/**
+ * 修改头像信息
+ * @param formData
+ */
 function dophoto(formData) {
     $.ajax({
         type: 'post',
@@ -246,6 +315,11 @@ function dophoto(formData) {
     });
 }
 
+/**
+ * 跳转并设置为已读
+ * @param replyId
+ * @param url
+ */
 function doread(replyId,url) {
     $.ajax({
         url: `/post/doread`,

@@ -19,8 +19,13 @@
     list-style: none;
 }
 
+.z-post-imgs {
+    height: auto;
+}
+
 .z-post-imgs img {
-    height: 100px;
+    height: 130px;
+    padding: 5px 10px 5px 0;
 }
 
 textarea {
@@ -56,4 +61,14 @@ footer {
 
 .dropdown-menu {
     min-width: 100px;
+}
+
+input[type="file"]{
+    width: 100%;
+}
+
+
+/* 分页 */
+.pagination-container {
+    text-align: center;
 }

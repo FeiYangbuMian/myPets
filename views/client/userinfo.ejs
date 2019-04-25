@@ -32,11 +32,11 @@
 </nav>
 <div class="container">
     <div class="col-xs-2 hidden-xs hidden-sm left">
-        <div class="list-group">
-            <a class="list-group-item" data-toggle="tab" href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
-            <a class="list-group-item" data-toggle="tab" href="#formypost"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
-            <a class="list-group-item" data-toggle="tab" href="#formyreply"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
-            <a class="list-group-item" data-toggle="tab" href="#forreplyme"><span class="glyphicon glyphicon-comment"></span>&nbsp;未读消息</a>
+        <div class="list-group" id="myTab">
+            <a class="list-group-item"  href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
+            <a class="list-group-item"  href="#formypost" data-type="2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
+            <a class="list-group-item"  href="#formyreply" data-type="3"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
+            <a class="list-group-item"  href="#forreplyme" data-type="4"><span class="glyphicon glyphicon-comment"></span>&nbsp;未读消息</a>
         </div>
     </div>
     <div class="col-xs-10 right tab-content">
@@ -177,5 +177,6 @@
 <script src="/client/js/distpicker.js" charset="utf-8"></script>
 <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
 <script src="/client/js/userinfo.js" charset="utf-8"></script>
+<script src="/post/js/paginathing.js" type="text/javascript" charset="utf-8"></script>
 
 </html>

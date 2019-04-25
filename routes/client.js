@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
 const nodemailer  = require('nodemailer');
-const config = require('../middleware/config');
 const mail = require('../middleware/mail');
 const Util = require('../middleware/util');
 const User = require('../models/User');
@@ -290,6 +289,8 @@ router.get('/docode2',function (req,res,next) {
 
 
 router.route("/userinfo").get(function(req,res){
+    let user = req.session.user;
+    if (!user) res.render("client/login");
     res.render("client/userinfo");
 });
 
