@@ -210,7 +210,17 @@ router.post('/dopost',function (req,res) {
        result.code = 1;
        result.text = '查询成功';
        result.list = rows;
-       res.send(result);
+       //res.send(result);
+    });
+    Reply.selectReplyLOL([postId],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        result.code = 1;
+        result.text = '查询成功';
+        result.lol = rows;
+        res.send(result);
     });
 });
 
@@ -218,7 +228,7 @@ router.post('/upreply',function (req,res) {
     let all=[]; //存放图片文件
     let data = {}; //存放数据
     let replyPhotos = ''; //存放照片名称
-    form.multiples=true; //设置为多文件上传
+    form.multiples = true; //设置为多文件上传
     form.uploadDir = "../myPets/public/image/replyPhoto"; //缓存地址
     form.on('file',function (filed,file) {
         all.push([filed,file]);
@@ -272,6 +282,36 @@ router.post('/upreply',function (req,res) {
                 res.send(result);
             }
         });
+    });
+});
+
+router.post('/uplol',function (req,res) {
+    let data = req.body;
+    let replyTime = Util.currentTime();
+    console.log(replyTime);
+    Reply.insertReply([data.replyContent,data.replyPhoto,replyTime,data.replyFloor,data.replyState,data.postId,data.userNameF,data.userNameT],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '未知错误,上传失败！';
+        } else {
+            result.text = '发表成功！';
+        }
+    });
+    Post.updatePostreply([data.postReply,data.postId],function (err,rows) {
+        if (err) {
+            res.render('error');
+            return;
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '回复数增加失败！';
+        } else {
+            res.send(result);
+        }
     });
 });
 

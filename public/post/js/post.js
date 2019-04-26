@@ -20,6 +20,18 @@ window.onload = function () {
     docount();
     dopost(postId);
 
+}
+
+function initial() {
+
+    // 分页
+    $('.pagination-container').remove();
+    $('#forreply').paginathing({
+        perPage: 10, //每页几个
+        insertAfter: '#forreply',
+        pageNumbers: true
+    });
+
     // 评论帖子
     $('#up_reply').on('click',function () {
         let data = {};
@@ -37,30 +49,44 @@ window.onload = function () {
         $('#replyState').val(state);
 
         let formData = new FormData(document.forms.namedItem("addForm"));
-
         upreply(formData);
 
     });
 
+    $('.z-time').on('click','a',function (e) {
+        e.preventDefault();
+    });
+
+    // 楼中楼点击回复时
+    $('.forlol').on('click','a',function () {
+        let userT = $(this).attr('data-userT');
+        console.log(userT);
+        $(this).parents('.collapse').find('textarea').prepend('回复 '+userT+'：');
+        $(this).parents('.collapse').find('button').attr('data-usert',userT);
+    });
+
     // 楼中楼
-    $('#up_reply').on('li',function () {
+    $('.z-lol-up').on('click',function () {
+       // let par = $(this).parents()
         let data = {};
-        data.replyContent = $('#replyContent').val();
+        data.replyContent = $(this).siblings('textarea').val();
         data.replyPhoto = '';
         data.replyTime = '';
-        data.replyFloor = replyFloor; //楼层
+        data.replyFloor = $(this).attr('data-floor'); //楼层
         data.postReply = postReply + 1;
         data.replyState = 1; //0评论 1楼中楼
         data.postId = postId;
         data.userNameF = userName;
-        data.userNameT = userNameT;
-        upreply(data);
+        data.userNameT = $(this).attr('data-userT');
+        console.log(data);
+
+        uplol(data);
 
     });
 }
 
 /**
- * 获取帖子全部信息
+ * 获取帖子详情
  * @param postId
  */
 function dopost(postId) {
@@ -77,9 +103,14 @@ function dopost(postId) {
             if (result.code === 0){
                 alert(result.text);
             } else {
+                // 1
+                userName = result.user.userName;
+                userPhoto = result.user.userPhoto;
+                $('#foruser').text(userName);
+
                 let info = result.info;
-                let tem = $('#tem-post').html();
-                let out = Mustache.render(tem,info);
+                let tem1 = $('#tem-post').html();
+                let out = Mustache.render(tem1,info);
                 $('#forpost').html(out);
                 userNameT = info.userName;
                 postReply = info.postReply;
@@ -98,7 +129,7 @@ function dopost(postId) {
                     });
                 }
 
-
+                // 2
                 $('#forreply').html('');
                 let list = result.list;
                 replyFloor = list.length;
@@ -121,17 +152,19 @@ function dopost(postId) {
                     }
                 });
 
-                // 分页
-                $('.pagination-container').remove();
-                $('#forreply').paginathing({
-                    perPage: 10, //每页几个
-                    insertAfter: '#forreply',
-                    pageNumbers: true
+                // 3
+                $('.forlol').html('');
+                let lol = result.lol;
+                let tem3 = $('#tem-lol').html();
+                $.each(lol,function (k,v) {
+                    let out = Mustache.render(tem3,v);
+                    console.log(out);
+                    console.log($(`#forreply li:eq(${v.replyFloor-1}) .forlol`));
+                    $(`#forreply li:eq(${v.replyFloor-1}) .forlol`).append(out);
+                    $(`#forreply li:eq(${v.replyFloor-1}) .collapse`).addClass('in');
                 });
 
-                userName = result.user.userName;
-                userPhoto = result.user.userPhoto;
-                $('#foruser').text(userName);
+                initial();
             }
         },
         error:function (err) {
@@ -139,6 +172,7 @@ function dopost(postId) {
         }
     });
 }
+
 
 /**
  * 评论帖子
@@ -164,6 +198,24 @@ function upreply(formData) {
     });
 }
 
+function uplol(data) {
+    $.ajax({
+        url: `/post/uplol`,
+        type: 'post',
+        data:JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                dopost(postId);
+                $('input,textarea').val('');
+            }
+        }
+    });
+}
 
 /**
  * 未读消息数目

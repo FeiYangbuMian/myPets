@@ -66,7 +66,7 @@
 <footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>
 
 
-
+<!-- 1 帖子详情 -->
 <script type="text/template" id="tem-post" >
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -92,6 +92,7 @@
     </div>
 </script>
 
+<!-- 2 每楼帖子 -->
 <script type="text/template" id="tem-reply">
     <li class="panel-body clearfix reply-item" data-floor="{{replyFloor}}">
         <div class="pull-left col-md-2 col-lg-2 z-user">
@@ -99,30 +100,38 @@
             <p class="text-info">{{userNameF}}</p>
         </div>
         <div class="pull-left col-md-10 col-lg-10 z-post">
-            {{replyContent}}
-            <div class="z-post-imgs" >
+            <div class="z-content">
+                {{replyContent}}
+                <div class="z-post-imgs" >
+                </div>
+                <p class="z-time">
+                    <span class="text-muted">{{replyFloor}}楼 {{replyTime}} </span>
+                    <a href="#" class="text-primary lol-reply" data-toggle="collapse"
+                       data-target="#{{replyFloor}}">展开/收起</a>
+                </p>
             </div>
-            <p class="z-time">
-                <span class="text-muted">{{replyFloor}}楼 {{replyTime}} </span>
-                <a href="#" class="text-primary lol-reply">收起回复</a>
-            </p>
-            <ul class="list-group pull-right col-md-9 col-lg-9 clearfix" id="forlol">
-            </ul>
-            <div class="form-group  pull-right col-md-9 col-lg-9 clearfix">
-                <textarea title="回复内容" class="z-lol-textarea" ></textarea>
-                <button class="btn pull-right btn-primary btn-sm z-lol-up">发&nbsp;表</button>
+            <div class="collapse pull-right col-md-9 col-lg-9 clearfix" id="{{replyFloor}}">
+                <ul class="list-group forlol">
+                </ul>
+                <div class="form-group  pull-right col-md-12 col-lg-12 clearfix">
+                    <textarea title="回复内容" class="z-lol-textarea" name="lolreply" ></textarea>
+                    <button data-floor="{{replyFloor}}" data-usert="{{userNameF}}"  class="btn pull-right btn-primary btn-sm z-lol-up">发&nbsp;表</button>
+                </div>
             </div>
+
+
         </div>
     </li>
 </script>
 
+<!-- 3 楼中楼 -->
 <script type="text/template" id="tem-lol">
     <li class="list-group-item">
-        <span class="text-primary">夏达 </span>回复
-        <span class="text-primary">肥羊不绵：</span>你偷拍我家猫猫呀
+        <span class="text-primary">{{userNameF}}： <!--</span>回复
+        <span class="text-primary"> {{userNameT}}：--></span>{{replyContent}}
         <p class="z-time">
-            <span class="text-muted">2019-04-03 12:26 </span>
-            <a href="#" class="text-info">回复</a>
+            <span class="text-muted">{{replyTime}} </span>
+            <a href="#" class="text-info" data-usert="{{userNameF}}">回复</a>
         </p>
     </li>
 </script>

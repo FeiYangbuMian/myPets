@@ -37,6 +37,7 @@
     border: 1px solid #ccc;
 }
 
+
 .z-lol-textarea {
     max-width: calc(100% - 70px);
     min-width: calc(100% - 70px);
@@ -108,16 +109,22 @@ footer {
     min-height: 170px;
 }
 
+.z-content {
+    position: relative;
+    min-height: 120px;
+}
 
 .z-time {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
     width: 100%;
     text-align: right;
 }
 
-.list-group {
+.collapse {
     padding: 0;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
+    border-top: 1px solid #f5f5f5;
 }
 
 .list-group .list-group-item {

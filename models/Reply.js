@@ -56,13 +56,13 @@ Reply.selectReplybyPostid = function(arr,callback){
 };
 
 Reply.selectReplyLOL = function (arr,callback){
-    let selectSql = `SELECT * FROM t_reply WHERE postId= ?,replyFloor=? and replyState = 1`;
+    let selectSql = `SELECT * FROM t_reply  WHERE postId= ? and replyState = 1 order by replyId ASC`;
     db.query(selectSql,arr,function (err,rows,fields) {
         if (err){
-            console.log('selectReplyid err:' + err);
+            console.log('selectReplyLOL err:' + err);
             return;
         }
-        console.log('selectReplyid success');
+        console.log('selectReplyLOL success');
         callback(err,rows);
     });
 };
