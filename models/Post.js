@@ -124,7 +124,11 @@ Post.updatePostreply = function(arr,callback){
     });
 };
 
-
+/**
+ * 根据标题查询帖子
+ * @param arr
+ * @param callback
+ */
 Post.selectPostbyTitle = function (arr,callback){
     let selectSql = `SELECT * FROM t_post WHERE postTitle LIKE ? AND plateId = ? order by postId DESC`;
     db.query(selectSql,arr,function (err,rows,fields) {
@@ -137,4 +141,19 @@ Post.selectPostbyTitle = function (arr,callback){
     });
 };
 
+/**
+ *
+ * @param callback
+ */
+Post.selectPosts = function (callback){
+    let selectSql = `SELECT * FROM t_post INNER JOIN t_plate ON t_post.plateId = t_plate.plateId`;
+    db.query(selectSql,function (err,rows,fields) {
+        if (err){
+            console.log('selectPosts err:' + err);
+            return;
+        }
+        console.log('selectPosts success.');
+        callback(err,rows);
+    });
+};
 module.exports = Post;

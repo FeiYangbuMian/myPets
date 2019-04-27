@@ -8,7 +8,6 @@ const moment = require('moment');
 const session = require('express-session');
 const app = express();
 
-
 app.locals.moment = moment;
 
 //支持编码为JSON的请求消息体
@@ -26,23 +25,19 @@ app.use(session({
     },
 }));
 
-
-
-/*var indexRouter = require('./routes/client');
-var usersRouter = require('./routes/users');*/
-
 // 路由信息（接口地址），存放在routes的根目录
 const index = require('./routes/index');
 const client = require('./routes/client');
-//const user = require('./routes/user');
-//const dologin = require('./routes/dologin');
 const post = require('./routes/post');
+const admin = require('./routes/admin');
 
 //配置路由('自定义路径'，上面设置的接口地址)
-
 app.use('/', index);  // 即为为路径 / 设置路由
 app.use('/client',client);
 app.use('/post',post);
+app.use('/admin',admin);
+
+
 
 
 

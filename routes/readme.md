@@ -4,4 +4,4 @@
 
 - client.js 首页用户登录注册
 - post.js 帖子相关 增删改查
-- admin.js 管理员相关
+- home.js 管理员相关

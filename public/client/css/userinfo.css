@@ -73,6 +73,14 @@ img {
     padding: 10px;
 }
 
+footer {
+    padding: 20px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    text-align: center;
+}
 
 /* 分页 */
 .pagination-container {

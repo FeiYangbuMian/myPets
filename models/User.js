@@ -12,7 +12,7 @@ function User(user){
     this.userId = user.userId;
     this.userName = user.userName;
     this.userPwd = user.userPwd;
-    this.userBrith = user.userBrith;
+    this.userBirth = user.userBirth;
     this.userStatus = user.userStatus;
     this.userPhoto = user.userPhoto;
     this.userQQ = user.userQQ;
@@ -138,7 +138,7 @@ User.updateUserphoto = function (arr,callback){
  */
 User.updateUser = function (arr,callback){
     console.log(arr);
-    let uploadSql = `update t_user set userName= ?,userBrith=?,userArea=? where userEmail= ? `;
+    let uploadSql = `update t_user set userName= ?,userBirth=?,userArea=? where userEmail= ? `;
     db.query(uploadSql,arr,function (err,rows,fields) {
         if (err){
             console.log('updateUser error:' + err);
@@ -169,13 +169,29 @@ User.selectUserphoto = function (arr,callback){
  */
 User.updateUserExtra = function (arr,callback){
     console.log(arr);
-    let uploadSql = `update t_user set userBrith=?,userArea=?,userQQ=?,userWechat=? where userName= ? `;
+    let uploadSql = `update t_user set userBirth=?,userArea=?,userQQ=?,userWechat=? where userName= ? `;
     db.query(uploadSql,arr,function (err,rows,fields) {
         if (err){
             console.log('updateUserExtra error:' + err);
             return;
         }
         console.log('updateUserExtra success');
+        callback(err,rows);
+    });
+};
+
+/**
+ * 获取全部用户信息
+ * @param callback
+ */
+User.selectUsers = function (callback){
+    let selectSql = `SELECT * FROM t_user`;
+    db.query(selectSql,function (err,rows,fields) {
+        if (err){
+            console.log('selectUsers err:' + err);
+            return;
+        }
+        console.log('selectUsers success.');
         callback(err,rows);
     });
 };

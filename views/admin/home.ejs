@@ -1,0 +1,192 @@
+<!--
+作者：张慧珍
+创建时间：2019-04-26
+版本：[1.0,2019-04-26]
+版权：@肥羊不绵
+描述：
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/css/home.css" />
+    <title>萌宠战记-后台管理</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">萌宠战记</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">管理员：肥羊不绵</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="clearfix z-container">
+    <div class="col-xs-2 hidden-xs hidden-sm left">
+        <div class="list-group" id="myTab">
+            <a class="list-group-item"  href="#forusers" data-type="1"><span class="glyphicon glyphicon-user"></span>&nbsp;用户信息</a>
+            <a class="list-group-item"  href="#forplates" data-type="2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;板块信息</a>
+            <a class="list-group-item"  href="#forposts" data-type="3"><span class="glyphicon glyphicon-edit"></span>&nbsp;帖子信息</a>
+            <a class="list-group-item"  href="#forreplys" data-type="4"><span class="glyphicon glyphicon-comment"></span>&nbsp;评论信息</a>
+        </div>
+    </div>
+    <div class="col-xs-10 right tab-content">
+        <!-- 用户信息 -->
+        <div class="list-group tab-pane active" id="forusers">
+            <table width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>用户ID</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>头像</th>
+                    <th>出生日期</th>
+                    <th>所在地</th>
+                    <th>申请时间</th>
+                    <th>QQ</th>
+                    <th>微信</th>
+                    <th>状态</th>
+                    <th>身份</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 板块信息 -->
+        <div class="list-group tab-pane" id="forplates">
+            <table width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>板块ID</th>
+                    <th>板块名</th>
+                    <th>图片</th>
+                    <th>简介</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 帖子信息 -->
+        <div class="list-group tab-pane" id="forposts">
+            <table width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>图片</th>
+                    <th>发帖时间</th>
+                    <th>回复数</th>
+                    <th>发帖人</th>
+                    <th>所属板块</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 评论信息 -->
+        <div class="list-group tab-pane" id="forreplys">
+            <table width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>回复ID</th>
+                    <th>所属帖子</th>
+                    <th>回复内容</th>
+                    <th>图片</th>
+                    <th>回复时间</th>
+                    <th>楼层</th>
+                    <th>状态</th>
+                    <th>回复人</th>
+                    <th>被回复人</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>
+</body>
+
+
+
+<!-- 模板 用户 -->
+<script type="text/template" id="tem-user">
+    <tr>
+        <td>{{userId}}</td>
+        <td>{{userName}}</td>
+        <td>{{userEmail}}</td>
+        <td>{{userPhoto}}</td>
+        <td>{{userBirth}}</td>
+        <td>{{userArea}}</td>
+        <td>{{userStart}}</td>
+        <td>{{userQQ}}</td>
+        <td>{{userWechat}}</td>
+        <td>{{userState}}</td>
+        <td>{{userStatus}}</td>
+    </tr>
+</script>
+<!-- 模板 板块 -->
+<script type="text/template" id="tem-plate">
+    <tr>
+        <td>{{plateId}}</td>
+        <td>{{plateName}}</td>
+        <td>{{platePhoto}}</td>
+        <td>{{plateIntro}}</td>
+        <td><a href="#">修改</a></td>
+    </tr>
+</script>
+<!-- 模板 帖子 -->
+<script type="text/template" id="tem-post">
+    <tr>
+        <td>{{postId}}</td>
+        <td>{{postTitle}}</td>
+        <td>{{postContent}}</td>
+        <td>{{postPhoto}}</td>
+        <td>{{postStart}}</td>
+        <td>{{postReply}}</td>
+        <td>{{userName}}</td>
+        <td>{{plateName}}</td>
+    </tr>
+</script>
+
+<!-- 模板 帖子 -->
+<script type="text/template" id="tem-reply">
+    <tr>
+        <td>{{replyId}}</td>
+        <td>{{postTitle}}</td>
+        <td>{{replyContent}}</td>
+        <td>{{replyPhoto}}</td>
+        <td>{{replyTime}}</td>
+        <td>{{replyFloor}}</td>
+        <td>{{replyState}}</td>
+        <td>{{userNameF}}</td>
+        <td>{{userNameT}}</td>
+    </tr>
+</script>
+
+
+<script src="/js/jquery.js" charset="utf-8"></script>
+<script src="/js/bootstrap.js" charset="utf-8"></script>
+
+<script src="/client/js/bootstrap-datepicker.js" charset="utf-8"></script>
+<script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
+<script src="/admin/js/home.js" charset="utf-8"></script>
+<script src="/post/js/paginathing.js" type="text/javascript" charset="utf-8"></script>
+
+</html>

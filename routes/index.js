@@ -35,4 +35,8 @@ router.route("/post").get(function(req,res){
     res.render("post/home");
 });
 
+router.route("/admin").get(function(req,res){
+    res.render("admin/home");
+});
+
 module.exports = router;

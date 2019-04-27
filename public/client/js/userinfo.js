@@ -89,16 +89,16 @@ function initial() {
 
     });
 
-    $('.forbrith').on('click','.onconfirm',function (e) {
+    $('.forbirth').on('click','.onconfirm',function (e) {
         // e.preventDefault();
         let user = myinfo;
-        user.userBrith = $('#userBrith').val();
-        if (!user.userBrith){
+        user.userBirth = $('#userBirth').val();
+        if (!user.userBirth){
             alert('不可为空');
             return;
         }
         console.log(user);
-        domodify(user,user.userBrith,$(this));
+        domodify(user,user.userBirth,$(this));
     });
 
     $('.forarea').on('click','.onconfirm',function () {
@@ -154,7 +154,7 @@ function myInfo() {
         url: `/client/myinfo`,
         type: 'post',
         contentType: 'application/json;charset=UTF-8',
-        success:function (result) {
+        success: function (result) {
             console.log(result);
             if (result.code === 0){
                 alert(result.text);
@@ -193,7 +193,7 @@ function myPost() {
 
                 // 分页
                 $('#formypost').paginathing({
-                    perPage: 2, //每页几个
+                    perPage: 10, //每页几个
                     containerClass: 'pagination-container page-mypost hidden',
                     insertAfter: '#formypost',
                     pageNumbers: true
@@ -224,7 +224,7 @@ function myReply() {
                 });
 
                 $('#formyreply').paginathing({
-                    perPage: 2, //每页几个
+                    perPage: 10, //每页几个
                     containerClass: 'pagination-container page-myreply hidden',
                     insertAfter: '#formyreply',
                     pageNumbers: true
@@ -255,7 +255,7 @@ function replyMe() {
                 });
 
                 $('#forreplyme').paginathing({
-                    perPage: 2, //每页几个
+                    perPage: 10, //每页几个
                     containerClass: 'pagination-container page-replyme hidden',
                     insertAfter: '#forreplyme',
                     pageNumbers: true

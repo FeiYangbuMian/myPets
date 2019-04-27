@@ -42,6 +42,7 @@ $('#btn_login').on('click',function () {
                 alert(result.text);
             } else {
                 let isadmin = result.user.userStatus;
+                console.log(isadmin);
                 if (isadmin === 1){
                     window.location.href=`/post/home/${result.userName}`;
                 } else {

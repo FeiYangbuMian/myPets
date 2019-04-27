@@ -120,4 +120,18 @@ Reply.updateIsread = function(arr,callback){
     });
 };
 
+
+Reply.selectReplys = function(callback){
+    let selectSql = `SELECT * FROM t_reply INNER JOIN t_post ON t_reply.postId = t_post.postId`;
+    db.query(selectSql,function (err,rows,fields) {
+        if (err){
+            console.log('selectReplys err:' + err);
+            return;
+        }
+        console.log('selectReplys success.');
+        console.log(rows.length);
+        callback(err,rows);
+    });
+};
+
 module.exports = Reply;
