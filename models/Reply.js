@@ -28,6 +28,7 @@ function Reply(reply){
 Reply.insertReply = function(arr,callback) {
     let insertSql = `insert into t_reply (replyContent,replyPhoto,replyTime,replyFloor,replyState,postId,userNameF,userNameT) values (?,?,?,?,?,?,?,?)`;
     db.query(insertSql,arr,function (err,rows,fields) {
+        console.log(arr);
         if (err){
             console.log('insertPost err:' + err);
             return;

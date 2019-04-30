@@ -8,7 +8,7 @@
 "use strict";
 
 let userName = document.getElementById('userName'),
-    userBrith = document.getElementById('userBrith'),
+    userBirth = document.getElementById('userBirth'),
     userEmail = document.getElementById('userEmail'),
     province = '',city = '',email='',data={};
 
@@ -23,7 +23,7 @@ let allValue = function (){
     province = $('#province option:selected').val();
     city = $('#city option:selected').val();
     console.log('222');
-    if (userName.value && userBrith.value && province && city) {
+    if (userName.value && userBirth.value && province && city) {
         btn_next.removeAttribute('disabled');
     } else {
         btn_next.setAttribute('disabled','disabled');
@@ -58,11 +58,12 @@ $('body').on('input','input',function () {
             contentType: false,
             success:function(result){
                 console.log(result);
-                if (result.code === 0) {
+                $('#photo').attr('src',`../../image/userPhoto/${result}`);
+               /* if (result.code === 0) {
                     alert(result.text);
                 } else {
                     $('#photo').attr('src',`../../image/userPhoto/${result.data}`);
-                }
+                }*/
             },
             error:function(err){
                 console.log(err);
@@ -92,7 +93,7 @@ $('body').on('input','input',function () {
 }).on('click','#btn_next',function () {
     data.userarea = province+city;
     data.userName = userName.value;
-    data.userBrith = userBrith.value;
+    data.userBirth = userBirth.value;
     data.userEmail = userEmail.value;
     console.log(data);
     $.ajax({

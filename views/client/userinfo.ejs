@@ -10,8 +10,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/client/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/client/css/userinfo.css" />
     <title>个人中心</title>
 </head>
@@ -19,13 +19,12 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">萌宠战记</a>
+            <a class="navbar-brand" href="#" id="tohome">萌宠战记</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">肥羊不绵</a></li>
-
             </ul>
         </div>
     </div>
@@ -88,6 +87,7 @@
         <div class="confirm hidden">
             <input type="text"  id="userBirth" name="userBirth"  readonly="readonly" data-provide="datepicker"  title="" />
             <button class="text-primary onconfirm"> 确认</button>
+            <button class="text-primary oncancel"> 取消</button>
         </div>
     </li>
     <li class="list-group-item forarea">
@@ -102,6 +102,7 @@
                 <select name="city" id="city" title="市"></select>
             </div>
             <button class="text-primary onconfirm"> 确认</button>
+            <button class="text-primary oncancel"> 取消</button>
         </div>
     </li>
     <li class="list-group-item">
@@ -121,6 +122,7 @@
         <div class="confirm hidden">
             <input type="text"  id="userQQ" name="userQQ"  title=""/>
             <button class="text-primary onconfirm"> 确认</button>
+            <button class="text-primary oncancel"> 取消</button>
         </div>
     </li>
     <li class="list-group-item forwechat">
@@ -132,6 +134,7 @@
         <div class="confirm hidden">
             <input type="text"  id="userWechat" name="userWechat"  title=""/>
             <button class="text-primary onconfirm"> 确认</button>
+            <button class="text-primary oncancel"> 取消</button>
         </div>
     </li>
 </script>
@@ -172,12 +175,10 @@
 
 <script src="/js/jquery.js" charset="utf-8"></script>
 <script src="/js/bootstrap.js" charset="utf-8"></script>
-
-<script src="/client/js/bootstrap-datepicker.js" charset="utf-8"></script>
-<script src="/client/js/distpicker.data.js" charset="utf-8"></script>
-<script src="/client/js/distpicker.js" charset="utf-8"></script>
 <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
 <script src="/client/js/userinfo.js" charset="utf-8"></script>
 <script src="/post/js/paginathing.js" type="text/javascript" charset="utf-8"></script>
-
+<script src="/client/js/bootstrap-datepicker.js" charset="utf-8"></script>
+<script src="/client/js/distpicker.data.js" charset="utf-8"></script>
+<script src="/client/js/distpicker.js" charset="utf-8"></script>
 </html>

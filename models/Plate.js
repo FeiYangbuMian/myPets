@@ -49,4 +49,36 @@ Plate.selectPlatebyId = function (plateId,callback){
     });
 };
 
+
+/**
+ * 板块信息 修改
+ * @param arr
+ * @param callback
+ */
+Plate.updatePlate = function (arr,callback){
+    console.log(arr);
+    let uploadSql = `update t_plate set plateName=?,plateIntro=? where plateId= ? `;
+    db.query(uploadSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('updatePlate error:' + err);
+            return;
+        }
+        console.log('updatePlate success.');
+        callback(err,rows);
+    });
+};
+
+Plate.updatePlatephoto = function(arr,callback){
+    console.log(arr);
+    let uploadSql = `update t_plate set platePhoto= ? where plateId= ? `;
+    db.query(uploadSql,arr,function (err,rows,fields) {
+        if (err){
+            console.log('updatePlatephoto error:' + err);
+            return;
+        }
+        console.log('updatePlatephoto success.');
+        callback(err,rows);
+    });
+};
+
 module.exports = Plate;

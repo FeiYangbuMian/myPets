@@ -15,7 +15,7 @@ Util.check = {
     //检查是否为邮箱号
     isMail: function (str) {
         let reg =  /^(\w)+([-.]\w+)*@(\w)+((\.\w{2,4}){1,3})$/;
-        return !!ttttt;
+        return !!reg.test(str);
     },
     //检查是否包含特殊字符
     isString: function(str){

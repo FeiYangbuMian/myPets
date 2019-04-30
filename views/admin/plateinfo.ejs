@@ -1,0 +1,96 @@
+<!--
+作者：张慧珍
+创建时间：2019-04-19
+版本：[1.0,2019-04-20]
+版权：@肥羊不绵
+描述：
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" type="text/css" href="/client/css/userinfo.css" />
+    <title>萌宠战记-后台管理</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" id="tohome">萌宠战记</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="adminName">肥羊不绵</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="page-header">
+        <h2>板块管理</h2>
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="#" id="goback">后台管理</a></li>
+        <li class="active">板块管理</li>
+    </ol>
+
+    <!-- 信息 -->
+    <ul class="list-group" id="forinfo">
+    </ul>
+
+</div>
+<footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>
+</body>
+
+<!-- 模板 信息 -->
+<script type="text/template" id="tem-info" >
+    <li class="list-group-item">
+        <span class="text-muted">板块ID：</span>
+        <span class="text-info">{{plateId}}</span>
+    </li>
+    <li class="list-group-item forphoto">
+        <span class="text-muted">头像：</span>
+        <span class="text-info"><img src="/image/{{platePhoto}}" class="img-thumbnail" alt="" id="photo"></span>
+        <a class="pull-right text-primary onmodify">修改</a>
+        <form  method="post" class="z-inline pull-right" enctype="multipart/form-data" name="picForm">
+            <input type="file" id="platePhoto" title="点击修改头像" name="platePhoto" class="pull-right z-forphoto" />
+            <input type="hidden" name="plateId" value="{{plateId}}" />
+        </form>
+    </li>
+    <li class="list-group-item forname">
+        <span class="text-muted">名称：</span>
+        <div class="modify">
+            <span class="text-info">{{plateName}}</span>
+            <a class="pull-right text-primary onmodify">修改</a>
+        </div>
+        <div class="confirm hidden">
+            <input type="text"  id="plateName" name="plateName" value="{{plateName}}"  title=""/>
+            <button class="text-primary onconfirm"> 确认</button>
+            <button class="text-primary oncancel"> 取消</button>
+        </div>
+    </li>
+    <li class="list-group-item forintro">
+        <span class="text-muted">简介：</span>
+        <div class="modify">
+            <span class="text-info">{{plateIntro}}</span>
+            <a class="pull-right text-primary onmodify">修改</a>
+        </div>
+        <div class="confirm hidden">
+            <textarea id="plateIntro" name="plateIntro"  title="">{{plateIntro}}</textarea>
+            <button class="text-primary onconfirm"> 确认</button>
+            <button class="text-primary oncancel"> 取消</button>
+        </div>
+    </li>
+</script>
+
+<script src="/js/jquery.js" charset="utf-8"></script>
+<script src="/js/bootstrap.js" charset="utf-8"></script>
+<script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
+<script src="/admin/js/plateinfo.js" charset="utf-8"></script>
+
+</html>

@@ -24,6 +24,7 @@ window.onload = function () {
     // 排序
     $('.sort').on('click','li',function (e) {
         e.preventDefault();
+        $('#likeTitle').val('');
         $(this).addClass('active').siblings().removeClass('active');
         let type = $(this).attr('data-type');
         console.log(type);
@@ -135,6 +136,7 @@ function doplate(plateId) {
 
                 userName = result.user.userName;
                 $('#foruser').text(userName);
+                $('#tohome').attr('href',`/post/home/${userName}`);
             }
         }
     });
@@ -216,6 +218,10 @@ function dosearch(plateId,postTitle) {
             } else {
                 $('#forlist').html('');
                 let list = result.list;
+                if (list.length === 0){
+                    $('#forlist').html(`<span class="center-block text-danger">暂无搜索结果！</span>`);
+                    return;
+                }
                 let tem2 = $('#tem-list').html();
                 $.each(list,function (k,v) {
                     let out = Mustache.render(tem2,v);
@@ -234,7 +240,6 @@ function dosearch(plateId,postTitle) {
                             $(`#forlist li:eq(${key}) .z-post-imgs`).html(html);
                         });
                     }
-
                 });
 
                 // 分页
@@ -262,6 +267,8 @@ function uppost(formData) {
         processData: false,  // 告诉JSLite不要去处理发送的数据
         contentType: false,   // 告诉JSLite不要去设置Content-Type请求头
         success:function(result){
+            dosort(plateId,url);
+            $('input,textarea').val('');
             console.log(result);
             if (result.code===0){
                 alert(result.text);

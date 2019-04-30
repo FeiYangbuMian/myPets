@@ -10,33 +10,33 @@ let result={
 };
 
 router.route("/").get(function(req,res){
-    res.render("index");
+    return res.render("index");
 });
 router.route("/index").get(function(req,res){
-    res.render("index");
+    return res.render("index");
 });
 
 router.get('/doindex',function (req,res) {
     Plate.selectPlate(function (err,rows) {
         result.data = rows;
-        res.send(result);
+        return res.send(result);
     });
 });
 
 router.route("/login").get(function(req,res){
-    res.render("client/login");
+    return res.render("client/login");
 });
 
 router.route("/register").get(function(req,res){
-    res.render("client/register");
+    return res.render("client/register");
 });
 
 router.route("/post").get(function(req,res){
-    res.render("post/home");
+    return res.render("post/home");
 });
 
 router.route("/admin").get(function(req,res){
-    res.render("admin/home");
+    return res.render("admin/home");
 });
 
 module.exports = router;

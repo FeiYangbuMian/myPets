@@ -107,6 +107,7 @@ function dopost(postId) {
                 userName = result.user.userName;
                 userPhoto = result.user.userPhoto;
                 $('#foruser').text(userName);
+                $('#tohome').attr('href',`/post/home/${userName}`);
 
                 let info = result.info;
                 let tem1 = $('#tem-post').html();
@@ -158,7 +159,6 @@ function dopost(postId) {
                 let tem3 = $('#tem-lol').html();
                 $.each(lol,function (k,v) {
                     let out = Mustache.render(tem3,v);
-                    console.log(out);
                     console.log($(`#forreply li:eq(${v.replyFloor-1}) .forlol`));
                     $(`#forreply li:eq(${v.replyFloor-1}) .forlol`).append(out);
                     $(`#forreply li:eq(${v.replyFloor-1}) .collapse`).addClass('in');
@@ -186,8 +186,10 @@ function upreply(formData) {
         dataType:'json',
         processData: false,  // 告诉JSLite不要去处理发送的数据
         contentType: false,   // 告诉JSLite不要去设置Content-Type请求头
-        success:function(result){
+        success:function (result){
             console.log(result);
+            dopost(postId);
+            $('input,textarea').val('');
             if (result.code===0){
                 alert(result.text);
             } else {

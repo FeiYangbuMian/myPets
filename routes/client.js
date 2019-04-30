@@ -26,11 +26,16 @@ form.uploadDir = "../myPets/public/image/userPhoto";
 
 
 router.route("/").get(function(req,res){
-    res.render("client/login");
+    return res.render("client/login");
 });
 
 router.route("/login").get(function(req,res){
-    res.render("client/login");
+    return res.render("client/login");
+});
+
+router.route("/logout").get(function(req,res){
+
+    return res.render("client/login");
 });
 
 router.post('/dologin',function (req,res) {
@@ -41,34 +46,31 @@ router.post('/dologin',function (req,res) {
 
     User.selectUserbyName(userName,function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         if (rows.length === 0) {
             result.code = 0;
             result.text = '暂无此人';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         User.selectUser([userName,userPwd],function (err,rows) {
             if (rows.length === 0) {
                 result.code = 0;
                 result.text = '密码错误';
-                res.send(result);
-                return;
+                return res.send(result);
             }
             result.code = 1;
             result.text = '';
             req.session.user = rows[0];
             result.userName = userName;
             result.user = rows[0];
-            res.send(result);
+            return res.send(result);
         });
     });
 });
 
 router.route("/getpassword").get(function(req,res){
-    res.render("client/getpassword");
+    return res.render("client/getpassword");
 });
 
 router.post('/dopassword',function (req,res) {
@@ -77,25 +79,23 @@ router.post('/dopassword',function (req,res) {
         userEmail = req.body.userEmail;
     User.updateUserpwd([userPwd,userEmail],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         if (rows.length === 0) {
             result.code = 0;
             result.text = '修改失败';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         console.log(rows);
         result.code = 1;
         result.text = '';
         result.userEmail = userEmail;
-        res.send(result);
+        return res.send(result);
     });
 });
 
 router.route("/register").get(function(req,res){
-    res.render("client/register");
+    return res.render("client/register");
 });
 
 router.post('/doregister',function (req,res) {
@@ -105,29 +105,32 @@ router.post('/doregister',function (req,res) {
         userEmail = req.body.userEmail;
     User.insertUser([userEmail,current,userPwd,userEmail],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         if (rows.length === 0) {
             result.code = 0;
             result.text = '注册失败';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         console.log(rows);
         result.code = 1;
         result.text = '';
         result.userEmail = userEmail;
-        res.send(result);
+        return res.send(result);
     })
 });
 
 router.route("/useragreement").get(function(req,res){
-    res.render("client/useragreement");
+    return res.render("client/useragreement");
 });
 
 router.route("/register1").get(function(req,res){
-    res.render("client/register1");
+    console.log(req.query);
+    console.log(req.query.useremail);
+    if (!req.query || !req.query.useremail) {
+        return res.render("client/login");
+    }
+    return res.render("client/register1");
 });
 
 router.post('/dophoto',function (req,res,next) {
@@ -155,19 +158,18 @@ router.post('/dophoto',function (req,res,next) {
             } else {
                 User.updateUserphoto([newfilename,userEmail],function (err,rows) {
                     if (err) {
-                        res.render('error');
-                        return;
+                        return res.render('error');
                     }
                     if (rows.length === 0) {
                         result.code = 0;
                         result.text = '头像上传失败';
-                        res.send(result);
+                        return res.send(result);
                         return;
                     }
                     result.code = 1;
-                    result.text = ''
+                    result.text = '';
                     result.data = newfilename;
-                    res.send(result);
+                    return res.end(newfilename);
                 });
             }
         });
@@ -179,18 +181,16 @@ router.post('/ifname',function (req,res) {
     let userName = req.body.userName;
     User.selectUserbyName(userName,function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         if (rows.length !== 0) {
             result.code = 0;
             result.text = '用户名已存在';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         result.code = 1;
         result.text = ''
-        res.send(result);
+        return res.send(result);
     });
 });
 
@@ -202,18 +202,16 @@ router.post('/doregister1',function (req,res) {
         userEmail = req.body.userEmail;
     User.updateUser([userName,userBrith,userArea,userEmail],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         if (rows.length === 0) {
             result.code = 0;
             result.text = '信息完善失败';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         result.code = 1;
         result.text = '';
-        res.send(result);
+        return res.send(result);
     });
 });
 
@@ -233,8 +231,7 @@ router.get('/docode',function (req,res,next) {
         if (rows.length !== 0) {
             result.code = 0;
             result.text = '邮箱已存在';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         mail.sendMail(options,function (err,msg) {
             if (err){
@@ -244,8 +241,7 @@ router.get('/docode',function (req,res,next) {
                 result.code = 1;
                 result.text = '';
                 result.data = code;
-                res.send(result);
-                res.end();
+                return res.send(result);
             }
         });
     });
@@ -267,8 +263,7 @@ router.get('/docode2',function (req,res,next) {
         if (rows.length === 0) {
             result.code = 0;
             result.text = '邮箱不存在';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         mail.sendMail(options,function (err,msg) {
             if (err){
@@ -278,8 +273,7 @@ router.get('/docode2',function (req,res,next) {
                 result.code = 1;
                 result.text = '';
                 result.data = code;
-                res.send(result);
-                res.end();
+                return res.send(result);
             }
         });
     });
@@ -290,8 +284,8 @@ router.get('/docode2',function (req,res,next) {
 
 router.route("/userinfo").get(function(req,res){
     let user = req.session.user;
-    if (!user) res.render("client/login");
-    res.render("client/userinfo");
+    if (!user) return res.render("client/login");
+    return res.render("client/userinfo");
 });
 
 
@@ -299,41 +293,38 @@ router.post('/myinfo',function (req,res) {
     let userName = req.session.user.userName;
     User.selectUserbyName(userName, function (err, rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         result.code = 1;
         result.text = '我的信息查询成功';
         result.user = rows[0];
-        res.send(result);
+        return res.send(result);
     });
 });
 router.post('/mypost',function (req,res) {
     let userName = req.session.user.userName;
     Post.selectPostbyUsername([userName],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         result.code = 1;
         result.text = '我的帖子查询成功';
         result.list = rows;
         result.length = rows.length;
-        res.send(result);
+        return res.send(result);
     });
 });
 router.post('/myreply',function (req,res) {
     let userName = req.session.user.userName;
     Reply.selectMyreply([userName],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         result.code = 1;
         result.text = '我的回复查询成功';
         result.list = rows;
         result.length = rows.length;
-        res.send(result);
+        return res.send(result);
     });
 });
 
@@ -341,49 +332,34 @@ router.post('/replyme',function (req,res) {
     let userName = req.session.user.userName;
     Reply.selectIsread([userName],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         result.code = 1;
         result.text = '未读回复查询成功';
         result.list = rows;
         result.length = rows.length;
-        res.send(result);
+        return res.send(result);
     });
 });
 
 
 router.post('/domodify',function (req,res) {
-    console.log(req.body);
     let data = req.body;
     console.log(data);
-    User.updateUserExtra([data.userBrith,data.userArea,data.userQQ,data.userWechat,data.userName],function (err,rows) {
+    User.updateUserExtra([data.userBirth,data.userArea,data.userQQ,data.userWechat,data.userName],function (err,rows) {
         if (err) {
-            res.render('error');
-            return;
+            return res.render('error');
         }
         if (rows.length === 0) {
             result.code = 0;
             result.text = '修改失败';
-            res.send(result);
-            return;
+            return res.send(result);
         }
         result.code = 1;
         result.text = '';
-        res.send(result);
+        return res.send(result);
     })
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

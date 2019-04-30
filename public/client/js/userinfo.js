@@ -20,6 +20,7 @@ window.onload = function () {
 
 
 function initial() {
+    console.log('initial');
     switch (type) {
         case 1:
             $('#formyinfo').addClass('active');
@@ -40,7 +41,7 @@ function initial() {
     $('#myTab a').click(function (e) {
         e.preventDefault();//阻止a链接的跳转行为
         $(this).tab('show');//显示当前选中的链接及关联的content
-        console.log($(this).tab());
+      //  console.log($(this).tab());
         let type = $(this).tab().attr('data-type');
         let pmp =  $('.page-mypost'),
             pmr = $('.page-myreply'),
@@ -68,6 +69,8 @@ function initial() {
     // 个人信息修改
     $('#formyinfo').on('click','.onmodify',function () {
         $(this).parents('.modify').addClass('hidden').siblings('.confirm').removeClass('hidden');
+    }).on('click','.oncancel',function () {
+        $(this).parents('.confirm').addClass('hidden').siblings('.modify').removeClass('hidden');
     });
 
     $('.forphoto').on('change','#userPhoto',function () {
@@ -93,11 +96,11 @@ function initial() {
         // e.preventDefault();
         let user = myinfo;
         user.userBirth = $('#userBirth').val();
+        console.log(user);
         if (!user.userBirth){
             alert('不可为空');
             return;
         }
-        console.log(user);
         domodify(user,user.userBirth,$(this));
     });
 
@@ -112,9 +115,11 @@ function initial() {
         }
         console.log(user);
         domodify(user,user.userArea,$(this));
+    }).distpicker({
+        autoSelect: false
     });
 
-    $('.forqq').on('click','button',function () {
+    $('.forqq').on('click','.onconfirm',function () {
         console.log('qq');
         let user = myinfo;
         user.userQQ = $('#userQQ').val();
@@ -136,7 +141,6 @@ function initial() {
         console.log(user);
         domodify(user,user.userWechat,$(this));
     });
-
 
     // 未读消息跳转
     $('#forreplyme').on('click','li',function () {
@@ -165,7 +169,10 @@ function myInfo() {
                 let out = Mustache.render(tem,myinfo);
                 $('#formyinfo').html(out);
 
-                initial();
+                $('#tohome').attr('href',`/post/home/${myinfo.userName}`);
+
+                setTimeout(initial,0);
+                //initial();
             }
         }
     });
@@ -272,6 +279,7 @@ function replyMe() {
  * @param that 点击的那块
  */
 function domodify(data,content,that) {
+    console.log(data);
     $.ajax({
         url: `/client/domodify`,
         type: 'post',
@@ -303,11 +311,12 @@ function dophoto(formData) {
         contentType: false,
         success: function (result) {
             console.log(result);
-            if (result.code === 0) {
+            $('#photo').attr('src', `../../image/userPhoto/${result}`);
+            /*if (result.code === 0) {
                 alert(result.text);
             } else {
                 $('#photo').attr('src', `../../image/userPhoto/${result.data}`);
-            }
+            }*/
         },
         error: function (err) {
             console.log(err);
