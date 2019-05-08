@@ -24,7 +24,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">肥羊不绵</a></li>
+                <li><a href="#" class="z-user">肥羊不绵</a></li>
             </ul>
         </div>
     </div>
@@ -32,10 +32,11 @@
 <div class="container">
     <div class="col-xs-2 hidden-xs hidden-sm left">
         <div class="list-group" id="myTab">
-            <a class="list-group-item"  href="#formyinfo"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
+            <a class="list-group-item"  href="#formyinfo"  data-type="1"><span class="glyphicon glyphicon-user"></span>&nbsp;个人信息</a>
             <a class="list-group-item"  href="#formypost" data-type="2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;我的发帖</a>
             <a class="list-group-item"  href="#formyreply" data-type="3"><span class="glyphicon glyphicon-edit"></span>&nbsp;我的回帖</a>
-            <a class="list-group-item"  href="#forreplyme" data-type="4"><span class="glyphicon glyphicon-comment"></span>&nbsp;未读消息</a>
+            <a class="list-group-item"  href="#forreplyme" data-type="4"><span class="glyphicon glyphicon-envelope"></span>&nbsp;未读消息</a>
+            <a class="list-group-item"  href="#forback"><span class="glyphicon glyphicon-comment"></span>&nbsp;建议反馈</a>
         </div>
     </div>
     <div class="col-xs-10 right tab-content">
@@ -54,6 +55,23 @@
         <!-- 未读回复 -->
         <ul class="list-group tab-pane" id="forreplyme">
         </ul>
+
+        <!-- 建议反馈 -->
+        <ul class="list-group tab-pane" id="forback">
+            <li class="list-group-item">
+                <span class="text-muted">反馈用户：</span>
+                <span class="text-info z-user" ></span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">反馈内容：</span>
+                <textarea title="意见反馈" id="backContent"></textarea>
+            </li>
+            <li class="list-group-item">
+                <button class="btn btn-primary" id="do_back">确认反馈</button>
+                <span class="text-danger">注：可对本系统提出不足之处、需要改进的地方等。反馈内容将直接提交至管理员处。</span>
+            </li>
+        </ul>
+
     </div>
 </div>
 <footer class="text-muted">©2019 版权所有 @肥羊不绵</footer>

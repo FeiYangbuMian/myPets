@@ -77,6 +77,10 @@ body:after {
     display: block;
 }
 
+.z-foruserphoto {
+    position: relative;
+}
+
 .z-forphoto {
     width: 120px;
     height: 120px;
@@ -85,6 +89,7 @@ body:after {
     opacity: 0;
     position: absolute;
     top: 0;
+    right: 30%;
 }
 
 .z-icon {

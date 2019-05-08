@@ -14,6 +14,7 @@ window.onload = function () {
     plateInfo();
     postInfo();
     replyInfo();
+    backInfo();
 
 };
 
@@ -226,6 +227,7 @@ function userInfo() {
         },
     })
 }
+
 function plateInfo() {
     $.ajax({
         url:'/admin/plates',
@@ -308,6 +310,36 @@ function replyInfo() {
                     perPage: 10, //每页几个
                     containerClass: 'pagination-container page-replys hidden',
                     insertAfter: '#forreplys',
+                    pageNumbers: true
+                });
+            }
+        },
+    })
+}
+
+function backInfo() {
+    $.ajax({
+        url:'/admin/backs',
+        type:'post',
+        contentType:'application/json;charset=UTF-8',
+        success: function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                let list = result.backs;
+                let tem = $('#tem-back').html();
+                $('#forbacks tbody').html('');
+                $.each(list,function (k,v) {
+                    let out = Mustache.render(tem,v);
+                    $('#forbacks tbody').append(out);
+                });
+
+                // 分页
+                $('#forbacks tbody').paginathing({
+                    perPage: 10, //每页几个
+                    containerClass: 'pagination-container page-backs hidden',
+                    insertAfter: '#forbacks',
                     pageNumbers: true
                 });
             }

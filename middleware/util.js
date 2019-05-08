@@ -7,6 +7,7 @@ Util.math = {
     },
 };
 
+/*
 Util.check = {
     //检查是否为空
     isFalse: function(str){
@@ -23,6 +24,7 @@ Util.check = {
         return !!reg.test(str);
     },
 };
+*/
 
 Util.currentTime = function () {
     let now = new Date();

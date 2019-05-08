@@ -9,6 +9,7 @@
 
 let myinfo = {};
 let type;
+let userName;
 window.onload = function () {
     let href = window.location.href;
     type = parseInt(href.slice(-1));
@@ -62,7 +63,11 @@ function initial() {
                 pmr.addClass('hidden');
                 prm.removeClass('hidden');
                 break;
-            default:break;
+            default:
+                pmp.addClass('hidden');
+                pmr.addClass('hidden');
+                prm.addClass('hidden');
+                break;
         }
     });
 
@@ -148,6 +153,20 @@ function initial() {
             url = $(this).attr('data-url');
         doread(replyId,url);
     });
+
+
+    // 反馈信息
+    $('#do_back').on('click',function () {
+       let data={};
+       let backContent = $('#backContent').val();
+       if (!backContent) {
+           alert('反馈内容不可为空！');
+           return false;
+       }
+       data.userName = userName;
+       data.backContent = backContent;
+       doback(data);
+    });
 }
 
 /**
@@ -165,12 +184,13 @@ function myInfo() {
             } else {
                 // 个人信息
                 myinfo = result.user;
+                userName = myinfo.userName;
                 let tem = $('#tem-myinfo').html();
                 let out = Mustache.render(tem,myinfo);
                 $('#formyinfo').html(out);
 
-                $('#tohome').attr('href',`/post/home/${myinfo.userName}`);
-
+                $('#tohome').attr('href',`/post/home/${userName}`);
+                $('.z-user').text(userName);
                 setTimeout(initial,0);
                 //initial();
             }
@@ -344,6 +364,26 @@ function doread(replyId,url) {
                 alert(result.text);
             } else {
                 window.location.href = url;
+            }
+        }
+    });
+}
+
+
+function doback(data) {
+    $.ajax({
+        url: `/client/doback`,
+        type: 'post',
+        data:JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success:function (result) {
+            console.log(result);
+            if (result.code === 0){
+                alert(result.text);
+            } else {
+                alert('反馈成功');
+                $('#backContent').val('');
             }
         }
     });

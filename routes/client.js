@@ -9,6 +9,7 @@ const Util = require('../middleware/util');
 const User = require('../models/User');
 const Post = require('../models/Post');
 const Reply = require('../models/Reply');
+const Back = require('../models/Back');
 
 let router = express.Router();
 
@@ -42,7 +43,6 @@ router.post('/dologin',function (req,res) {
     console.log(req.body);
     let userPwd = req.body.userPwd;
     userName = req.body.userName;
-    //req.session.userName = userName;
 
     User.selectUserbyName(userName,function (err,rows) {
         if (err) {
@@ -126,8 +126,8 @@ router.route("/useragreement").get(function(req,res){
 
 router.route("/register1").get(function(req,res){
     console.log(req.query);
-    console.log(req.query.useremail);
-    if (!req.query || !req.query.useremail) {
+    console.log(req.query.userEmail);
+    if (!req.query || !req.query.userEmail) {
         return res.render("client/login");
     }
     return res.render("client/register1");
@@ -197,10 +197,10 @@ router.post('/ifname',function (req,res) {
 router.post('/doregister1',function (req,res) {
     console.log(req.body);
     let userName = req.body.userName,
-        userBrith = req.body.userBrith,
+        userBirth = req.body.userBirth,
         userArea = req.body.userArea,
         userEmail = req.body.userEmail;
-    User.updateUser([userName,userBrith,userArea,userEmail],function (err,rows) {
+    User.updateUser([userName,userBirth,userArea,userEmail],function (err,rows) {
         if (err) {
             return res.render('error');
         }
@@ -353,6 +353,24 @@ router.post('/domodify',function (req,res) {
         if (rows.length === 0) {
             result.code = 0;
             result.text = '修改失败';
+            return res.send(result);
+        }
+        result.code = 1;
+        result.text = '';
+        return res.send(result);
+    })
+});
+
+router.post('/doback',function (req,res) {
+    let data = req.body;
+    console.log(data);
+    Back.insertBack([data.backContent,data.userName],function (err,rows) {
+        if (err) {
+            return res.render('error');
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '反馈失败';
             return res.send(result);
         }
         result.code = 1;

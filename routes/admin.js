@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Plate = require('../models/Plate');
 const Post = require('../models/Post');
 const Reply = require('../models/Reply');
+const Back = require('../models/Back');
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
@@ -91,6 +92,23 @@ router.post('/replys',function (req,res,next) {
             result.code = 1;
             result.text = '查询成功';
             result.replys = rows;
+            return res.send(result);
+        }
+    });
+});
+
+router.post('/backs',function (req,res,next) {
+    Back.selectBack(function (err,rows) {
+        if (err) {
+            return res.render('error');
+        }
+        if (rows.length === 0) {
+            result.code = 0;
+            result.text = '未知错误';
+        } else {
+            result.code = 1;
+            result.text = '查询成功';
+            result.backs = rows;
             return res.send(result);
         }
     });

@@ -122,7 +122,6 @@ router.post('/uppost',function (req,res) {
         if(err){
             throw err;
         }
-        console.log('------------------------uppost--------------------------');
         console.log(fields);
         data = fields;
 
@@ -158,7 +157,6 @@ router.post('/uppost',function (req,res) {
             } else {
                 result.text = '发表成功！';
                 return res.end('1111');
-                //return res.send(result);
             }
         });
     });
@@ -234,9 +232,7 @@ router.post('/upreply',function (req,res) {
         if (err) {
             throw err;
         }
-        console.log('------------------------upreply--------------------------');
         console.log(fields);
-        console.log(form.uploadDir);
         data = fields;
         for (let i = 0, len = all.length; i < len; i++) {
             let replyPhoto = all[i][1].name;

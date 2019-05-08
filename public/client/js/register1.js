@@ -10,6 +10,7 @@
 let userName = document.getElementById('userName'),
     userBirth = document.getElementById('userBirth'),
     userEmail = document.getElementById('userEmail'),
+    btn_next = document.getElementById('btn_next'),
     province = '',city = '',email='',data={};
 
 let reg = new RegExp("(^|&)userEmail=([^&]*)(&|$)", "i");
@@ -22,7 +23,6 @@ console.log(email);
 let allValue = function (){
     province = $('#province option:selected').val();
     city = $('#city option:selected').val();
-    console.log('222');
     if (userName.value && userBirth.value && province && city) {
         btn_next.removeAttribute('disabled');
     } else {
@@ -72,30 +72,40 @@ $('body').on('input','input',function () {
     }
 }).on('input','#userName',function () {
     let _this = $(this);
-    $.ajax({
-        url: '/client/ifname',
-        type: 'post',
-        data: JSON.stringify({
-            userName:userName.value
-        }),
-        dataType: 'json',
-        contentType: 'application/json;charset=UTF-8',
-        success:function (result) {
-            console.log(result);
-            $('#text_danger').text(result.text);
-            if (result.code === 0){
-                _this.addClass('z-input-danger');
-            } else {
-                _this.removeClass('z-input-danger');
+    if (userName.value.length < 14) {
+        _this.removeClass('z-input-danger');
+        $.ajax({
+            url: '/client/ifname',
+            type: 'post',
+            data: JSON.stringify({
+                userName:userName.value
+            }),
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            success:function (result) {
+                console.log(result);
+                $('#text_danger').text(result.text);
+                if (result.code === 0){
+                    _this.addClass('z-input-danger');
+                } else {
+                    _this.removeClass('z-input-danger');
+                }
             }
-        }
-    });
+        });
+    } else {
+        $('#text_danger').text('用户名请少于14字符');
+        _this.addClass('z-input-danger');
+    }
+
 }).on('click','#btn_next',function () {
-    data.userarea = province+city;
+    data.userArea = province+city;
     data.userName = userName.value;
     data.userBirth = userBirth.value;
     data.userEmail = userEmail.value;
     console.log(data);
+    if (data.userName.length >=14){
+        return;
+    }
     $.ajax({
         url: '/client/doregister1',
         type: 'post',

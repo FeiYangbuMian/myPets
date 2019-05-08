@@ -34,7 +34,8 @@ glyphicon glyphicon-home"></span>&nbsp;个人信息</a>
             <a class="list-group-item"  href="#forusers" data-type="1"><span class="glyphicon glyphicon-user"></span>&nbsp;用户信息</a>
             <a class="list-group-item"  href="#forplates" data-type="2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;板块信息</a>
             <a class="list-group-item"  href="#forposts" data-type="3"><span class="glyphicon glyphicon-edit"></span>&nbsp;帖子信息</a>
-            <a class="list-group-item"  href="#forreplys" data-type="4"><span class="glyphicon glyphicon-comment"></span>&nbsp;评论信息</a>
+            <a class="list-group-item"  href="#forreplys" data-type="4"><span class="glyphicon glyphicon-envelope"></span>&nbsp;评论信息</a>
+            <a class="list-group-item"  href="#forbacks"><span class="glyphicon glyphicon-comment"></span>&nbsp;建议反馈</a>
         </div>
     </div>
     <div class="col-xs-10 right tab-content">
@@ -116,6 +117,21 @@ glyphicon glyphicon-home"></span>&nbsp;个人信息</a>
                     <th>状态</th>
                     <th>回复人</th>
                     <th>被回复人</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 板块信息 -->
+        <div class="list-group tab-pane" id="forbacks">
+            <table width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>反馈ID</th>
+                    <th>反馈内容</th>
+                    <th>反馈用户</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -246,7 +262,7 @@ glyphicon glyphicon-home"></span>&nbsp;个人信息</a>
     </tr>
 </script>
 
-<!-- 模板 帖子 -->
+<!-- 模板 回复 -->
 <script type="text/template" id="tem-reply">
     <tr>
         <td>{{replyId}}</td>
@@ -261,6 +277,14 @@ glyphicon glyphicon-home"></span>&nbsp;个人信息</a>
     </tr>
 </script>
 
+<!-- 模板 反馈 -->
+<script type="text/template" id="tem-back">
+    <tr>
+        <td>{{backId}}</td>
+        <td>{{backContent}}</td>
+        <td>{{userName}}</td>
+    </tr>
+</script>
 
 <script src="/js/jquery.js" charset="utf-8"></script>
 <script src="/js/bootstrap.js" charset="utf-8"></script>
