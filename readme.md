@@ -16,3 +16,9 @@
 ### 拟采用技术
 > 毕设写完后，时间还够的话……
 - Vue.js
+
+### 浏览学习的话
+1. git clone https://github.com/FeiYangbuMian/myPets.git
+2. npm init
+3. 打开数据库
+4. 运行项目
