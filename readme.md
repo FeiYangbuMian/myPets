@@ -19,6 +19,6 @@
 
 ### 浏览学习的话
 1. git clone https://github.com/FeiYangbuMian/myPets.git
-2. npm init
+2. npm install
 3. 打开数据库
 4. 运行项目
