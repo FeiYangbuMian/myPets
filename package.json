@@ -22,7 +22,7 @@
     "morgan": "~1.9.0",
     "mustache": "^3.0.1",
     "mysql": "^2.16.0",
-    "nodemailer": "^5.1.1",
+    "nodemailer": "^6.4.16",
     "sb-admin-2": "^3.3.8"
   }
 }
